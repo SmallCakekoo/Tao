@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { AnimatedLine } from '../AnimatedLine/AnimatedLine';
 import cursorImg from '../../../assets/cursor.png';
 import './HowItWorksSection.css';
 
@@ -159,7 +160,10 @@ export const HowItWorksSection = () => {
 
 
   return (
-    <section id="how-it-works" className="landing-how" ref={sectionRef}>
+    <section className="landing-how" ref={sectionRef}>
+      <div className="landing-how-line-wrap">
+        <AnimatedLine variant="second" triggerSelector=".landing-how" className="landing-how-line-svg" />
+      </div>
       <h2 ref={headingRef} className="landing-how-title">How it works.</h2>
       <p className="landing-how-sub" ref={subRef}>
         A minimalist framework designed to optimize your performance without compromising your health.

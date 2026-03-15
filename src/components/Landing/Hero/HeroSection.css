@@ -1,3 +1,5 @@
+
+
 .landing section.landing-hero {
   box-sizing: border-box;
   min-height: 100vh;
@@ -7,7 +9,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: var(--space-5xl) var(--section-padding-x) 25vh;
+  padding: var(--space-5xl) var(--section-padding-x) var(--space-3xl);
   position: relative;
   font-family: var(--font-family);
   overflow: hidden;
@@ -15,12 +17,10 @@
 
 .landing-hero-badge {
   font-size: var(--text-body);
-  font-weight: 400;
+  font-weight: 500;
   color: var(--black-300);
   margin-bottom: var(--space-sm);
   font-family: var(--font-family);
-  position: relative;
-  z-index: 2;
 }
 
 .landing-hero-title {
@@ -29,42 +29,34 @@
   line-height: 1.2;
   color: var(--base-black);
   text-align: center;
-  max-width: 50rem;
+  max-width: var(--content-max);
   margin: 0 0 var(--space-lg);
   font-family: var(--font-family);
-  position: relative;
-  z-index: 2;
 }
+
 
 .landing-hero-cta {
   margin-top: var(--space-sm);
-  position: relative;
-  z-index: 2;
 }
 
 .landing-hero-hill {
   position: absolute;
-  inset: auto 0 0 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   height: 25vh;
-  min-height: 9.375rem;
+  min-height: 9.375rem; /* 150px */
+  /* Ajustar el field */
+  background: url('../../../assets/field-landing.svg') no-repeat bottom center;
+  background-size: cover;
   pointer-events: none;
-  z-index: 1;
+  z-index: 0;
 }
 
-.landing-hero-hill-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: bottom center;
-  display: block;
-  user-select: none;
-  pointer-events: none;
-}
 
 .landing-hero-stickers {
   position: absolute;
   inset: 0;
-  z-index: 3;
   pointer-events: none;
 }
 
@@ -72,6 +64,4 @@
   pointer-events: auto;
 }
 
-.landing-sticker-hero {
-  will-change: transform;
-}
+

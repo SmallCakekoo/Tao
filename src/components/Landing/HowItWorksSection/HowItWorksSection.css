@@ -1,5 +1,5 @@
 .landing-how {
-  padding: var(--space-5xl) var(--section-padding-x);
+  padding: var(--section-padding-y) var(--section-padding-x) var(--space-5xl);
   font-family: var(--font-family);
   position: relative;
   overflow: hidden;
@@ -9,7 +9,7 @@
 .landing-how-title {
   font-size: clamp(var(--text-h4), 5vw, var(--text-h3)) !important;
   font-weight: 500;
-  color: var(--base-violet);
+  color: #8A6CFD;
   text-align: center;
   margin: 0 0 var(--space-sm);
   font-family: var(--font-family);
@@ -28,9 +28,9 @@
 .landing-how-cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  gap: 32px;
   position: relative;
-  max-width: 960px;
+  max-width: 1100px;
   margin: 0 auto;
   z-index: 1;
 }
@@ -38,9 +38,9 @@
 .landing-how-card {
   background: white;
   border-radius: var(--radius-xl);
-  padding: var(--space-lg) var(--space-sm) var(--space-md);
+  padding: var(--space-xl) var(--space-md) var(--space-md);
   border: 1px solid #f0f0f5;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -82,7 +82,7 @@
   max-width: 240px;
 }
 
-/* Component Illustrations */
+/* Illustrations */
 .landing-how-illustration-box {
   width: 100%;
   aspect-ratio: 1.4 / 1;
@@ -96,7 +96,7 @@
   overflow: hidden;
 }
 
-/* Daily Check Illustration */
+/* Illustration Check (01) */
 .illustration-check {
   width: 80%;
   height: 85%;
@@ -184,7 +184,7 @@
   pointer-events: none;
 }
 
-/* Sync Load Illustration */
+/* Illustration Sync (02) */
 .illustration-sync {
   width: 75%;
   height: 75%;
@@ -309,7 +309,7 @@
 
 
 
-/* Balance Illustration */
+/* Illustration Balance (03) */
 .illustration-balance {
   width: 80%;
   height: 70%;

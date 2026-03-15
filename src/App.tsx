@@ -1,18 +1,12 @@
 import './App.css'
-import { Routes } from 'react-router-dom'
-
-
-
+import { Routes, Route } from 'react-router-dom'
+import { Landing } from './pages/Landing/Landing'
 
 function App() {
-
   return (
-    <>
-    <button>Hello World</button>
     <Routes>
-    
+      <Route path="/" element={<Landing />} />
     </Routes>
-    </>
   )
 }
 

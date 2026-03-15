@@ -1,0 +1,15 @@
+/* Landing layout - uses tokens from index.css */
+.landing {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--bg-color);
+  overflow-x: hidden;
+  font-family: var(--font-family);
+}
+
+.landing section {
+  position: relative;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--section-padding-x);
+}

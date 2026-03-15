@@ -24,14 +24,14 @@
     margin-bottom: 10%;
 }
 
-.message p {
+.animated-p {
     margin: 0;
     animation-name: fadeInUp;
     animation-duration: 0.6s;
 
 }
 
-.message h4 {
+.animated-h {
     margin: 0;
     animation-name: fadeInUp;
     animation-duration: 0.8s;
@@ -45,7 +45,7 @@
     align-items: flex-start;
 }
 
-.form-area h3 {
+.create {
     margin: 0;
     animation-name: fadeInUp;
     animation-duration: 1s;

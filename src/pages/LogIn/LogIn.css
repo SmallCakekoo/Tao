@@ -8,6 +8,7 @@
   flex-direction: row;
   align-items: center;
   padding-left: var(--space-3xl);
+  gap: var(--space-xl);
 }
 
 .gradient-box {
@@ -38,7 +39,7 @@
 }
 
 .form-area {
-    margin-left: 8%;
+    margin-left: var(--space-xl);
     width: 40%;
     display: flex;
     flex-direction: column;

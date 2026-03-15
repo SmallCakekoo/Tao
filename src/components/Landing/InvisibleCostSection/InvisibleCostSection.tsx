@@ -8,13 +8,13 @@ import './InvisibleCostSection.css';
 gsap.registerPlugin(ScrollTrigger);
 
 export const InvisibleCostSection = () => {
-  const sectionRef = useRef(null);
-  const headingRef = useRef(null);
-  const textRef = useRef(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const textRef = useRef<HTMLParagraphElement>(null);
 
-  const boxRef = useRef(null);
-  const boxTextRef = useRef(null);
-  const imgRef = useRef(null);
+  const boxRef = useRef<HTMLDivElement>(null);
+  const boxTextRef = useRef<HTMLDivElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Invisible Cost animations
@@ -99,7 +99,7 @@ export const InvisibleCostSection = () => {
   }, []);
 
   return (
-    <section className="landing-invisible-cost" ref={sectionRef}>
+    <section id="price" className="landing-invisible-cost" ref={sectionRef}>
       <AnimatedLine
         variant="first"
         triggerSelector=".landing-invisible-cost"

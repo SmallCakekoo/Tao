@@ -28,8 +28,14 @@ export const DraggableSticker = ({
   getGroundY?: (centerX: number) => number;
 }) => {
   const elRef = useRef<HTMLSpanElement>(null);
-  const posRef = useRef({ x: 0, y: 0 });
-  const dragRef = useRef({
+  const posRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+  const dragRef = useRef<{
+    isDragging: boolean;
+    startX: number;
+    startY: number;
+    originX: number;
+    originY: number;
+  }>({
     isDragging: false,
     startX: 0,
     startY: 0,

@@ -1,0 +1,100 @@
+.login {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--bg-color);
+  overflow-x: hidden;
+  font-family: var(--font-family);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: var(--space-3xl);
+}
+
+.gradient-box {
+    min-height: 80vh;
+    width: 36%;
+    border-radius: var(--radius-xl);
+    background: linear-gradient(180deg, #B59AFF 0%, #FFCEC0 100%);
+    padding: var(--space-2xl);
+    color: var(--bg-color);
+}
+
+.gradient-box img {
+    width: 28%;
+    margin-bottom: 10%;
+}
+
+.message p {
+    margin: 0;
+    animation-name: fadeInUp;
+    animation-duration: 0.6s;
+
+}
+
+.message h4 {
+    margin: 0;
+    animation-name: fadeInUp;
+    animation-duration: 0.8s;
+}
+
+.form-area {
+    margin-left: 8%;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.form-area h3 {
+    margin: 0;
+    animation-name: fadeInUp;
+    animation-duration: 1s;
+
+}
+
+.form-area p {
+    margin-top: 0;
+    font-size: var(--text-sm);
+    margin-bottom: var(--space-lg);
+    animation-name: fadeInUp;
+    animation-duration: 1s;
+}
+
+.form-area form {
+    display: flex;
+    width: 60%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-lg)
+}
+
+.form-area button {
+    width: 110%;
+}
+
+.form-label {
+    display: flex;
+    width: 100%;
+    gap: var(--space-xs);
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.form-label input {
+    width: 100%;
+}
+
+@keyframes fadeInUp {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
+.fadeInUp-animation {
+  animation: 2s fadeInUp;
+}

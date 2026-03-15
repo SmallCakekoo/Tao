@@ -16,7 +16,7 @@ export const Navbar = () => {
   return (
     <nav className={`landing-nav ${scrolled ? 'scrolled' : ''}`}>
       <Link to="/" className="landing-nav-logo" aria-label="Tao home">
-        <img src={logoFull} alt="" aria-hidden /> {/* TODO: Agregar texto alternativo en todas las imagenes y ARIAS en todos los elementos/componentes*/}
+        <img src={logoFull} alt="Tao logo" aria-hidden />
       </Link>
       <div className="landing-nav-actions">
         <Link to="/login" className="landing-nav-link">

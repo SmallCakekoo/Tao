@@ -99,7 +99,7 @@ export const InvisibleCostSection = () => {
   }, []);
 
   return (
-    <section className="landing-invisible-cost" ref={sectionRef}>
+    <section id="price" className="landing-invisible-cost" ref={sectionRef}>
       <AnimatedLine
         variant="first"
         triggerSelector=".landing-invisible-cost"

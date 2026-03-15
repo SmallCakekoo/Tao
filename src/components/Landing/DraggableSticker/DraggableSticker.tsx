@@ -9,6 +9,7 @@ export interface DraggableStickerProps {
   hasGravity?: boolean;
   className?: string;
   style?: CSSProperties;
+  getGroundY?: (centerX: number) => number;
 }
 
 export const DraggableSticker = ({
@@ -17,7 +18,15 @@ export const DraggableSticker = ({
   hasGravity = false,
   className = '',
   style,
-}: DraggableStickerProps) => {
+  getGroundY,
+}: {
+  emotionSrc: string;
+  size?: number;
+  hasGravity?: boolean;
+  className?: string;
+  style?: CSSProperties;
+  getGroundY?: (centerX: number) => number;
+}) => {
   const elRef = useRef<HTMLSpanElement>(null);
   const posRef = useRef({ x: 0, y: 0 });
   const dragRef = useRef({
@@ -29,17 +38,27 @@ export const DraggableSticker = ({
   });
   const [isDragging, setIsDragging] = useState(false);
 
-  const getGroundY = useCallback(() => {
+  const getTargetY = useCallback(() => {
     const el = elRef.current;
-    const parent = el?.parentElement;
-    if (!el || !parent) return null;
+    if (!el) return null;
+
+    if (getGroundY) {
+      const centerX = el.offsetLeft + posRef.current.x + size / 2;
+      const groundYAbs = getGroundY(centerX);
+
+      // groundYAbs is the actual Y coordinate inside the hero section
+      // offsetTop is the base position of the sticker before translate
+      return groundYAbs - el.offsetTop - size + 6;
+    }
+
+    const parent = el.parentElement;
+    if (!parent) return null;
 
     const hillHeight = Math.max(150, parent.clientHeight * 0.25);
     const groundY = parent.clientHeight - hillHeight;
-    const elTop = el.offsetTop;
 
-    return groundY - elTop - size + 20;
-  }, [size]);
+    return groundY - el.offsetTop - size + 20;
+  }, [getGroundY, size]);
 
   const setPosition = useCallback((x: number, y: number) => {
     const el = elRef.current;
@@ -52,7 +71,7 @@ export const DraggableSticker = ({
   useEffect(() => {
     if (!hasGravity || !elRef.current) return;
 
-    const targetY = getGroundY();
+    const targetY = getTargetY();
     if (targetY == null) return;
 
     gsap.fromTo(
@@ -69,7 +88,7 @@ export const DraggableSticker = ({
     );
 
     posRef.current = { x: 0, y: targetY };
-  }, [hasGravity, getGroundY]);
+  }, [hasGravity, getTargetY]);
 
   const handlePointerDown = useCallback((e: PointerEvent<HTMLSpanElement>) => {
     const el = elRef.current;
@@ -101,8 +120,6 @@ export const DraggableSticker = ({
     [setPosition]
   );
 
-
-
   const handlePointerUp = useCallback(
     (e: PointerEvent<HTMLSpanElement>) => {
       const el = elRef.current;
@@ -118,17 +135,13 @@ export const DraggableSticker = ({
       setIsDragging(false);
 
       if (hasGravity) {
-        let targetY = getGroundY();
+        const targetY = getTargetY();
         if (targetY == null) return;
-
-        if (targetY < posRef.current.y) {
-          targetY = posRef.current.y;
-        }
 
         gsap.to(el, {
           x: posRef.current.x,
           y: targetY,
-          duration: 1.5,
+          duration: 1.2,
           ease: 'bounce.out',
         });
 
@@ -145,7 +158,7 @@ export const DraggableSticker = ({
 
       posRef.current = { x: 0, y: 0 };
     },
-    [hasGravity, getGroundY]
+    [hasGravity, getTargetY]
   );
 
   return (
@@ -156,16 +169,19 @@ export const DraggableSticker = ({
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerUp}
       onPointerLeave={handlePointerUp}
       style={{
         position: 'absolute',
         width: size,
         height: size,
         cursor: isDragging ? 'grabbing' : 'grab',
+        touchAction: 'none',
+        userSelect: 'none',
         ...style,
       }}
     >
-      <img src={emotionSrc} alt="" aria-hidden />
+      <img src={emotionSrc} alt="" aria-hidden draggable={false} />
     </span>
   );
 };

@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import './SignUp.css'
+import { BackButton } from "../../components/BackButton/BackButton";
+
 
 export const SignUp = () => {
   return (
@@ -13,6 +15,7 @@ export const SignUp = () => {
       </div>
 
         <div className="form-area">
+        <BackButton/>
           <h3>Create an account</h3>
           <p className="already">
             And begin to take care of your mind today. <Link to='/login'>Already have an account?</Link>

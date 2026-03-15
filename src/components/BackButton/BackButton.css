@@ -1,0 +1,17 @@
+.back {
+    display: flex;
+    width: 20%;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: var(--space-xs);
+    cursor:pointer;
+
+}
+
+.back p {
+    margin: none;
+    cursor:pointer;
+    font-size: var(--text-button);
+    animation: none;
+}

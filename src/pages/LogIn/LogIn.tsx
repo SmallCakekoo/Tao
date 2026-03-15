@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import './LogIn.css'
+import { BackButton } from "../../components/BackButton/BackButton";
 
 export const LogIn = () => {
   return (
@@ -11,8 +12,9 @@ export const LogIn = () => {
           <h4>Ready to dive in to your personalized recommendations?</h4>
         </div>
       </div>
-
         <div className="form-area">
+          <BackButton/>
+
           <h3>Welcome back!</h3>
           <p>
             First time here? <Link to='/signup'>Sign up for free.</Link>

@@ -1,0 +1,27 @@
+.draggable-sticker {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  font-family: var(--font-family);
+
+  border-radius: var(--radius-full);
+  background-color: transparent;
+  border: 4px solid var(--bg-color, white);
+  box-shadow: 0 0 0 1px var(--light-stroke, #ddddea);
+  box-sizing: border-box;
+}
+
+.draggable-sticker:active {
+  cursor: grabbing;
+}
+
+.draggable-sticker img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}

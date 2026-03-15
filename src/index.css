@@ -50,6 +50,7 @@
   --bg-light-gray: #f5f5fb;
   --base-black: #393939;
   --black-300: #747474;
+  --black-150: #A1A1A1;
 
   --violet-500: #6C37FF;
   --base-violet: #895fff;
@@ -150,5 +151,27 @@ button {
 
 button:hover {
   background-color: var(--orange-300, #ff9e84);
+}
+
+input {
+  display: flex;
+  font-family: (--font-family);
+  padding: var(--space-sm);
+  align-items: center;
+  align-self: stretch;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--light-stroke, #DDDDEA);
+  background: var(--bg-light-gray);
+
+  /* Soft Shadow */
+  box-shadow: 0 2px 4.8px 0 rgba(0, 0, 0, 0.05);
+}
+
+input:placeholder-shown {
+  color: var(--black-150);
+}
+
+input:focus {
+  outline: none;
 }
 

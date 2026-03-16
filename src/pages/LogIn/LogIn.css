@@ -8,6 +8,7 @@
   flex-direction: row;
   align-items: center;
   padding-left: var(--space-3xl);
+  gap: var(--space-xl);
 }
 
 .gradient-box {
@@ -24,16 +25,21 @@
     margin-bottom: 10%;
 }
 
-.animated-text {
+.message p {
     margin: 0;
     animation-name: fadeInUp;
     animation-duration: 0.6s;
 
 }
 
+.message h4 {
+    margin: 0;
+    animation-name: fadeInUp;
+    animation-duration: 0.8s;
+}
 
 .form-area {
-    margin-left: 8%;
+    margin-left: var(--space-xl);
     width: 40%;
     display: flex;
     flex-direction: column;
@@ -47,7 +53,7 @@
 
 }
 
-.animated-p {
+.form-area p {
     margin-top: 0;
     font-size: var(--text-sm);
     margin-bottom: var(--space-lg);

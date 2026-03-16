@@ -3,7 +3,7 @@
     width: 20%;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
     gap: var(--space-xs);
     cursor:pointer;
 

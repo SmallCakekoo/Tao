@@ -9,14 +9,14 @@ export const SignUp = () => {
       <div className="gradient-box">
         <img src="/logo-full-white.svg" alt="Tao Logo" />
         <div className="message">
-          <p>You can easily</p>
-          <h4>Get access to your personal hub for clarity and productivity.</h4>
+          <p className="animated-text">You can easily</p>
+          <h4 className="animated-text">Get access to your personal hub for clarity and productivity.</h4>
         </div>
       </div>
 
         <div className="form-area">
         <BackButton/>
-          <h3>Create an account</h3>
+          <h3 className="animated-text">Create an account</h3>
           <p className="already">
             And begin to take care of your mind today. <Link to='/login'>Already have an account?</Link>
           </p>

@@ -7,6 +7,7 @@ import { PrivacyPolicy } from './pages/LegalPages/PrivacyPolicy/PrivacyPolicy'
 import { Legal } from './pages/LegalPages/LegalNotice/Legal'
 import { Terms } from './pages/LegalPages/Terms/Terms'
 import { ScrollToTop } from './components/Utils/ScrollToTop'
+import { Home } from './pages/Home/Home'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Route path="/privacy" element={<PrivacyPolicy />} />
       <Route path="/legal" element={<Legal />} />
       <Route path="/terms" element={<Terms />} />
+      <Route path="/home" element={<Home />} />
       </Routes>
     </>
   )

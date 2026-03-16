@@ -54,7 +54,6 @@
   --bg-light-gray: #f5f5fb;
   --base-black: #393939;
   --black-300: #747474;
-  --black-400: #575757;
   --black-150: #A1A1A1;
 
   --violet-500: #6C37FF;
@@ -137,8 +136,8 @@ button {
   font-weight: 500;
 
   display: inline-flex;
-  height: 3rem; /* 50px */
-  padding: 0.6rem 3.375rem; /* 14px 54px */
+  height: 3.125rem; /* 50px */
+  padding: 0.875rem 3.375rem; /* 14px 54px */
   justify-content: center;
   align-items: center;
   gap: 0.625rem; /* 10px */

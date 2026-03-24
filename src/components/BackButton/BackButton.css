@@ -9,9 +9,9 @@
 
 }
 
-.back p {
-    margin: none;
+.back-p {
     cursor:pointer;
+    margin: 0;
     font-size: var(--text-button);
     animation: none;
 }

@@ -10,7 +10,7 @@ export const BackButton = () => {
     return(
         <div className='back'>
             <IconArrowLeft/>
-            <p onClick={() => navigate(-1)}>Back</p>
+            <p className='back-p' onClick={() => navigate(-1)}>Back</p>
         </div>
     )
 }

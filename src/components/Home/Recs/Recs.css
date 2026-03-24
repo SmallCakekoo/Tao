@@ -19,7 +19,7 @@
     padding-bottom: var(--space-lg);
 }
 
-.recs:hover h5 {
+.recs:hover .message-r {
     color: var(--base-orange)
 }
 
@@ -32,7 +32,7 @@
     color: var(--black-400);
 }
 
-.message-h {
+.message-r {
     margin: 0;
     font-size: 1.7rem;
     transition: color 0.5s ease;

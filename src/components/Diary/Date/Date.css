@@ -1,0 +1,22 @@
+.date {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-sm) var(--space-lg);
+    justify-content: flex-start;
+    align-items: flex-start;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--light-stroke, #DDDDEA);
+    opacity: 0.5;
+    background: #FFF;
+
+    /* Soft Shadow */
+    box-shadow: 0 2px 4.8px 0 rgba(0, 0, 0, 0.05);
+}
+
+.day {
+    margin: 0;
+}
+
+.day-num {
+    margin: 0;
+}

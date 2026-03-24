@@ -5,18 +5,20 @@ import { BackButton } from "../../components/BackButton/BackButton";
 export const LogIn = () => {
   return (
     <div className="login">
+      
       <div className="gradient-box">
         <img src="/logo-full-white.svg" alt="Tao Logo" />
         <div className="message">
-          <p>Glad you’re back!</p>
-          <h4>Ready to dive in to your personalized recommendations?</h4>
+          <p className="glad">Glad you’re back!</p>
+          <h4 className="ready">Ready to dive in to your personalized recommendations?</h4>
         </div>
       </div>
+
         <div className="form-area">
           <BackButton/>
 
-          <h3>Welcome back!</h3>
-          <p>
+          <h3 className="welcome">Welcome back!</h3>
+          <p className="first">
             First time here? <Link to='/signup'>Sign up for free.</Link>
           </p>
           <form>

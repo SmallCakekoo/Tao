@@ -14,6 +14,8 @@
     /* Soft Shadow */
     box-shadow: 0 2px 4.8px 0 rgba(0, 0, 0, 0.05);
     padding-top: var(--space-md);
+    padding-left: var(--space-sm);
+    padding-right: var(--space-sm);
     transition: transform 0.25s ease;
 }
 
@@ -48,4 +50,13 @@
 .add-btn:hover {
     background-color: var(--base-blue);
     color: var(--bg-color);
+}
+
+@media (max-width: 768px) {
+    .diary-widget {
+        background-size: 45%;
+    }
+    .create-new {
+        font-size: 1.1rem;
+    }
 }

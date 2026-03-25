@@ -1,18 +1,16 @@
 import { Link } from "react-router-dom";
 import './SignUp.css'
 import { BackButton } from "../../components/BackButton/BackButton";
+import { GradientBox } from "../../components/Login/GradientBox/GradientBox";
 
 
 export const SignUp = () => {
   return (
     <div className="signup">
-      <div className="gradient-box">
-        <img src="/logo-full-white.svg" alt="Tao Logo" />
-        <div className="message">
-          <p className="easily">You can easily</p>
-          <h4 className="get">Get access to your personal hub for clarity and productivity.</h4>
-        </div>
-      </div>
+
+        <GradientBox mtop="You can easily" 
+        mbot="Get access to your personal hub for clarity and productivity.">
+        </GradientBox>
 
         <div className="form-area">
         <BackButton/>

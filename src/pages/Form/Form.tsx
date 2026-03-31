@@ -12,6 +12,20 @@ import messImg from '../../assets/mess.png';
 import faceImg from '../../assets/face.png';
 import boxImg from '../../assets/box.png';
 
+import awfulImg from '../../assets/stickers/awful.svg';
+import badImg from '../../assets/stickers/bad.svg';
+import neutralImg from '../../assets/stickers/neutral.svg';
+import goodImg from '../../assets/stickers/good.svg';
+import greatImg from '../../assets/stickers/great.svg';
+
+const facesMap = {
+  awful: awfulImg,
+  bad: badImg,
+  neutral: neutralImg,
+  good: goodImg,
+  great: greatImg,
+};
+
 type Step = 'intro' | 1 | 2 | 3 | 4 | 5 | 'results';
 
 export const Form = () => {
@@ -47,27 +61,37 @@ export const Form = () => {
     },
     {
       id: 2,
-      title: "How many hours did you sleep?",
-      subtitle: "Sleep is crucial for your mental clarity and physical health.",
-      options: ["Less than 5 hours", "5-7 hours", "7-9 hours", "More than 9 hours"]
+      title: "How much did you sleep?",
+      subtitle: "Think back on how many hours you slept.",
+      options: ["0-3 Hours", "4-6 Hours", "7-9 Hours", "10+ Hours"]
     },
     {
       id: 3,
-      title: "How is your mood today?",
-      subtitle: "Your emotions are valuable indicators of your well-being.",
-      options: ["Feeling down", "A bit off", "Good", "Outstanding!"]
+      title: "How are you feeling today?",
+      subtitle: "Select which mood represents you best today.",
+      options: ["awful", "bad", "neutral", "good", "great"]
     },
     {
       id: 4,
       title: "How stressed do you feel today?",
       subtitle: "Breathe and think about how your stress levels are today.",
-      options: ["Low stress or no stress", "Medium stress", "High stress", "Very high stress"]
+      options: [
+        "Low stress or no stress",
+        "Medium stress",
+        "High stress",
+        "Very high stress"
+      ]
     },
     {
       id: 5,
-      title: "How's your daily load?",
+      title: "How’s your daily load?",
       subtitle: "Think about how heavy your work load feels today.",
-      options: ["Light", "Manageable", "Heavy", "Overwhelming"]
+      options: [
+        "Light",
+        "Manageable",
+        "Heavy",
+        "Overwhelming"
+      ]
     }
   ];
 
@@ -103,17 +127,31 @@ export const Form = () => {
         <div className="question-content">
           <h2>{q.title}</h2>
           <p className="question-subtitle">{q.subtitle}</p>
-          <div className="options-list">
-            {q.options.map(option => (
-              <button
-                key={option}
-                className={`option-btn ${answers[q.id] === option ? 'selected' : ''}`}
-                onClick={() => selectOption(option)}
-              >
-                {option}
-              </button>
-            ))}
-          </div>
+          {q.id === 3 ? (
+            <div className="faces-list">
+              {q.options.map(option => (
+                <button
+                  key={option}
+                  className={`face-btn ${answers[q.id] === option ? 'selected' : ''}`}
+                  onClick={() => selectOption(option)}
+                >
+                  <img src={facesMap[option as keyof typeof facesMap]} alt={option} />
+                </button>
+              ))}
+            </div>
+          ) : (
+            <div className="options-list">
+              {q.options.map(option => (
+                <button
+                  key={option}
+                  className={`option-btn ${answers[q.id] === option ? 'selected' : ''}`}
+                  onClick={() => selectOption(option)}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+          )}
           <button
             className="btn-primary continue-btn"
             onClick={handleNext}
@@ -172,7 +210,7 @@ export const Form = () => {
   );
 
   return (
-    <div className={`form-page ${typeof step === 'number' ? 'question-step' : ''} ${step === 'results' ? 'results-step' : ''}`}>
+    <div className={`form-page ${step === 'intro' ? 'intro-step' : ''} ${typeof step === 'number' ? 'question-step' : ''} ${step === 'results' ? 'results-step' : ''}`}>
       {(step === 'intro' || step === 'results') && <HomeNavbar />}
       <div className={`form-container ${typeof step === 'number' ? 'no-nav' : ''}`}>
         <div className="form-inner-container">

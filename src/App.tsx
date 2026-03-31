@@ -9,6 +9,7 @@ import { Terms } from './pages/LegalPages/Terms/Terms'
 import { ScrollToTop } from './components/Utils/ScrollToTop'
 import { Home } from './pages/Home/Home'
 import { Diary } from './pages/Diary/Diary'
+import {Agenda} from './pages/Agenda/Agenda'
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <Route path="/terms" element={<Terms />} />
       <Route path="/home" element={<Home />} />
       <Route path="/diary" element={<Diary />} />
+      <Route path="/agenda" element={<Agenda />} />
 
       </Routes>
     </>

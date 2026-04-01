@@ -7,10 +7,28 @@ import { Intention } from '../../components/Diary/Intention/Intention'
 import { Polaroid } from '../../components/Diary/Polaroid/Polaroid'
 
 import { useState, useEffect } from 'react';
-import { BigButtons, SmallButtons } from '../../components/Diary/DiaryButtons/DiaryButtons'
+import { DiaryButtons } from '../../components/Diary/DiaryButtons/DiaryButtons'
+import { Camera } from '../../components/Diary/Camera/Camera'
 
 
 export const Diary = () => {
+
+const [showCamera, setShowCamera] = useState<boolean>(false);
+const [savedImage, setSavedImage] = useState<string | null>(null);
+// Temporary, to check if image changes in local storage
+const [capturedImage, setCapturedImage] = useState<string | null>(null);
+
+// Check if there is an image inside local storage (Temporary)
+useEffect(() => {
+  const image = localStorage.getItem("capturedPhoto");
+  if (image) {
+    setSavedImage(image);
+  }
+}, []);
+
+const setCamera = (): void => {
+    setShowCamera(true)
+}
 
 const useWindowWidth = () => {
   const [width, setWidth] = useState(window.innerWidth);
@@ -30,7 +48,9 @@ const isMobile = width <= 768;
 
     return(
         <div className="diary">
-
+            {showCamera && (
+            <Camera onClose={() => setShowCamera(false)} onCapture={(img) => setCapturedImage(img)}/>
+            )}
             <aside className='side'>
             <IconChevronUp className='arrow up'/>
             <div className='dates'>
@@ -53,20 +73,23 @@ const isMobile = width <= 768;
                             <p>Mar 15, 2026</p>
                         </div>
                         <Intention></Intention>
-                        {isMobile && <SmallButtons/>}
+                        {isMobile && <DiaryButtons setCamera={setCamera}/>}
                         <textarea name="entry1" id="entry1" className='text-entry' placeholder='Feel free to journal your current thoughts or follow the prompt based on your needs'>
                         </textarea>
                     </div>
                     <div className='page2'>
                         <textarea name="entry2" id="entry2" className='text-entry' placeholder='Feel free to journal your current thoughts or follow the prompt based on your needs'>
                         </textarea>
-                        <Polaroid/>
+                          {capturedImage && (
+                                <Polaroid src={capturedImage} />
+                            )}
                     </div>
                 </div>
                 </div>
             <aside className='options'>
-                {!isMobile && <BigButtons/>}
+                {!isMobile && <DiaryButtons setCamera={setCamera}/>}
             </aside>
+
         </div>
     )
 }

@@ -9,12 +9,13 @@
     align-items: flex-start;
 }
 
-.options.small {
+@media (max-width: 768px) {
+    .options {
     gap: var(--space-sm);
     margin-bottom: var(--space-sm);
-}
+    }
 
-.s-blue-circle {
+    .blue-circle {
     color: var(--bg-color);
     background-color: var(--base-blue);
     border-radius: 50%;
@@ -24,4 +25,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    }
+
 }
+

@@ -98,3 +98,10 @@
 .icon {
     color: var(--base-blue);
 }
+
+@media (max-width: 768px) {
+  .intention {
+    width: 100%;
+    min-width: 0;
+  }
+}

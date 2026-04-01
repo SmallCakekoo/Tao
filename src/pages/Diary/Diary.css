@@ -5,11 +5,12 @@
     overflow-x: hidden;
     font-family: var(--font-family);
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
-    padding-left: var(--space-2xl);
+    padding-left: var(--space-lg);
     padding-top: var(--space-lg);
-    gap: var(--space-lg);
+    gap: min(var(--space-md), 2%);
 }
 
 .dates {
@@ -28,10 +29,25 @@
     gap: var(--space-xs)
 }
 
+.notebook-wrapper {
+    display: flex;
+    margin-top: 2%;
+    margin-bottom: 1%;
+    justify-content: center;
+    align-items: flex-start;
+    flex-shrink: 0;
+    height: fit-content;
+    align-self: flex-start;
+
+
+
+}
+
 .notebook {
-    min-width: 1000px;
-    width: 80%;
-    height: 96%;
+    width: 1000px;
+    aspect-ratio: 14 / 10; 
+
+    height: auto;
     border-radius: var(--radius-xl);
     background: #9DB5FF;
     /* Strong Shadow */
@@ -46,20 +62,110 @@
 
 }
 
-.blue-circle {
-    color: var(--bg-color);
-    background-color: var(--base-blue);
-    border-radius: 50%;
-    display: flex;
-    padding: var(--space-sm);
-    flex-direction: column;
-    align-items: flex-start;
+@media (max-width: 1200px) {
+    .diary{
+        flex-wrap: wrap;
+        justify-content: center;
+        padding-left: 0;
+        gap: var(--space-sm);
+    }
+    .side {
+        flex-direction: row;
+    }
+    .dates {
+        flex-direction: row;
+    }
+    .notebook-wrapper {
+        height: 600px;
+    }
+    .notebook {
+        transform: scale(0.85);
+        transform-origin: top center;
+    }
+    .options {
+        display: flex;
+        flex-direction: row !important;
+
+    }
+          .arrow.up {
+    transform: rotate(-90deg); 
+  }
+
+  .arrow.down {
+    transform: rotate(-90deg);
+  }
 }
+
+@media (max-width: 900px) {
+    .diary{
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: center;
+        padding-left: 0;
+        gap: var(--space-sm);
+    }
+    .notebook-wrapper {
+        height: 500px;
+    }
+    .notebook {
+        transform: scale(0.7);
+        transform-origin: top center;
+    }
+    .diary {
+        padding-left: 0;
+        justify-content: center;
+        gap: var(--space-sm);
+    }
+    .options {
+        display: flex;
+        flex-direction: row;
+
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    
+    .diary {
+        align-items: stretch;
+    }
+    .dates {
+        width: 100%;
+        gap: var(--space-xs);
+    }
+  .notebook {
+    padding: var(--space-sm);
+    transform: none !important;
+    width: 100%;
+    height: auto;
+    aspect-ratio: auto;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .notebook-wrapper {
+    height: auto;
+    width: 100%;
+    align-self: stretch;
+    padding: var(--space-xs);
+  }
+
+  .page1,
+  .page2 {
+    width: 100% !important;
+    height: auto;
+    min-height: 600px;
+  }
+
+}
+
 
 .options {
     display: flex;
     flex-direction: column;
     gap: var(--space-lg);
+    
 }
 
 .page1 {
@@ -74,7 +180,7 @@
     padding-bottom: var(--space-sm);
     padding-left: var(--space-lg);
     padding-right: var(--space-md);
-    padding-left: var(-space-md);
+    padding-left: var(--space-md);
 }
 
 .page2 {
@@ -91,7 +197,7 @@
     padding-bottom: var(--space-sm);
     padding-left: var(--space-lg);
     padding-right: var(--space-md);
-    padding-left: var(-space-md);
+    padding-left: var(--space-md);
 }
 
 .date-day {

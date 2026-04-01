@@ -1,0 +1,22 @@
+h5{
+    color: #747474;
+    margin: 2vh 0 2vh 0;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 50vh;
+}
+
+form button{
+    width: 25vh;
+    padding: 2vh;
+}
+
+.form-container{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}

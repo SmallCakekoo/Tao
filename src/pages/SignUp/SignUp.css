@@ -10,40 +10,62 @@
   padding-left: var(--space-3xl);
 }
 
-.gradient-box {
-    min-height: 80vh;
-    width: 43%;
-    border-radius: var(--radius-xl);
-    background: linear-gradient(180deg, #B59AFF 0%, #FFCEC0 100%);
-    padding: var(--space-2xl);
-    color: var(--bg-color);
-}
-
-.gradient-box img {
-    width: 28%;
-    margin-bottom: 10%;
-}
-
-.message {
-    color: var(--bg-color);
-}
-
-.easily {
+/* Tablet */
+@media (max-width: 768px) {
+  .signup {
+    flex-direction: column;
     margin: 0;
-    animation-name: fadeInUp;
-    animation-duration: 0.6s;
+    padding: 0;
+    gap: var(--space-md);
+    align-items: flex-start;
+    padding-bottom: var(--space-xl);
 
+  }
+
+  .mobile-svg {
+    display: block;
+  }
+
+  .form-area {
+    margin-top: -150px;
+    width: 100%;
+  }
+
+  .form-area form {
+    width: 100%;
+  }
 }
 
-.get {
+/* Mobile */
+@media (max-width: 600px) {
+  .signup {
+    flex-direction: column;
     margin: 0;
-    animation-name: fadeInUp;
-    animation-duration: 0.8s;
+    padding: 0;
+    gap: var(--space-md);
+    align-items: flex-start;
+    padding-bottom: var(--space-xl);
+
+  }
+
+  .create-a {
+    font-size: var(--text-h4);
+  }
+
+  .form-area {
+    width: 100%;
+    margin-left: 10% !important;
+  }
+
+    .form-area form {
+    width: 100% !important;
+  }
 }
+
 
 .form-area {
-    margin-left: 8%;
-    width: 40%;
+    margin-left: var(--space-2xl);
+    width: 70%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;

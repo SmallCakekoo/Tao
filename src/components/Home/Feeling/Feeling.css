@@ -1,6 +1,7 @@
 .feeling {
     border-radius: 20px;
     width: 100%;
+    max-width: 600px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -14,9 +15,9 @@
     /* Soft Shadow */
     box-shadow: 0 2px 4.8px 0 rgba(0, 0, 0, 0.05);
 
-    padding-top: var(--space-xl);
-    padding-left: var(--space-lg);
-    padding-bottom: var(--space-lg);
+    padding-top: min(var(--space-xl), 10%);
+    padding-left: min(var(--space-lg), 5%);
+    padding-bottom: min(var(--space-lg), 5%);
 }
 
 .feeling:hover span {
@@ -41,4 +42,10 @@
     width: 70%;
     margin: 0;
     font-size: var(--text-sm);
+}
+
+@media (max-width: 768px) {
+    .message-h {
+        font-size: 1.5rem;
+    }
 }

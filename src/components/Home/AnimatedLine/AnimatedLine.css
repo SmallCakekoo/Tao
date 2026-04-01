@@ -6,4 +6,7 @@ align-items: center;
 position: absolute;
 margin: none;
 height: 20%;
+width: 100%;
+z-index: 0;
+
 }

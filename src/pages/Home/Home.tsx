@@ -3,14 +3,14 @@ import { AnimatedLine } from '../../components/Home/AnimatedLine/AnimatedLine';
 import { Feeling } from '../../components/Home/Feeling/Feeling';
 import { Recs } from '../../components/Home/Recs/Recs';
 import { Weekly } from '../../components/Weekly/Weekly';
-import { Navbar } from '../../components/NavBar/LandingNavBar/Navbar';
+import { HomeNavbar } from '../../components/NavBar/CommonNavBar/HomeNavbar';
 import { DiaryWidget } from '../../components/DiaryWidget/DiaryWidget';
 import { ToDoWidget } from '../../components/ToDoWidget/ToDoWidget';
 
 export const Home = () => {
   return (
     <div className="home">
-      <Navbar></Navbar>
+      <HomeNavbar />
 
       <AnimatedLine />
       <div className="home-content">

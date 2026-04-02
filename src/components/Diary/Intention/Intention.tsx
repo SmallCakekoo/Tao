@@ -36,7 +36,6 @@ export const Intention = () => {
     const { data, error } = await supabase.from('prompts').select('*').eq('mood', prompt);
 
     if (error) {
-      console.log(error.message);
       return [];
     }
 

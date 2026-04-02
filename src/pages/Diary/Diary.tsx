@@ -9,6 +9,7 @@ import { Polaroid } from '../../components/Diary/Polaroid/Polaroid'
 import { useState, useEffect } from 'react';
 import { DiaryButtons } from '../../components/Diary/DiaryButtons/DiaryButtons'
 import { Camera } from '../../components/Diary/Camera/Camera'
+import { HomeNavbar } from '../../components/NavBar/CommonNavBar/HomeNavbar'
 
 
 export const Diary = () => {
@@ -47,6 +48,9 @@ const width = useWindowWidth();
 const isMobile = width <= 768; 
 
     return(
+        <>
+        <HomeNavbar></HomeNavbar>
+
         <div className="diary">
             {showCamera && (
             <Camera onClose={() => setShowCamera(false)} onCapture={(img) => setCapturedImage(img)}/>
@@ -91,5 +95,6 @@ const isMobile = width <= 768;
             </aside>
 
         </div>
+        </>
     )
 }

@@ -1,0 +1,21 @@
+.intention-overlay {
+  padding: var(--space-md);
+  padding-left: var(--space-xl);
+  padding-right: var(--space-xl);
+  background-color: var(--bg-color);
+  border-radius: var(--radius-md);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: var(--space-xs);
+
+  min-width: 300px;
+  max-width: 90%;
+}
+
+.continue {
+  cursor: pointer;
+}

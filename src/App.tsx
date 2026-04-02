@@ -16,6 +16,7 @@ import { RecommendationsPreset } from './pages/Recommendations/Preset/Recommenda
 import { RecommendationsLoading } from './pages/Recommendations/Loading/RecommendationsLoading';
 import { RecommendationsResults } from './pages/Recommendations/Results/RecommendationsResults';
 import { BreathingExercise } from './pages/BreathingExercise/BreathingExercise';
+import { EditFeelings } from './pages/EditFeelings/EditFeelings';
 
 function App() {
   return (
@@ -32,6 +33,8 @@ function App() {
         <Route path="/diary" element={<Diary />} />
         <Route path="/agenda" element={<Agenda />} />
         <Route path="/form" element={<Form />} />
+        <Route path="/form/edit-feelings" element={<EditFeelings />} />
+        <Route path="/edit-feelings" element={<EditFeelings />} />
         <Route path="/recommendations" element={<Recommendations />} />
         <Route path="/recommendations/preset" element={<RecommendationsPreset />} />
         <Route path="/recommendations/loading" element={<RecommendationsLoading />} />

@@ -105,14 +105,21 @@ export const InvisibleCostSection = () => {
         triggerSelector=".landing-invisible-cost"
         className="bg-curve-invisible"
       />
+      <AnimatedLine
+        variant="second"
+        triggerSelector=".landing-invisible-cost"
+        className="bg-responsive-line-scnd"
+      />
 
       <div className="landing-invisible-top">
         <h2 ref={headingRef}>
-          The <span className="highlight-purple">invisible</span> cost of<br />
+          The <span className="highlight-purple">invisible</span> cost of
+          <br />
           academic excellence.
         </h2>
         <p ref={textRef}>
-          Modern academic systems reward output, but ignore the<br />
+          Modern academic systems reward output, but ignore the
+          <br />
           biological rhythms that sustain it.
         </p>
       </div>
@@ -121,8 +128,10 @@ export const InvisibleCostSection = () => {
         <div ref={boxTextRef}>
           <h2 className="landing-more-than-gpa-title">You are more than a GPA.</h2>
           <p className="landing-more-than-gpa-text">
-            Tao was built by students, for students. We understand that<br />
-            your mental state is the fuel for your learning. When your fuel<br />
+            Tao was built by students, for students. We understand that
+            <br />
+            your mental state is the fuel for your learning. When your fuel
+            <br />
             is low, your progress stalls.
           </p>
         </div>

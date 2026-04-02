@@ -2,7 +2,7 @@
   padding: 0 0 var(--space-4xl);
   margin-top: 0;
   font-family: var(--font-family);
-  background: white;
+  background: var(--bg-color);
   width: 100%;
 }
 
@@ -98,14 +98,14 @@
   align-items: center;
   cursor: grab;
   user-select: none;
-  background: #fbfaff; 
+  background: #fbfaff;
   border-radius: var(--radius-sm);
   margin: 2px 0;
   isolation: isolate; /* Create new stacking context */
 }
 
 .comparison-row:hover {
-  background: #fbfaff; 
+  background: #fbfaff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   z-index: 2;
   border-color: transparent;
@@ -147,7 +147,7 @@
   }
 
   .landing-why-subtitle {
-     margin: 0 auto var(--space-xl);
+    margin: 0 auto var(--space-xl);
   }
 
   .landing-why-list {

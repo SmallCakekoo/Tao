@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect, useCallback, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Button } from '../../Button/Button';
@@ -38,6 +38,7 @@ const bounce = 0.3;
 const friction = 0.8;
 
 export const FindAcademicSection = () => {
+  const [renderedStickers, setRenderedStickers] = useState(stickers);
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const ctaRef = useRef<HTMLButtonElement>(null);
@@ -199,29 +200,50 @@ export const FindAcademicSection = () => {
     const arena = arenaRef.current;
     if (!arena) return;
 
-    const W = arena.clientWidth || window.innerWidth;
-    const bodies: Body[] = stickers.map((sticker) => {
-      const r = sticker.size / 2;
+    let isMobile = window.innerWidth <= 768;
+    let activeStickers = isMobile ? stickers.slice(0, 7) : stickers;
+    setRenderedStickers(activeStickers);
 
-      return {
-        x: r + Math.random() * Math.max(0, W - sticker.size),
-        y: -r - Math.random() * 500,
-        vx: (Math.random() - 0.5) * 80,
-        vy: Math.random() * 50,
-        r,
-        dragging: false,
-        dragOffX: 0,
-        dragOffY: 0,
-        prevX: 0,
-        prevY: 0,
-      };
-    });
+    const initPhysics = (currentStickers: typeof stickers) => {
+      const W = arena.clientWidth || window.innerWidth;
+      const bodies: Body[] = currentStickers.map((sticker) => {
+        const r = sticker.size / 2;
+        return {
+          x: r + Math.random() * Math.max(0, W - sticker.size),
+          y: -r - Math.random() * 500,
+          vx: (Math.random() - 0.5) * 80,
+          vy: Math.random() * 50,
+          r,
+          dragging: false,
+          dragOffX: 0,
+          dragOffY: 0,
+          prevX: 0,
+          prevY: 0,
+        };
+      });
+      bodiesRef.current = bodies;
+    };
 
-    bodiesRef.current = bodies;
+    initPhysics(activeStickers);
     lastTRef.current = performance.now();
     rafRef.current = requestAnimationFrame(loop);
 
-    return () => cancelAnimationFrame(rafRef.current);
+    const handleResize = () => {
+      const newIsMobile = window.innerWidth <= 768;
+      if (newIsMobile !== isMobile) {
+        isMobile = newIsMobile;
+        activeStickers = isMobile ? stickers.slice(0, 7) : stickers;
+        setRenderedStickers(activeStickers);
+        initPhysics(activeStickers);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      cancelAnimationFrame(rafRef.current);
+      window.removeEventListener('resize', handleResize);
+    };
   }, [loop]);
 
   const handlePointerDown = useCallback(
@@ -296,7 +318,7 @@ export const FindAcademicSection = () => {
           <img src={meditationImg} alt="Person meditating" />
         </div>
 
-        {stickers.map((sticker, i) => (
+        {renderedStickers.map((sticker, i) => (
           <span
             key={sticker.id}
             ref={(el) => {

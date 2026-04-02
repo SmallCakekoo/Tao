@@ -15,13 +15,16 @@ export const MobileNavBar = () => {
 
   const isActive = (path: string) => {
     const pathname = location.pathname;
+    const isFormRoute = pathname === '/form' || pathname.startsWith('/form/');
+    const isEditFeelingsRoute = pathname.startsWith('/edit-feelings/');
+
+    if (path === '/profile') {
+      return isFormRoute || isEditFeelingsRoute;
+    }
+
     // If we're in /edit-feelings/*, check if it matches the form version
     // We have to improve this later to handle better the cases not only form
-    if (pathname.startsWith('/edit-feelings/') && path !== '/home') {
-      // For form routes, profile represents the entire form section
-      if (path === '/profile') {
-        return pathname.startsWith('/form/');
-      }
+    if (isEditFeelingsRoute && path !== '/home') {
       return false;
     }
     // Normal path matching

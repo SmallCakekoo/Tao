@@ -8,8 +8,10 @@ import { Polaroid } from '../../components/Diary/Polaroid/Polaroid';
 import { HomeNavbar } from '../../components/NavBar/CommonNavBar/HomeNavbar';
 
 import { useState, useEffect } from 'react';
-import { DiaryButtons } from '../../components/Diary/DiaryButtons/DiaryButtons';
-import { Camera } from '../../components/Diary/Camera/Camera';
+import { DiaryButtons } from '../../components/Diary/DiaryButtons/DiaryButtons'
+import { Camera } from '../../components/Diary/Camera/Camera'
+import { HomeNavbar } from '../../components/NavBar/CommonNavBar/HomeNavbar'
+
 
 export const Diary = () => {
   const [showCamera, setShowCamera] = useState<boolean>(false);
@@ -25,54 +27,29 @@ export const Diary = () => {
     }
   }, []);
 
-  const setCamera = (): void => {
-    setShowCamera(true);
-  };
+  return width;
+};
 
-  const useWindowWidth = () => {
-    const [width, setWidth] = useState(window.innerWidth);
+const width = useWindowWidth();
+const isMobile = width <= 768; 
 
-    useEffect(() => {
-      const handleResize = () => setWidth(window.innerWidth);
-      window.addEventListener('resize', handleResize);
+    return(
+        <>
+        <HomeNavbar></HomeNavbar>
 
-      return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
-    return width;
-  };
-
-  const width = useWindowWidth();
-  const isMobile = width <= 768;
-
-  return (
-    <div className="diary">
-      <HomeNavbar />
-      {showCamera && (
-        <Camera
-          onClose={() => setShowCamera(false)}
-          onCapture={(img) => setCapturedImage(img)}
-        />
-      )}
-      <aside className="side">
-        <IconChevronUp className="arrow up" />
-        <div className="dates">
-          <Date></Date>
-          <Date></Date>
-          <Date></Date>
-          <Date></Date>
-          <Date></Date>
-          <Date></Date>
-        </div>
-        <IconChevronDown className="arrow down" />
-      </aside>
-
-      <div className="notebook-wrapper">
-        <div className="notebook">
-          <div className="page1">
-            <div className="date-day">
-              <h5>Saturday</h5>
-              <p>Mar 15, 2026</p>
+        <div className="diary">
+            {showCamera && (
+            <Camera onClose={() => setShowCamera(false)} onCapture={(img) => setCapturedImage(img)}/>
+            )}
+            <aside className='side'>
+            <IconChevronUp className='arrow up'/>
+            <div className='dates'>
+            <Date></Date>
+            <Date></Date>
+            <Date></Date>
+            <Date></Date>
+            <Date></Date>
+            <Date></Date>
             </div>
             <Intention></Intention>
             {isMobile && <DiaryButtons setCamera={setCamera} />}
@@ -93,10 +70,6 @@ export const Diary = () => {
             {capturedImage && <Polaroid src={capturedImage} />}
           </div>
         </div>
-      </div>
-      <aside className="options">
-        {!isMobile && <DiaryButtons setCamera={setCamera} />}
-      </aside>
-    </div>
-  );
-};
+        </>
+    )
+}

@@ -1,16 +1,16 @@
 .diary {
-  width: 100%;
-  height: 100vh;
-  background: var(--bg-color);
-  overflow-x: hidden;
-  font-family: var(--font-family);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  padding-left: var(--space-lg);
-  padding-top: calc(var(--space-4xl) + var(--space-md));
-  gap: min(var(--space-md), 2%);
+    width: 100%;
+    height: 100vh;
+    background: var(--bg-color);
+    font-family: var(--font-family);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-left: var(--space-lg);
+    padding-top: var(--space-lg);
+    gap: min(var(--space-md), 2%);
+    margin-top: 12px;
 }
 
 .dates {

@@ -1,0 +1,95 @@
+.personalized-overlay-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  background: rgba(57, 57, 57, 0.32);
+  display: grid;
+  place-items: center;
+  padding: var(--space-md);
+}
+
+.personalized-overlay-card {
+  width: 100%;
+  max-width: 28rem;
+  min-height: auto;
+  border-radius: 1.5rem;
+  border: none;
+  background: var(--bg-color);
+  box-shadow: 0 18px 34px rgba(20, 20, 20, 0.16);
+  padding: 2rem 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.personalized-overlay-card h3 {
+  margin: 0;
+  font-size: var(--text-h4);
+  line-height: 1.1;
+  font-weight: 500;
+}
+
+.overlay-pencil {
+  display: block;
+  width: 11.75rem;
+  align-self: center;
+  margin: 1.25rem 0 1.1rem;
+}
+
+.personalized-overlay-actions {
+  margin-top: var(--space-md);
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+
+.overlay-secondary {
+  background: #fff;
+  color: #ff5735;
+  border: 1px solid var(--light-stroke);
+  height: 2.75rem;
+  min-width: 8.5rem;
+  font-size: var(--text-body);
+  order: 2;
+  cursor: pointer;
+}
+
+.overlay-secondary:hover {
+  background: #fff;
+}
+
+.overlay-primary {
+  background: var(--base-orange);
+  color: #fff;
+  height: 2.75rem;
+  min-width: 8.5rem;
+  font-size: var(--text-button);
+  order: 1;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .personalized-overlay-card {
+    max-width: 20rem;
+    min-height: 24rem;
+    padding: 1.4rem 1.35rem 1.25rem;
+  }
+
+  .personalized-overlay-card h3 {
+    font-size: var(--text-body);
+  }
+
+  .overlay-pencil {
+    width: 7rem;
+    margin: 1rem auto 0.9rem;
+  }
+
+  .personalized-overlay-actions {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .overlay-secondary {
+    min-width: 7.6rem;
+    font-size: var(--text-sm);
+  }
+}

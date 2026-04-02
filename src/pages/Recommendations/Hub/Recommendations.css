@@ -1,0 +1,115 @@
+.recommendations-hub-page {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--bg-color);
+  background-image: none;
+}
+
+.recommendations-hub-page::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: min(62rem, 72vw);
+  height: min(19rem, 38vh);
+  background: url('../../assets/field-recs.png') no-repeat bottom right;
+  background-size: contain;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.recommendations-hub-page .line-contain {
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.recommendations-hub-main {
+  min-height: calc(100dvh - 7.5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: calc(var(--space-4xl) + var(--space-sm));
+  padding-bottom: calc(var(--space-4xl) + var(--space-md));
+  position: relative;
+  z-index: 1;
+}
+
+.recommendations-hub-main .recs-back {
+  margin-bottom: var(--space-xl);
+}
+
+.recommendations-hub-main .recommendations-hero {
+  margin-top: 0;
+}
+
+.recommendations-hero {
+  margin-top: 4rem;
+  max-width: 44rem;
+}
+
+.recommendations-hero h1 {
+  margin: 0;
+  font-size: var(--text-h3);
+  line-height: 1.05;
+}
+
+.recommendations-hero p {
+  margin: 0.9rem 0 0;
+  color: var(--black-300);
+  max-width: 44rem;
+}
+
+.recs-source-hint {
+  display: block;
+  margin-top: 0.6rem;
+  color: var(--black-300);
+}
+
+.recommendations-choice-grid {
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.recommendation-choice-card {
+  border: 1px solid var(--light-stroke);
+  border-radius: var(--radius-xl);
+  background: #fff;
+  padding: var(--space-lg);
+  box-shadow: 0 2px 8px rgba(20, 20, 20, 0.06);
+}
+
+.recommendation-choice-card h3 {
+  margin: 0;
+  font-size: var(--text-h4);
+  line-height: 1.1;
+}
+
+.recommendation-choice-card h3 span {
+  color: var(--base-violet);
+}
+
+.recommendation-choice-card p {
+  margin: var(--space-sm) 0 var(--space-md);
+  color: var(--black-300);
+}
+
+@media (max-width: 992px) {
+  .recommendations-hub-page::after {
+    width: min(28rem, 95vw);
+    height: min(11rem, 24vh);
+  }
+
+  .recommendations-hub-main {
+    min-height: calc(100dvh - 6.5rem);
+    padding-top: calc(var(--space-4xl) + var(--space-sm));
+    padding-bottom: calc(var(--space-3xl) + var(--space-sm));
+  }
+
+  .recommendations-choice-grid {
+    grid-template-columns: 1fr;
+  }
+}

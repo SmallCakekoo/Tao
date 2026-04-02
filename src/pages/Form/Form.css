@@ -11,7 +11,11 @@
 }
 
 .form-page.intro-step {
-  background-image: radial-gradient(circle at bottom center, rgba(255, 120, 80, 0.12) 0%, transparent 60%);
+  background-image: radial-gradient(
+    circle at bottom center,
+    rgba(255, 120, 80, 0.12) 0%,
+    transparent 60%
+  );
 }
 
 .form-container {
@@ -39,7 +43,6 @@
   flex-direction: column;
 }
 
-
 /* =========================
    BACK BUTTON
    ========================= */
@@ -63,7 +66,6 @@
   background-color: transparent;
   color: var(--base-black);
 }
-
 
 /* =========================
    INTRO SCREEN
@@ -118,7 +120,6 @@
   font-size: 0.85rem;
 }
 
-
 /* =========================
    PROGRESS BAR
    ========================= */
@@ -140,7 +141,6 @@
 .progress-segment.active {
   background-color: var(--base-violet);
 }
-
 
 /* =========================
    QUESTION SCREEN
@@ -213,7 +213,9 @@
   cursor: pointer;
   width: 64px;
   height: 64px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -233,7 +235,6 @@
   box-shadow: 0 0 0 2px var(--base-violet);
 }
 
-
 /* =========================
    BUTTONS
    ========================= */
@@ -247,7 +248,9 @@
   cursor: pointer;
   font-size: var(--text-button);
   font-weight: 500;
-  transition: filter 0.2s ease, transform 0.2s ease;
+  transition:
+    filter 0.2s ease,
+    transform 0.2s ease;
 }
 
 .btn-primary:hover:not(:disabled) {
@@ -282,7 +285,6 @@
   background-color: var(--orange-50);
   border-color: var(--base-orange);
 }
-
 
 /* =========================
    RESULTS SCREEN
@@ -373,7 +375,6 @@
   gap: var(--space-md);
 }
 
-
 /* =========================
    QUESTION STEP OVERRIDES
    Ajustes solo para preguntas
@@ -413,7 +414,6 @@
   padding: 0.85rem 1rem;
 }
 
-
 /* =========================
    RESULTS STEP OVERRIDES
    Ajustes solo para resultados
@@ -429,7 +429,7 @@
 }
 
 .form-page.results-step .results-header h1 {
-  font-size: 2.25rem; 
+  font-size: 2.25rem;
   gap: 0.75rem;
   margin-bottom: 2rem;
 }
@@ -486,7 +486,6 @@
 .form-page.results-step .result-val {
   font-size: 0.8125rem; /* ~13px */
 }
-
 
 /* =========================
     RESPONSIVE (no terminado)

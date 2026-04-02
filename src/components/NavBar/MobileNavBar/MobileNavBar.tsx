@@ -1,16 +1,17 @@
 import { Link, useLocation } from 'react-router-dom';
 import { IconBook, IconBookmark, IconHome, IconUser } from '@tabler/icons-react';
+import type { MobileNavItem } from '../../../types/MobileNavBarTypes';
 import './MobileNavBar.css';
 
 export const MobileNavBar = () => {
   const location = useLocation();
 
-  const navItems = [
+  const navItems: MobileNavItem[] = [
     { path: '/home', label: 'home', aria: 'Go to home', icon: IconHome },
     { path: '/diary', label: 'diary', aria: 'Go to diary', icon: IconBookmark },
     { path: '/agenda', label: 'agenda', aria: 'Go to agenda', icon: IconBook },
     { path: '/profile', label: 'profile', aria: 'Go to profile', icon: IconUser },
-  ] as const;
+  ];
 
   const isActive = (path: string) => {
     const pathname = location.pathname;

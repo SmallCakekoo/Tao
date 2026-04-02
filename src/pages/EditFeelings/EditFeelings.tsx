@@ -9,10 +9,8 @@ import badImg from '../../assets/stickers/bad.svg';
 import neutralImg from '../../assets/stickers/neutral.svg';
 import goodImg from '../../assets/stickers/good.svg';
 import greatImg from '../../assets/stickers/great.svg';
+import type { MoodOption, MoodValue, SelectKey } from '../../types/EditFeelingsTypes';
 import './EditFeelings.css';
-
-type MoodValue = 'awful' | 'bad' | 'neutral' | 'good' | 'great';
-type SelectKey = 'energy' | 'sleep' | 'stress' | 'dailyLoad';
 
 const energyOptions = ['Low Energy', 'Medium Energy', 'High Energy', 'Very high Energy'];
 const sleepOptions = ['0-3 Hours', '4-6 Hours', '7-9 Hours', '10+ Hours'];
@@ -24,7 +22,7 @@ const stressOptions = [
 ];
 const loadOptions = ['Light', 'Manageable', 'Heavy', 'Overwhelming'];
 
-const moodOptions: Array<{ value: MoodValue; image: string; label: string }> = [
+const moodOptions: MoodOption[] = [
   { value: 'awful', image: awfulImg, label: 'Awful mood' },
   { value: 'bad', image: badImg, label: 'Bad mood' },
   { value: 'neutral', image: neutralImg, label: 'Neutral mood' },

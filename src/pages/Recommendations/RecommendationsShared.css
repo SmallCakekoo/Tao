@@ -1,0 +1,32 @@
+.recommendations-page {
+  min-height: 100dvh;
+  background-color: var(--bg-color);
+  background-image:
+    url('../../assets/default-bg-line.svg'),
+    linear-gradient(180deg, rgba(255, 255, 255, 0) 65%, rgba(255, 223, 214, 0.25) 100%);
+  background-repeat: no-repeat;
+  background-position:
+    top right,
+    center;
+}
+
+.recommendations-main {
+  width: min(68rem, 92%);
+  margin: 0 auto;
+  padding-top: 7.5rem;
+  padding-bottom: 4rem;
+}
+
+.recs-back {
+  background: transparent;
+  color: var(--base-black);
+  padding: 0;
+  border-radius: 0;
+  height: auto;
+  font-size: var(--text-body);
+  cursor: pointer;
+}
+
+.recs-back:hover {
+  background: transparent;
+}

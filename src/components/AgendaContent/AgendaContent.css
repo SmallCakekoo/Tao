@@ -1,96 +1,92 @@
-.add-task-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.add-task-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.add-task-container h5{
-color: #747474;
+.add-task-container h5 {
+  color: #747474;
 }
 
-.agenda-empty{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.agenda-empty {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .emptyImage {
-    width: 280px;
-    height: 170px;
-    margin-bottom: 20px;
+  width: 280px;
+  height: 170px;
+  margin-bottom: 20px;
 }
 
 .form-wrapper {
-    display: flex;
-    justify-content: center; 
-    align-items: center;     
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    min-height: 10vh; 
+  min-height: 10vh;
 }
 
 button.add-button {
-    width: 50px;
-    height: 50px;
-    border-radius: 100px;
-    margin: 2vh;
-    background-color: #FF7E5B;
-    color: white;
-    font-size: 24px;
+  width: 50px;
+  height: 50px;
+  border-radius: 100px;
+  margin: 2vh;
+  background-color: #ff7e5b;
+  color: white;
+  font-size: var(--text-button);
 
-    border: 5px solid #ffffff;
+  border: 5px solid #ffffff;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 button.add-button {
-    transition: all 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 button.add-button:hover {
-    transform: scale(1.08); 
-    background-color: #ff6a45; 
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+  transform: scale(1.08);
+  background-color: #ff6a45;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
 }
-
 
 .agenda-layout {
-    display: flex;
-    gap: 40px;
-    align-items: flex-start;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin-left: 8%;
-    margin-right: 8%;
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-left: 8%;
+  margin-right: 8%;
 }
-
 
 .tasks-column {
-    flex: 2;
-    max-width: 700px;
-    justify-content: center; 
+  flex: 2;
+  max-width: 700px;
+  justify-content: center;
 }
-
 
 .form-column {
-    flex: 1; 
-    align-self: flex-start;
-    position: sticky;
-    justify-content: left;
-    top: 40px;
+  flex: 1;
+  align-self: flex-start;
+  position: sticky;
+  justify-content: left;
+  top: 40px;
 }
 
-
 .form-column form {
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-    display: flex;
-    justify-content: left;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: left;
 }

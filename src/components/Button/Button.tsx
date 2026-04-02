@@ -1,11 +1,7 @@
 import { forwardRef } from 'react';
 import { Link } from 'react-router-dom';
+import type { ButtonProps } from '../../types/ComponentProps';
 import './Button.css';
-
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: 'primary' | 'nav';
-  to?: string;
-};
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ variant = 'primary', className = '', to, ...props }, ref) => {

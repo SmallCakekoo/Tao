@@ -2,6 +2,7 @@ import { useRef, useEffect, useCallback } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Button } from '../../Button/Button';
+import type { Body } from '../../../types/LandingTypes';
 import meditationImg from '../../../assets/meditation.png';
 import awfulIcon from '../../../assets/stickers/awful.svg';
 import badIcon from '../../../assets/stickers/bad.svg';
@@ -12,7 +13,18 @@ import './FindAcademicSection.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const stickerIcons = [awfulIcon, badIcon, goodIcon, greatIcon, neutralIcon, greatIcon, goodIcon, neutralIcon, badIcon, awfulIcon];
+const stickerIcons = [
+  awfulIcon,
+  badIcon,
+  goodIcon,
+  greatIcon,
+  neutralIcon,
+  greatIcon,
+  goodIcon,
+  neutralIcon,
+  badIcon,
+  awfulIcon,
+];
 const stickerSizes = Array(35).fill(74);
 
 const stickers = stickerSizes.map((size, i) => ({
@@ -24,19 +36,6 @@ const stickers = stickerSizes.map((size, i) => ({
 const gravity = 1600;
 const bounce = 0.3;
 const friction = 0.8;
-
-interface Body {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  r: number;
-  dragging: boolean;
-  dragOffX: number;
-  dragOffY: number;
-  prevX: number;
-  prevY: number;
-}
 
 export const FindAcademicSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -225,53 +224,62 @@ export const FindAcademicSection = () => {
     return () => cancelAnimationFrame(rafRef.current);
   }, [loop]);
 
-  const handlePointerDown = useCallback((index: number, e: React.PointerEvent<HTMLSpanElement>) => {
-    const body = bodiesRef.current[index];
-    const arena = arenaRef.current;
-    const el = stickerElsRef.current[index];
+  const handlePointerDown = useCallback(
+    (index: number, e: React.PointerEvent<HTMLSpanElement>) => {
+      const body = bodiesRef.current[index];
+      const arena = arenaRef.current;
+      const el = stickerElsRef.current[index];
 
-    if (!body || !arena || !el) return;
+      if (!body || !arena || !el) return;
 
-    e.preventDefault();
-    e.currentTarget.setPointerCapture(e.pointerId);
+      e.preventDefault();
+      e.currentTarget.setPointerCapture(e.pointerId);
 
-    const rect = arena.getBoundingClientRect();
-    body.dragging = true;
-    body.dragOffX = e.clientX - rect.left - body.x;
-    body.dragOffY = e.clientY - rect.top - body.y;
-    body.vx = 0;
-    body.vy = 0;
+      const rect = arena.getBoundingClientRect();
+      body.dragging = true;
+      body.dragOffX = e.clientX - rect.left - body.x;
+      body.dragOffY = e.clientY - rect.top - body.y;
+      body.vx = 0;
+      body.vy = 0;
 
-    el.style.zIndex = '50';
-  }, []);
+      el.style.zIndex = '50';
+    },
+    []
+  );
 
-  const handlePointerMove = useCallback((index: number, e: React.PointerEvent<HTMLSpanElement>) => {
-    const body = bodiesRef.current[index];
-    const arena = arenaRef.current;
+  const handlePointerMove = useCallback(
+    (index: number, e: React.PointerEvent<HTMLSpanElement>) => {
+      const body = bodiesRef.current[index];
+      const arena = arenaRef.current;
 
-    if (!body || !arena || !body.dragging) return;
+      if (!body || !arena || !body.dragging) return;
 
-    const rect = arena.getBoundingClientRect();
-    body.x = e.clientX - rect.left - body.dragOffX;
-    body.y = e.clientY - rect.top - body.dragOffY;
-  }, []);
+      const rect = arena.getBoundingClientRect();
+      body.x = e.clientX - rect.left - body.dragOffX;
+      body.y = e.clientY - rect.top - body.dragOffY;
+    },
+    []
+  );
 
-  const handlePointerUp = useCallback((index: number, e: React.PointerEvent<HTMLSpanElement>) => {
-    const body = bodiesRef.current[index];
-    const el = stickerElsRef.current[index];
+  const handlePointerUp = useCallback(
+    (index: number, e: React.PointerEvent<HTMLSpanElement>) => {
+      const body = bodiesRef.current[index];
+      const el = stickerElsRef.current[index];
 
-    if (!body) return;
+      if (!body) return;
 
-    if (e.currentTarget.hasPointerCapture(e.pointerId)) {
-      e.currentTarget.releasePointerCapture(e.pointerId);
-    }
+      if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+        e.currentTarget.releasePointerCapture(e.pointerId);
+      }
 
-    body.vx = ((body.x - body.prevX) / 0.016) * 0.6;
-    body.vy = ((body.y - body.prevY) / 0.016) * 0.6;
-    body.dragging = false;
+      body.vx = ((body.x - body.prevX) / 0.016) * 0.6;
+      body.vy = ((body.y - body.prevY) / 0.016) * 0.6;
+      body.dragging = false;
 
-    if (el) el.style.zIndex = '';
-  }, []);
+      if (el) el.style.zIndex = '';
+    },
+    []
+  );
 
   return (
     <section className="find-academic-section" ref={sectionRef}>

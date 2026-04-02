@@ -1,16 +1,8 @@
 import { useRef, useCallback, useState, useEffect } from 'react';
 import gsap from 'gsap';
-import type { CSSProperties, PointerEvent } from 'react';
+import type { PointerEvent } from 'react';
+import type { DraggableStickerProps } from '../../../types/ComponentProps';
 import './DraggableSticker.css';
-
-export interface DraggableStickerProps {
-  emotionSrc: string;
-  size?: number;
-  hasGravity?: boolean;
-  className?: string;
-  style?: CSSProperties;
-  getGroundY?: (centerX: number) => number;
-}
 
 export const DraggableSticker = ({
   emotionSrc,
@@ -19,14 +11,7 @@ export const DraggableSticker = ({
   className = '',
   style,
   getGroundY,
-}: {
-  emotionSrc: string;
-  size?: number;
-  hasGravity?: boolean;
-  className?: string;
-  style?: CSSProperties;
-  getGroundY?: (centerX: number) => number;
-}) => {
+}: DraggableStickerProps) => {
   const elRef = useRef<HTMLSpanElement>(null);
   const posRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
   const dragRef = useRef<{

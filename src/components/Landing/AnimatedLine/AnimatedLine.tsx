@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import type { AnimatedLineProps } from '../../../types/ComponentProps';
 import './AnimatedLine.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -10,27 +11,19 @@ const firstPath =
 const secondPath =
   'M1456 1220C1456 1080 1289.35 980 1054 991C818.651 1002 787.739 1120 825.739 1180C863.739 1240 982.978 1270 1066.24 1180C1149.5 1080 935.501 990.5 824.501 924.001C713.501 857.501 564.501 746.501 497.501 687.001C443.854 639.359 357.501 567 270.501 441.001C183.501 315.001 178.501 113.001 290.001 57.5007C401.501 2.00073 461.001 133.001 435.001 193.501C383.203 314.03 241.001 260.001 126.501 136.001C88.9449 95.3289 45.3341 14.6674 16.0007 12.0007';
 
-export interface AnimatedLineProps {
-  variant?: 'first' | 'second';
-  className?: string;
-  triggerSelector?: string;
-}
-
 export const AnimatedLine = ({
   variant = 'first',
   className = '',
   triggerSelector,
-}: {
-  variant?: 'first' | 'second';
-  className?: string;
-  triggerSelector?: string;
-}) => {
+}: AnimatedLineProps) => {
   const pathRef = useRef<SVGPathElement>(null);
   const svgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const path = pathRef.current;
-    const trigger = triggerSelector ? document.querySelector(triggerSelector) : document.body;
+    const trigger = triggerSelector
+      ? document.querySelector(triggerSelector)
+      : document.body;
     if (!path || !trigger) return;
 
     const length = path.getTotalLength();
@@ -59,7 +52,10 @@ export const AnimatedLine = ({
 
   const viewBox = variant === 'first' ? '0 0 1975 1360' : '0 0 1472 1292';
   const d = variant === 'first' ? firstPath : secondPath;
-  const wrapperClass = variant === 'second' ? `animated-line-how ${className}` : `animated-line ${className}`;
+  const wrapperClass =
+    variant === 'second'
+      ? `animated-line-how ${className}`
+      : `animated-line ${className}`;
 
   return (
     <div className={wrapperClass.trim()} ref={svgRef} aria-hidden>

@@ -1,0 +1,74 @@
+.mobile-nav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-nav {
+    --mobile-nav-height: 4.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.55rem;
+    position: fixed;
+    left: 1rem;
+    right: 1rem;
+    bottom: calc(0.8rem + env(safe-area-inset-bottom, 0px));
+    min-height: var(--mobile-nav-height);
+    padding: 0.45rem;
+    background: #f7f7fa;
+    border: 2px solid #dfe1eb;
+    border-radius: 2rem;
+    box-shadow: 0 9px 24px rgba(21, 21, 31, 0.09);
+    z-index: 1200;
+  }
+
+  .mobile-nav-link {
+    flex: 1;
+    min-height: 3.35rem;
+    border-radius: 1.35rem;
+    color: #67686f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .mobile-nav-link span {
+    display: none;
+    font-size: 0.72rem;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.01em;
+    text-transform: lowercase;
+  }
+
+  .mobile-nav-link:hover {
+    color: #55565f;
+  }
+
+  .mobile-nav-link.active {
+    flex: 1.65;
+    background: var(--base-orange);
+    color: #fff;
+    justify-content: center;
+    padding: 0 0.4rem;
+  }
+
+  .mobile-nav-link.active span {
+    display: inline;
+    font-size: 0.72rem;
+  }
+
+  .mobile-nav-link.active svg {
+    stroke-width: 2;
+  }
+
+  .mobile-nav-link:not(.active) svg {
+    stroke-width: 1.9;
+  }
+}

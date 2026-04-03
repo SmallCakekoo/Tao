@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { IconArrowLeft } from '@tabler/icons-react';
 import logoFace from '../../../assets/logo-face.svg';
 import type { LoadingState } from '../../../types/RecommendationViewTypes';
 import '../RecommendationsShared.css';
@@ -25,6 +26,10 @@ export const RecommendationsLoading = () => {
 
   return (
     <div className="recommendations-page loading-page">
+      <button className="loading-back" onClick={() => navigate(-1)} aria-label="Go back">
+        <IconArrowLeft size={16} />
+        <span>Back</span>
+      </button>
       <main className="loading-content">
         <img src={logoFace} alt="Tao face" className="loading-face" />
         <p>Just a moment...</p>

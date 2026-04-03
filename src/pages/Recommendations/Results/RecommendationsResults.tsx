@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState, type PointerEventHandler } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { IconChevronDown, IconChevronUp, IconPlus } from '@tabler/icons-react';
+import {
+  IconChevronDown,
+  IconChevronUp,
+  IconPlus,
+  IconArrowLeft,
+} from '@tabler/icons-react';
 import { HomeNavbar } from '../../../components/NavBar/CommonNavBar/HomeNavbar';
 import logoFace from '../../../assets/logo-face.svg';
 import yogaImg from '../../../assets/yoga.png';
@@ -159,6 +164,10 @@ export const RecommendationsResults = () => {
   return (
     <div className="recommendations-page results-page">
       <HomeNavbar />
+      <button className="results-back" onClick={() => navigate(-1)} aria-label="Go back">
+        <IconArrowLeft size={16} />
+        <span>Back</span>
+      </button>
       <main className="recommendations-main">
         {!selectedFeeling ? (
           <section className="results-empty">
@@ -261,7 +270,7 @@ export const RecommendationsResults = () => {
                 </div>
               </article>
 
-              <div className="drag-hint">
+              <div className="drag-hint drag-hint-desktop">
                 <p>Drag down to see more</p>
                 <IconChevronDown size={28} />
                 <small>
@@ -278,6 +287,11 @@ export const RecommendationsResults = () => {
               >
                 I’m ready to leave
               </button>
+            </div>
+
+            <div className="drag-hint drag-hint-mobile">
+              <p>Drag down to see more</p>
+              <IconChevronDown size={28} />
             </div>
           </section>
         )}

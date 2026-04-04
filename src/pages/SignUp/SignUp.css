@@ -142,3 +142,15 @@
 .fadeInUp-animation {
   animation: 2s fadeInUp;
 }
+
+.airplane {
+  width: 30%;
+}
+
+.check-email {
+  margin-bottom: 0;
+}
+
+.error {
+  color: var(--orange-500);
+}

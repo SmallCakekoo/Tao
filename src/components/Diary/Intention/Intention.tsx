@@ -1,15 +1,26 @@
+// React
+import { useState } from 'react';
+import { createPortal } from 'react-dom';
+
+// Icons
 import {
   IconArrowsDiagonalMinimize2,
   IconArrowsDiagonal2,
   IconChevronLeft,
   IconChevronRight,
 } from '@tabler/icons-react';
+
+// Internal components
 import { IntentionOverlay } from '../IntentionOverlay/IntentionOverlay';
+
+// Supabase
+import { supabase } from '../../../lib/supabaseClient';
+
+// Types
 import type { PromptKey } from '../../../types/PromptKey';
 
+// Styles
 import './Intention.css';
-import { useState } from 'react';
-import { createPortal } from 'react-dom';
 
 export const Intention = () => {
   const [maximized, setMaximized] = useState(false);
@@ -21,28 +32,26 @@ export const Intention = () => {
   const hasPrompts = promptList.length > 0;
   const listLength = promptList.length - 1;
 
-  const prompts = {
-    calm: [
-      'What’s bothering you right now and what’s the first small step you can do to work on it?',
-      'What part of this situation is under your control?',
-      'Write down 3 things you can hear, 3 you can touch and 3 you can see.',
-      'What is something that you’re grateful for today?',
-      'If you gave your body 10 minutes of real rest, what would you choose to do?',
-    ],
-    motivated: [''],
-    organize: [''],
-    recognize: [''],
-    process: [''],
-    patterns: [''],
+  const fetchPrompts = async (prompt: PromptKey) => {
+    const { data, error } = await supabase.from('prompts').select('*').eq('mood', prompt);
+
+    if (error) {
+      return [];
+    }
+
+    return data?.[0]?.prompts ?? [];
   };
 
   const selectPrompt = (prompt: PromptKey) => {
     setSelected(prompt);
   };
 
-  const getPrompt = (prompt: PromptKey) => {
-    const promptList = prompts[prompt];
-    setPromptList(promptList);
+  const getPrompt = async (prompt: PromptKey) => {
+    console.log(prompt);
+
+    const prompts = await fetchPrompts(prompt);
+
+    setPromptList(prompts);
     setIndex(0);
   };
 

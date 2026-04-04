@@ -20,12 +20,12 @@ export const IntentionOverlay = ({
   return (
     <div className="intention-overlay">
       <h5>What's your intention for today?</h5>
-      {intentions.map((item) => (
+      {intentions && intentions.map((item) => (
         <IntentionButton
           key={item.prompt}
           content={item.content}
           prompt={item.prompt}
-          selectPrompt={selectPrompt}
+          selectPrompt={() => selectPrompt(item.prompt)}
           isSelected={selected === item.prompt}
         />
       ))}

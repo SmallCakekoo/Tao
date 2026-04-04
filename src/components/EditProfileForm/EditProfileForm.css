@@ -1,0 +1,60 @@
+/* Contenedor principal */
+.editProfile-form-container {
+    width: 100%;
+    max-width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Form */
+.editProfile-form-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+p {
+    margin-bottom: 1px;
+}
+/* Inputs */
+.editProfile-form-container input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+}
+
+/* Botón dentro del form */
+.editProfile-form-container form button {
+    margin-top: 20px;
+    width: 100%;
+    border-radius: 12px;
+    
+}
+
+/* Contenedor botones de abajo */
+.editProfile-buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+}
+
+/* Botones */
+.cancel-button{
+    background-color: #FFFDFD;
+    color: #FF4131;
+    border: 1px solid #DDDDEA;
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+}
+.save-button {
+    background-color: #FFFDFD;
+    color: #1F8A4C;
+    border: 1px solid #DDDDEA;
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+}

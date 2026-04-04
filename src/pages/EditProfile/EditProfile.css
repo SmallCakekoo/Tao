@@ -1,0 +1,57 @@
+.edit-profile{
+    width: 100%;
+    min-height: 100vh;
+    background: var(--bg-color);
+    overflow-x: hidden;
+    font-family: var(--font-family);
+}
+
+.editProfile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 8%;
+    margin-top: 5%;
+    margin-right: 8%;
+}
+
+.editProfile-header-title {
+    display: flex;
+    font-weight: 500;
+    color: #393939;
+}   
+
+.editProfile-header-title h1 {
+    font-size: 54px;
+}
+
+.editProfile-name {
+    color: #A1A1A1;
+    margin-left: 5vh;
+}
+
+.logout-button {
+    background-color: #FF5B5B;
+}
+
+.editProfile-content {
+    display: flex;
+    
+    align-items: flex-start;
+
+    margin-left: 8%;
+    margin-right: 8%;
+}
+
+.left-column {
+    width: 40%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+
+.right-column {
+    width: 50%;
+    display: flex;
+}
+

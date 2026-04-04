@@ -7,7 +7,7 @@ import { HomeNavbar } from '../../components/NavBar/CommonNavBar/HomeNavbar';
 import { DiaryWidget } from '../../components/DiaryWidget/DiaryWidget';
 import { ToDoWidget } from '../../components/ToDoWidget/ToDoWidget';
 
-export const Home = () => {
+export const Home = ({ userName }: { userName: string }) => {
   return (
     <div className="home">
       <HomeNavbar />
@@ -16,7 +16,7 @@ export const Home = () => {
       <div className="home-content">
         <div className="greetings">
           <h2>
-            Hello, <span>Migue!</span>
+            Hello, <span>{userName}! </span>
           </h2>
           <p>Welcome back, ready to take care of your mind?</p>
         </div>

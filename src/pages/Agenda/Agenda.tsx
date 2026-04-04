@@ -3,7 +3,8 @@ import { AnimatedLine } from "../../components/Home/AnimatedLine/AnimatedLine"
 import { Navbar } from "../../components/NavBar/LandingNavBar/Navbar"
 import { AgendaContent } from "../../components/AgendaContent/AgendaContent";
 
-export const Agenda = () => {
+
+export const Agenda = ({ userQuote, userQuoteAuthor }: { userQuote: string; userQuoteAuthor: string }) => {
     return(
         <div className="agenda">
             <Navbar></Navbar>
@@ -16,8 +17,8 @@ export const Agenda = () => {
                 </div>
 
                 <div className="diary-quote-container">
-                    <h5 className="quote-content">The key is not to prioritize what's on your schedule, but to schedule your priorities.</h5>
-                    <p className="quote-author">— Stephen Covey</p>
+                    <h5 className="quote-content">{userQuote}</h5>
+                    <p className="quote-author">{userQuoteAuthor}</p>
                 </div>
             </div>
 

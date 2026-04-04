@@ -1,0 +1,77 @@
+.profile{
+    width: 100%;
+    min-height: 100vh;
+    background: var(--bg-color);
+    overflow-x: hidden;
+    font-family: var(--font-family);
+}
+
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 8%;
+    margin-top: 5%;
+    margin-right: 8%;
+}
+
+.profile-header-title {
+    display: flex;
+    font-weight: 500;
+    color: #393939;
+}   
+
+.profile-header-title h1 {
+    font-size: 54px;
+}
+
+.profile-name {
+    color: #A1A1A1;
+    margin-left: 5vh;
+}
+
+.editProfile-button {
+    position: relative; /* 👈 activa z-index sin moverlo */
+    z-index: 1;
+}
+
+.profile-content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    margin-left: 8%;
+    margin-right: 8%;
+}
+
+.profile-left {
+    width: 50%;
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1 1 400px;
+}
+
+.profile-right {
+    width: 50%;
+    display: flex;
+    align-items: end;
+    flex-direction: column;
+    flex: 1 1 500px;
+
+}
+
+.widgets {
+    display: flex;
+    width: 100%;
+    height: 260px;
+    
+    flex-direction: row;
+    align-items: flex-start; /* 👈 clave */
+    justify-content: space-between;
+    margin-top: var(--space-3xl);
+    gap: var(--space-xl);
+    margin-bottom: var(--space-md);
+
+}

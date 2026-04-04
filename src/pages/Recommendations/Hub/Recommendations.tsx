@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IconArrowLeft } from '@tabler/icons-react';
 import { HomeNavbar } from '../../../components/NavBar/CommonNavBar/HomeNavbar';
+import { MobileNavBar } from '../../../components/NavBar/MobileNavBar/MobileNavBar';
 import { AnimatedLine } from '../../../components/Home/AnimatedLine/AnimatedLine';
 import { PersonalizedRedirectOverlay } from '../../../components/RecommendationsOverlay/PersonalizedRedirectOverlay';
 import type { RecommendationRouteState } from '../../../types/RecommendationTypes';
@@ -9,7 +10,7 @@ import '../RecommendationsShared.css';
 import './Recommendations.css';
 
 export const Recommendations = () => {
-  const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+  const [isOverlayOpen, setIsOverlayOpen] = useState<boolean>(false);
   const navigate = useNavigate();
   const location = useLocation();
   const routeState = (location.state ?? {}) as RecommendationRouteState;
@@ -83,6 +84,7 @@ export const Recommendations = () => {
         isOpen={isOverlayOpen}
         onClose={() => setIsOverlayOpen(false)}
       />
+      <MobileNavBar />
     </div>
   );
 };

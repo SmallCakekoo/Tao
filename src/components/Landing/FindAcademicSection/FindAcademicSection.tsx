@@ -86,7 +86,8 @@ export const FindAcademicSection = () => {
     return () => ctx.revert();
   }, []);
 
-  const loop = useCallback((now: number) => {
+  // Named function keeps "RAF recursion local" and avoids the ESLint "used before declaration" error.
+  const loop = useCallback(function frame(now: number) {
     const arena = arenaRef.current;
     if (!arena) return;
 
@@ -193,7 +194,7 @@ export const FindAcademicSection = () => {
       el.style.transform = `translate(${body.x - body.r}px, ${body.y - body.r}px)`;
     }
 
-    rafRef.current = requestAnimationFrame(loop);
+    rafRef.current = requestAnimationFrame(frame);
   }, []);
 
   useEffect(() => {

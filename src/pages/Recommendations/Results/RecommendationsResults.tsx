@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type PointerEventHandler } from 'react';
+import { useRef, useState, type PointerEventHandler } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
   IconChevronDown,
@@ -7,6 +7,7 @@ import {
   IconArrowLeft,
 } from '@tabler/icons-react';
 import { HomeNavbar } from '../../../components/NavBar/CommonNavBar/HomeNavbar';
+import { MobileNavBar } from '../../../components/NavBar/MobileNavBar/MobileNavBar';
 import logoFace from '../../../assets/logo-face.svg';
 import yogaImg from '../../../assets/yoga.png';
 import breatheImg from '../../../assets/breathe.png';
@@ -90,9 +91,9 @@ export const RecommendationsResults = () => {
   const state = (location.state ?? {}) as ResultsState;
 
   const selectedFeeling: PresetFeeling | null = state.feeling ?? null;
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [dragOffset, setDragOffset] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [dragOffset, setDragOffset] = useState<number>(0);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
   const dragStartY = useRef<number | null>(null);
 
   const variant: 'A' | 'B' = !selectedFeeling
@@ -103,13 +104,11 @@ export const RecommendationsResults = () => {
 
   const cards = CARDS_BY_VARIANT[variant];
 
-  useEffect(() => {
-    setCurrentIndex(0);
-    setDragOffset(0);
-  }, [variant]);
-
-  const canGoNext = currentIndex < cards.length - 1;
-  const canGoPrev = currentIndex > 0;
+  // We derive a safe index instead of resetting state in an effect to satisfy ESLint/react-hooks.
+  // This index have a logic of takes the min between the current index and the last index of the cards, so if the cards are less than before it will not break.
+  const effectiveIndex = Math.min(currentIndex, cards.length - 1);
+  const canGoNext = effectiveIndex < cards.length - 1;
+  const canGoPrev = effectiveIndex > 0;
 
   const goNext = () => {
     if (canGoNext) {
@@ -159,7 +158,7 @@ export const RecommendationsResults = () => {
     setIsDragging(false);
   };
 
-  const content = cards[currentIndex];
+  const content = cards[effectiveIndex];
 
   return (
     <div className="recommendations-page results-page">
@@ -274,7 +273,7 @@ export const RecommendationsResults = () => {
                 <p>Drag down to see more</p>
                 <IconChevronDown size={28} />
                 <small>
-                  {currentIndex + 1} / {cards.length}
+                  {effectiveIndex + 1} / {cards.length}
                 </small>
               </div>
             </div>
@@ -296,6 +295,7 @@ export const RecommendationsResults = () => {
           </section>
         )}
       </main>
+      <MobileNavBar />
     </div>
   );
 };

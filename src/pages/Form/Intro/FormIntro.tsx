@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { IconArrowLeft } from '@tabler/icons-react';
-import { HomeNavbar } from '../../../components/NavBar/CommonNavBar/HomeNavbar';
+import { MobileNavBar } from '../../../components/NavBar/MobileNavBar/MobileNavBar';
 import logoFace from '../../../assets/logo-face.svg';
 import '../Form.css';
 import './FormIntro.css';
@@ -16,7 +16,6 @@ export const FormIntro = () => {
 
   return (
     <div className="form-page intro-page">
-      <HomeNavbar />
       <div className="form-container">
         <div className="form-inner-container">
           <button className="back-btn" onClick={() => navigate('/home')}>
@@ -43,6 +42,7 @@ export const FormIntro = () => {
           </section>
         </div>
       </div>
+      <MobileNavBar />
     </div>
   );
 };

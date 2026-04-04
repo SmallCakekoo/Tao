@@ -1,12 +1,11 @@
 import './Agenda.css';
 import { AnimatedLine } from '../../components/Home/AnimatedLine/AnimatedLine';
-import { HomeNavbar } from '../../components/NavBar/CommonNavBar/HomeNavbar';
+import { MobileNavBar } from '../../components/NavBar/MobileNavBar/MobileNavBar';
 import { AgendaContent } from '../../components/AgendaContent/AgendaContent';
 
 export const Agenda = () => {
   return (
     <div className="agenda">
-      <HomeNavbar />
       <AnimatedLine />
 
       <div className="agenda-header">
@@ -27,6 +26,7 @@ export const Agenda = () => {
       <div className="agenda-content">
         <AgendaContent></AgendaContent>
       </div>
+      <MobileNavBar />
     </div>
   );
 };

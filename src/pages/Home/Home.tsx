@@ -7,13 +7,23 @@ import { Feeling } from '../../components/Home/Feeling/Feeling';
 import { Recs } from '../../components/Home/Recs/Recs';
 import { Weekly } from '../../components/Weekly/Weekly';
 import { HomeNavbar } from '../../components/NavBar/CommonNavBar/HomeNavbar';
+import { MobileNavBar } from '../../components/NavBar/MobileNavBar/MobileNavBar';
 import { DiaryWidget } from '../../components/DiaryWidget/DiaryWidget';
 import { ToDoWidget } from '../../components/ToDoWidget/ToDoWidget';
+import { useEffect, useState } from 'react';
 
 export const Home = () => {
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState('')
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
 
   useEffect(() => {
     const checkUser = async () => {
@@ -57,7 +67,7 @@ export const Home = () => {
   if (loading) return null;
   return (
     <div className="home">
-      <HomeNavbar />
+      {!isMobile && <HomeNavbar />}
 
       <AnimatedLine />
       <div className="home-content">
@@ -82,6 +92,7 @@ export const Home = () => {
           </div>
         </div>
       </div>
+      <MobileNavBar />
     </div>
   );
 };

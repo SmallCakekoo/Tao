@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IconArrowLeft } from '@tabler/icons-react';
 import { HomeNavbar } from '../../../components/NavBar/CommonNavBar/HomeNavbar';
+import { MobileNavBar } from '../../../components/NavBar/MobileNavBar/MobileNavBar';
 import { AnimatedLine } from '../../../components/Home/AnimatedLine/AnimatedLine';
 import { PersonalizedRedirectOverlay } from '../../../components/RecommendationsOverlay/PersonalizedRedirectOverlay';
 import type { RecommendationRouteState } from '../../../types/RecommendationTypes';
@@ -9,7 +10,7 @@ import '../RecommendationsShared.css';
 import './Recommendations.css';
 
 export const Recommendations = () => {
-  const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+  const [isOverlayOpen, setIsOverlayOpen] = useState<boolean>(false);
   const navigate = useNavigate();
   const location = useLocation();
   const routeState = (location.state ?? {}) as RecommendationRouteState;
@@ -41,8 +42,8 @@ export const Recommendations = () => {
         <section className="recommendations-hero">
           <h1>Recommendations</h1>
           <p>
-            Welcome to your recommendations hub. Choose preset options for quick support
-            or go through your daily check-in for personalized guidance.
+            Welcome to your recommendations hub! You can get them based on today&apos;s
+            feelings or some preset choices.
           </p>
           {routeState.source === 'form' && (
             <small className="recs-source-hint">
@@ -59,20 +60,20 @@ export const Recommendations = () => {
         <section className="recommendations-choice-grid">
           <article className="recommendation-choice-card">
             <h3>
-              <span>Preset</span> recommendations
+              <span>Personalized</span> recommendations
             </h3>
-            <p>Based on preset worries and options.</p>
-            <button type="button" onClick={() => navigate('/recommendations/preset')}>
+            <p>Based on your registered daily feelings.</p>
+            <button type="button" onClick={() => setIsOverlayOpen(true)}>
               Get recommendations
             </button>
           </article>
 
           <article className="recommendation-choice-card">
             <h3>
-              <span>Personalized</span> recommendations
+              <span>Preset</span> recommendations
             </h3>
-            <p>Built from your daily form answers and trends.</p>
-            <button type="button" onClick={() => setIsOverlayOpen(true)}>
+            <p>Based on your preset worries and options.</p>
+            <button type="button" onClick={() => navigate('/recommendations/preset')}>
               Get recommendations
             </button>
           </article>
@@ -83,6 +84,7 @@ export const Recommendations = () => {
         isOpen={isOverlayOpen}
         onClose={() => setIsOverlayOpen(false)}
       />
+      <MobileNavBar />
     </div>
   );
 };

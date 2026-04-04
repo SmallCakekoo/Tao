@@ -1,12 +1,22 @@
 import './Agenda.css';
 import { AnimatedLine } from '../../components/Home/AnimatedLine/AnimatedLine';
 import { HomeNavbar } from '../../components/NavBar/CommonNavBar/HomeNavbar';
+import { MobileNavBar } from '../../components/NavBar/MobileNavBar/MobileNavBar';
 import { AgendaContent } from '../../components/AgendaContent/AgendaContent';
+import { useEffect, useState } from 'react';
 
 export const Agenda = () => {
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <div className="agenda">
-      <HomeNavbar />
+      {!isMobile && <HomeNavbar />}
       <AnimatedLine />
 
       <div className="agenda-header">
@@ -27,6 +37,7 @@ export const Agenda = () => {
       <div className="agenda-content">
         <AgendaContent></AgendaContent>
       </div>
+      <MobileNavBar />
     </div>
   );
 };

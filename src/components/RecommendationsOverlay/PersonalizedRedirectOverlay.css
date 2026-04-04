@@ -27,6 +27,18 @@
   line-height: 1.1;
   font-weight: 500;
 }
+.overlay-description {
+  margin: 0.8rem 0 0;
+  font-size: var(--text-body);
+  color: var(--black-300);
+  line-height: 1.4;
+}
+.overlay-description {
+  margin: 0.8rem 0 0;
+  font-size: var(--text-body);
+  color: var(--black-300);
+  line-height: 1.4;
+}
 
 .overlay-pencil {
   display: block;
@@ -68,28 +80,63 @@
 }
 
 @media (max-width: 768px) {
+  .personalized-overlay-backdrop {
+    padding: 1.15rem;
+    align-items: center;
+  }
+
   .personalized-overlay-card {
-    max-width: 20rem;
-    min-height: 24rem;
-    padding: 1.4rem 1.35rem 1.25rem;
+    max-width: 22rem;
+    min-height: 34rem;
+    border-radius: 1.25rem;
+    padding: 1.85rem 1.75rem 1.6rem;
   }
 
   .personalized-overlay-card h3 {
-    font-size: var(--text-body);
+    font-size: clamp(2rem, 8.4vw, 2.35rem);
+    line-height: 1.04;
+  }
+
+  .overlay-description {
+    margin: 0.75rem 0 0;
+    font-size: clamp(0.95rem, 3.8vw, 1.05rem);
+    line-height: 1.35;
   }
 
   .overlay-pencil {
-    width: 7rem;
-    margin: 1rem auto 0.9rem;
+    width: min(13rem, 62%);
+    margin: 1.45rem auto 1.35rem;
   }
 
   .personalized-overlay-actions {
-    justify-content: center;
-    flex-wrap: wrap;
+    margin-top: auto;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .overlay-primary,
+  .overlay-secondary {
+    width: 100%;
+    min-width: 0;
+    height: 2.8rem;
+    border-radius: 0.95rem;
+    font-size: 1.12rem;
   }
 
   .overlay-secondary {
-    min-width: 7.6rem;
-    font-size: var(--text-sm);
+    background: #efeff6;
+    border-color: #d9d9e7;
+  }
+}
+
+@media (max-width: 420px) {
+  .personalized-overlay-card {
+    max-width: 21.5rem;
+    min-height: 33rem;
+    padding-inline: 1.55rem;
+  }
+
+  .personalized-overlay-card h3 {
+    font-size: clamp(1.78rem, 8vw, 2.2rem);
   }
 }

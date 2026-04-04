@@ -16,8 +16,8 @@ const toClock = (seconds: number): string => {
 
 export const BreathingExercise = () => {
   const navigate = useNavigate();
-  const [elapsed, setElapsed] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
+  const [elapsed, setElapsed] = useState<number>(0);
+  const [isPaused, setIsPaused] = useState<boolean>(false);
   const isComplete = elapsed >= TOTAL_SECONDS;
 
   // Avanza el contador cada segundo mientras el ejercicio no esté en pausa.

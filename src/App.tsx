@@ -11,6 +11,9 @@ import { Home } from './pages/Home/Home';
 import { Diary } from './pages/Diary/Diary';
 import { Agenda } from './pages/Agenda/Agenda';
 import { Form } from './pages/Form/Form';
+import { FormIntro } from './pages/Form/Intro/FormIntro';
+import { FormQuestion } from './pages/Form/Question/FormQuestion';
+import { FormResults } from './pages/Form/Results/FormResults';
 import { Recommendations } from './pages/Recommendations/Hub/Recommendations';
 import { RecommendationsPreset } from './pages/Recommendations/Preset/RecommendationsPreset';
 import { RecommendationsLoading } from './pages/Recommendations/Loading/RecommendationsLoading';
@@ -32,7 +35,11 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/diary" element={<Diary />} />
         <Route path="/agenda" element={<Agenda />} />
-        <Route path="/form" element={<Form />} />
+        <Route path="/form" element={<Form />}>
+          <Route index element={<FormIntro />} />
+          <Route path="question/:questionId" element={<FormQuestion />} />
+          <Route path="results" element={<FormResults />} />
+        </Route>
         <Route path="/form/edit-feelings" element={<EditFeelings />} />
         <Route path="/edit-feelings" element={<EditFeelings />} />
         <Route path="/recommendations" element={<Recommendations />} />

@@ -32,10 +32,10 @@ const moodOptions: MoodOption[] = [
 
 export const EditFeelings = () => {
   const navigate = useNavigate();
-  const [energy, setEnergy] = useState('Low Energy');
-  const [sleep, setSleep] = useState('4-6 Hours');
-  const [stress, setStress] = useState('High stress');
-  const [dailyLoad, setDailyLoad] = useState('Heavy');
+  const [energy, setEnergy] = useState<string>('Low Energy');
+  const [sleep, setSleep] = useState<string>('4-6 Hours');
+  const [stress, setStress] = useState<string>('High stress');
+  const [dailyLoad, setDailyLoad] = useState<string>('Heavy');
   const [mood, setMood] = useState<MoodValue>('neutral');
   const [openDropdown, setOpenDropdown] = useState<SelectKey | null>(null);
 

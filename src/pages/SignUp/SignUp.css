@@ -19,7 +19,6 @@
     gap: var(--space-md);
     align-items: flex-start;
     padding-bottom: var(--space-xl);
-
   }
 
   .mobile-svg {
@@ -45,7 +44,6 @@
     gap: var(--space-md);
     align-items: flex-start;
     padding-bottom: var(--space-xl);
-
   }
 
   .create-a {
@@ -57,75 +55,81 @@
     margin-left: 10% !important;
   }
 
-    .form-area form {
+  .form-area form {
     width: 100% !important;
   }
 }
 
-
 .form-area {
-    margin-left: var(--space-2xl);
-    width: 70%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+  margin-left: var(--space-2xl);
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .create-a {
-    margin: 0;
-    animation-name: fadeInUp;
-    animation-duration: 1s;
+  margin: 0;
+  animation-name: fadeInUp;
+  animation-duration: 1s;
 }
 
 .already {
-    margin-top: 0;
-    font-size: var(--text-sm);
-    margin-bottom: var(--space-lg);
-    animation-name: fadeInUp;
-    animation-duration: 1s;
+  margin-top: 0;
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-lg);
+  animation-name: fadeInUp;
+  animation-duration: 1s;
 }
 
 .form-area form {
-    display: flex;
-    width: 60%;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-lg)
+  display: flex;
+  width: 60%;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-lg);
 }
 
 .form-area button {
-    width: 110%;
+  width: 110%;
 }
 
 .form-label {
-    display: flex;
-    width: 100%;
-    gap: var(--space-xs);
-    flex-direction: column;
-    align-items: flex-start;
+  display: flex;
+  width: 100%;
+  gap: var(--space-xs);
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .form-label input {
-    width: 100%;
+  width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  font-size: var(--text-body);
+}
+
+.name-area input {
+  font-family: 'DM Sans', sans-serif;
+  font-size: var(--text-body);
 }
 
 .pass-condition {
-    color: var(--black-150);
-    margin: 0;
+  color: var(--black-150);
+  margin: 0;
 }
 
 .name-area {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: var(--space-lg);
-    height: var(--space-xl);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-lg);
+  height: var(--space-xl);
 }
 
 .name-area h3 {
-    margin: 0;
-    animation-name: fadeInLeft;
-    animation-duration: 1s;
+  margin: 0;
+  animation-name: fadeInLeft;
+  animation-duration: 1s;
 }
 
 @keyframes fadeInUp {

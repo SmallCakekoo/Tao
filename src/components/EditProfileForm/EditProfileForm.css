@@ -1,94 +1,93 @@
 /* Contenedor principal */
 .editProfile-form-container {
-    width: 100%;
-    max-width: 320px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  width: 100%;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 /* Form */
 .editProfile-form-container form {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
 }
 
 p {
-    margin-bottom: 1px;
+  margin-bottom: 1px;
 }
 /* Inputs */
 .editProfile-form-container input {
-    width: 100%;
-    padding: 12px;
-    border-radius: 12px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: var(--text-body);
 }
 
 /* Botón dentro del form */
 .editProfile-form-container form button {
-    margin-top: 20px;
-    width: 100%;
-    border-radius: 12px;
-    
+  margin-top: 20px;
+  width: 100%;
+  border-radius: 12px;
 }
 
 /* Contenedor botones de abajo */
 .editProfile-buttons-container {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
 }
 
 /* Botones */
-.cancel-button{
-    background-color: #FFFDFD;
-    color: #FF4131;
-    border: 1px solid #DDDDEA;
-    width: 100%;
-    padding: 12px;
-    border-radius: 12px;
+.cancel-button {
+  background-color: #fffdfd;
+  color: #ff4131;
+  border: 1px solid #ddddea;
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
 }
 .save-button {
-    background-color: #FFFDFD;
-    color: #1F8A4C;
-    border: 1px solid #DDDDEA;
-    width: 100%;
-    padding: 12px;
-    border-radius: 12px;
+  background-color: #fffdfd;
+  color: #1f8a4c;
+  border: 1px solid #ddddea;
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
 }
 
 @media (max-width: 768px) {
+  button {
+    height: 50%;
+  }
 
-    button{
-        
-        height: 50%;
-    }
-    
-    .change-password-button {
-        width: 100%;
-        padding: 8px;
-        border-radius: 12px;
-    }
+  .change-password-button {
+    width: 100%;
+    padding: 8px;
+    border-radius: 12px;
+  }
 
-    .editProfile-form-container {
-        max-width: 100%;
-    }
-    .cancel-button{
-        background-color: #FFFDFD;
-        color: #FF4131;
-        border: 1px solid #DDDDEA;
-        width: 100%;
-        padding: 8px;
-        border-radius: 12px;
-    }
-    .save-button {
-        background-color: #FFFDFD;
-        color: #1F8A4C;
-        border: 1px solid #DDDDEA;
-        width: 100%;
-        padding: 8px;
-        border-radius: 12px;
-    }
+  .editProfile-form-container {
+    max-width: 100%;
+  }
+  .cancel-button {
+    background-color: #fffdfd;
+    color: #ff4131;
+    border: 1px solid #ddddea;
+    width: 100%;
+    padding: 8px;
+    border-radius: 12px;
+  }
+  .save-button {
+    background-color: #fffdfd;
+    color: #1f8a4c;
+    border: 1px solid #ddddea;
+    width: 100%;
+    padding: 8px;
+    border-radius: 12px;
+  }
 }

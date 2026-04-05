@@ -67,7 +67,6 @@ export const AgendaForm = ({
         />
 
         <div className="priority-container">
-          <label>Priority level</label>
 
           <select
             className="priority-select"

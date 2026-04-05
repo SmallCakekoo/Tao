@@ -75,6 +75,11 @@ form {
   width: 50vh;
 }
 
+.form-container input {
+  font-family: 'DM Sans', sans-serif;
+  font-size: var(--text-body);
+}
+
 form button {
   width: 25vh;
   padding: 2vh;

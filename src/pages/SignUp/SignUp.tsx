@@ -76,7 +76,7 @@ export const SignUp = () => {
           <div className="success-box">
             <BackButton />
             <h3 className='check-email'>Check your email</h3>
-            <p>You're one step away from your calm space. We sent you a confirmation link.</p>
+            <p>Time to enter your calm space! Login now to start your journey.</p>
             <Link to="/login">Go to login</Link>
             <img src={airplane} alt="Paper airplane" className='airplane' />
           </div>

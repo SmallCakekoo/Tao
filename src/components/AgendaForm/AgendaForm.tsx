@@ -20,7 +20,7 @@ export const AgendaForm = ({
     } = await supabase.auth.getUser();
 
     if (!user) {
-        return;
+      return;
     }
 
     const newTask: TaskInterface = {
@@ -28,18 +28,18 @@ export const AgendaForm = ({
       description: taskDescription,
       priority: priority,
       complete: false,
-      user_id: user.id
+      user_id: user.id,
     };
 
     const { data, error } = await supabase.from('tasks').insert([newTask]).select();
 
     if (error) {
-        console.error(error);
-        return;
+      console.error(error);
+      return;
     }
 
     if (data) {
-        setTasks((prev) => [...prev, ...data]);
+      setTasks((prev) => [...prev, ...data]);
     }
 
     setTaskName('');
@@ -69,7 +69,11 @@ export const AgendaForm = ({
         <div className="priority-container">
           <label>Priority level</label>
 
-          <select value={priority} onChange={(e) => setPriority(e.target.value)}>
+          <select
+            className="priority-select"
+            value={priority}
+            onChange={(e) => setPriority(e.target.value)}
+          >
             <option value="">Select priority</option>
             <option value="low">When there’s time (Low)</option>
             <option value="medium">Work calmly (Medium)</option>

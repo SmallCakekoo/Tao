@@ -5,7 +5,13 @@ import { MobileNavBar } from '../../components/NavBar/MobileNavBar/MobileNavBar'
 import { AgendaContent } from '../../components/AgendaContent/AgendaContent';
 import { useEffect, useState } from 'react';
 
-export const Agenda = () => {
+export const Agenda = ({
+  userQuote,
+  userQuoteAuthor,
+}: {
+  userQuote: string;
+  userQuoteAuthor: string;
+}) => {
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
 
   useEffect(() => {
@@ -26,17 +32,15 @@ export const Agenda = () => {
         </div>
 
         <div className="diary-quote-container">
-          <h5 className="quote-content">
-            The key is not to prioritize what's on your schedule, but to schedule your
-            priorities.
-          </h5>
-          <p className="quote-author">— Stephen Covey</p>
+          <h5 className="quote-content">{userQuote}</h5>
+          <p className="quote-author">{userQuoteAuthor}</p>
         </div>
       </div>
 
       <div className="agenda-content">
-        <AgendaContent></AgendaContent>
+        <AgendaContent />
       </div>
+
       <MobileNavBar />
     </div>
   );

@@ -15,14 +15,13 @@ export const Home = () => {
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const [name, setName] = useState('')
+  const [name, setName] = useState('');
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-
 
   useEffect(() => {
     const checkUser = async () => {
@@ -36,9 +35,7 @@ export const Home = () => {
     };
 
     checkUser();
-  }, []);
-
-  // Get the useProfile
+  }, [navigate]);
 
   useEffect(() => {
     const getProfile = async () => {
@@ -64,6 +61,7 @@ export const Home = () => {
   }, []);
 
   if (loading) return null;
+
   return (
     <div className="home">
       {!isMobile && <HomeNavbar />}
@@ -76,14 +74,15 @@ export const Home = () => {
           </h2>
           <p>Welcome back, ready to take care of your mind?</p>
         </div>
+
         <div className="home-division">
           <div className="left">
-            <Feeling></Feeling>
-            <Recs></Recs>
+            <Feeling />
+            <Recs />
           </div>
 
           <div className="right">
-            <Weekly></Weekly>
+            <Weekly />
             <div className="widgets">
               <DiaryWidget />
               <ToDoWidget />
@@ -91,6 +90,7 @@ export const Home = () => {
           </div>
         </div>
       </div>
+
       <MobileNavBar />
     </div>
   );

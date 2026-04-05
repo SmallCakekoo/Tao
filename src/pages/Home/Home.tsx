@@ -10,7 +10,6 @@ import { HomeNavbar } from '../../components/NavBar/CommonNavBar/HomeNavbar';
 import { MobileNavBar } from '../../components/NavBar/MobileNavBar/MobileNavBar';
 import { DiaryWidget } from '../../components/DiaryWidget/DiaryWidget';
 import { ToDoWidget } from '../../components/ToDoWidget/ToDoWidget';
-import { useEffect, useState } from 'react';
 
 export const Home = () => {
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);

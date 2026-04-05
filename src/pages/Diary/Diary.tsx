@@ -10,12 +10,20 @@ import { useState, useEffect } from 'react';
 import { DiaryButtons } from '../../components/Diary/DiaryButtons/DiaryButtons';
 import { Camera } from '../../components/Diary/Camera/Camera';
 import { HomeNavbar } from '../../components/NavBar/CommonNavBar/HomeNavbar';
+import { MobileNavBar } from '../../components/NavBar/MobileNavBar/MobileNavBar';
 
 export const Diary = () => {
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
   const [showCamera, setShowCamera] = useState<boolean>(false);
   const [savedImage, setSavedImage] = useState<string | null>(null);
   // Temporary, to check if image changes in local storage
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Check if there is an image inside local storage (Temporary)
   useEffect(() => {
@@ -29,25 +37,9 @@ export const Diary = () => {
     setShowCamera(true);
   };
 
-  const useWindowWidth = () => {
-    const [width, setWidth] = useState(window.innerWidth);
-
-    useEffect(() => {
-      const handleResize = () => setWidth(window.innerWidth);
-      window.addEventListener('resize', handleResize);
-
-      return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
-    return width;
-  };
-
-  const width = useWindowWidth();
-  const isMobile = width <= 768;
-
   return (
     <>
-      <HomeNavbar></HomeNavbar>
+      {!isMobile && <HomeNavbar />}
 
       <div className="diary">
         {showCamera && (
@@ -100,6 +92,7 @@ export const Diary = () => {
           {!isMobile && <DiaryButtons setCamera={setCamera} />}
         </aside>
       </div>
+      <MobileNavBar/>
     </>
   );
 };

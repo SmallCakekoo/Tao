@@ -16,16 +16,16 @@
 }
 
 .take-pic {
-    color: var(--bg-color)
+  color: var(--bg-color);
 }
 
 .close-icon {
-    color: var(--bg-color);
-    cursor: pointer;
+  color: var(--bg-color);
+  cursor: pointer;
 }
 
 .camera-modal {
-    margin-bottom: 120px;
+  margin-bottom: 120px;
 
   padding: clamp(16px, 4vw, 24px);
 
@@ -37,7 +37,7 @@
   gap: 16px;
   align-items: flex-start;
 
-  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 }
 
 .camera-content {
@@ -47,9 +47,9 @@
 }
 
 @media (max-width: 600px) {
-.camera-overlay {
+  .camera-overlay {
     flex-direction: column;
-}
+  }
   .camera-content {
     flex-direction: column;
   }
@@ -73,9 +73,9 @@
 }
 
 .countdown {
-    font-family: var(--font-family);
+  font-family: var(--font-family);
   position: absolute;
-   top: 50%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 80px;
@@ -115,23 +115,23 @@
 }
 
 .camera-img {
-    width: 400px;
-    margin: 20px;
-    margin-bottom: 120px;
-    cursor: pointer;
-    position: relative;
-    z-index: 2;
+  width: 400px;
+  margin: 20px;
+  margin-bottom: 120px;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
 }
 
 .camera-wrapper {
   position: relative;
   width: fit-content;
-position: relative;
+  position: relative;
   z-index: 2;
 }
 
 .polaroid.printing {
-margin-bottom: 120px;
+  margin-bottom: 120px;
 
   position: absolute;
   top: 55%;

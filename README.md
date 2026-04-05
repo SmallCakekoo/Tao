@@ -13,11 +13,11 @@ improve performance without sacrificing well-being.
 
 Students often experience:
 
--   Academic overload
--   Mental fatigue
--   Lack of focus
--   Decreased performance
--   Early burnout symptoms
+- Academic overload
+- Mental fatigue
+- Lack of focus
+- Decreased performance
+- Early burnout symptoms
 
 Existing productivity tools focus on tasks, and wellness apps focus on
 meditation --- but none connect energy, stress, and academic performance
@@ -29,10 +29,10 @@ in a unified system.
 
 Tao connects:
 
--   Energy tracking
--   Emotional state monitoring
--   Academic workload
--   Productivity metrics
+- Energy tracking
+- Emotional state monitoring
+- Academic workload
+- Productivity metrics
 
 The system analyzes patterns and provides smart recommendations to help
 students maintain balance and optimize performance.
@@ -41,23 +41,23 @@ students maintain balance and optimize performance.
 
 ## Core Features
 
--   Daily Check-In (energy, mood, stress, sleep)
--   Study Session Tracking
--   Burnout Risk Indicator
--   Smart Recommendations
--   Goal Tracking Dashboard
--   Personalized Onboarding
--   Authentication System
+- Daily Check-In (energy, mood, stress, sleep)
+- Study Session Tracking
+- Burnout Risk Indicator
+- Smart Recommendations
+- Goal Tracking Dashboard
+- Personalized Onboarding
+- Authentication System
 
 ---
 
 ## Tech Stack
 
--   React
--   Vite
--   Firebase (Authentication & Database)
--   React Router
--   External API Integration
+- React
+- Vite
+- Firebase (Authentication & Database)
+- React Router
+- External API Integration
 
 ---
 
@@ -81,19 +81,19 @@ Run locally:
 
 Tao follows:
 
--   Semantic HTML structure
--   Keyboard navigation support
--   Responsive design
--   Clean component architecture
--   Performance optimizations (memoization, efficient rendering)
+- Semantic HTML structure
+- Keyboard navigation support
+- Responsive design
+- Clean component architecture
+- Performance optimizations (memoization, efficient rendering)
 
 ---
 
 ## Target Audience
 
--   University students
--   High academic load students
--   Individuals experiencing study-related stress
+- University students
+- High academic load students
+- Individuals experiencing study-related stress
 
 ---
 

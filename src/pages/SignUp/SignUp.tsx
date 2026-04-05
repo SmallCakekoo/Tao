@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import './SignUp.css';
 import { BackButton } from '../../components/BackButton/BackButton';
 import { GradientBox } from '../../components/Login/GradientBox/GradientBox';
-import airplane from '../../assets/airplane.png'
+import airplane from '../../assets/airplane.png';
 import { useState } from 'react';
 import { supabase } from '../../lib/supabaseClient';
 
@@ -49,7 +49,7 @@ export const SignUp = () => {
     });
 
     if (error) {
-      setError(error.message)
+      setError(error.message);
     } else {
       if (data.user) {
         const { error: profileError } = await supabase.from('profiles').insert({
@@ -58,7 +58,7 @@ export const SignUp = () => {
         });
 
         if (profileError) {
-          setError('Your account was created, try logging in')
+          setError('Your account was created, try logging in');
         }
         setSuccess(true);
       }
@@ -75,10 +75,10 @@ export const SignUp = () => {
         {success ? (
           <div className="success-box">
             <BackButton />
-            <h3 className='check-email'>Check your email</h3>
+            <h3 className="check-email">Check your email</h3>
             <p>Time to enter your calm space! Login now to start your journey.</p>
             <Link to="/login">Go to login</Link>
-            <img src={airplane} alt="Paper airplane" className='airplane' />
+            <img src={airplane} alt="Paper airplane" className="airplane" />
           </div>
         ) : (
           <>

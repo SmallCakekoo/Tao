@@ -7,7 +7,6 @@ import './Camera.css';
 import camera from '../../../assets/camera.png';
 import { IconX } from '@tabler/icons-react';
 
-
 export const Camera = ({ onClose, onCapture }: CameraProps) => {
   const webcamRef = useRef<Webcam | null>(null);
   const [image, setImage] = useState<string | null>(null);
@@ -69,13 +68,13 @@ export const Camera = ({ onClose, onCapture }: CameraProps) => {
   };
 
   useEffect(() => {
-  const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.key === "Escape") onClose();
-  };
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
 
-  window.addEventListener("keydown", handleKeyDown);
-  return () => window.removeEventListener("keydown", handleKeyDown);
-}, [onClose]);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
 
   return (
     <>
@@ -83,7 +82,7 @@ export const Camera = ({ onClose, onCapture }: CameraProps) => {
         {flash && <div className="flash" />}
 
         <div className="camera-modal">
-        <IconX className='close-icon' onClick={onClose}></IconX>
+          <IconX className="close-icon" onClick={onClose}></IconX>
 
           {countdown !== null && <div className="countdown">{countdown}</div>}
 

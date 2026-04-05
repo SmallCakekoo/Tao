@@ -20,26 +20,27 @@ export const IntentionOverlay = ({
   return (
     <div className="intention-overlay">
       <h5>What's your intention for today?</h5>
-      {intentions && intentions.map((item) => (
-        <IntentionButton
-          key={item.prompt}
-          content={item.content}
-          prompt={item.prompt}
-          selectPrompt={() => selectPrompt(item.prompt)}
-          isSelected={selected === item.prompt}
-        />
-      ))}
-        <button
-        className='continue'
+      {intentions &&
+        intentions.map((item) => (
+          <IntentionButton
+            key={item.prompt}
+            content={item.content}
+            prompt={item.prompt}
+            selectPrompt={() => selectPrompt(item.prompt)}
+            isSelected={selected === item.prompt}
+          />
+        ))}
+      <button
+        className="continue"
         disabled={!selected}
         onClick={() => {
-            if (!selected) return;
-            getPrompt(selected);
-            closeOverlay();
+          if (!selected) return;
+          getPrompt(selected);
+          closeOverlay();
         }}
-        >
+      >
         Continue
-        </button>
+      </button>
     </div>
   );
 };

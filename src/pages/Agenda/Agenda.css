@@ -1,59 +1,55 @@
-.agenda{
-    width: 100%;
-    min-height: 100vh;
-    background: var(--bg-color);
-    overflow-x: hidden;
-    font-family: var(--font-family);
+.agenda {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--bg-color);
+  overflow-x: hidden;
+  font-family: var(--font-family);
 }
 
 .agenda-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-left: 8%;
-    margin-top: 8%;
-    margin-right: 8%;
-
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 8%;
+  margin-top: 8%;
+  margin-right: 8%;
 }
 
 .diary-header-container h1 {
-    font-size: 54px;
-    font-weight: 500;
-    color: #3a3a3a;
+  font-size: 54px;
+  font-weight: 500;
+  color: #3a3a3a;
 }
 
 .diary-header-container p {
-    font-size: 16px;
-    color: #7a7a7a;
+  font-size: 16px;
+  color: #7a7a7a;
 }
-
 
 .diary-quote-container {
-    max-width: 400px;
-    text-align: left;
+  max-width: 400px;
+  text-align: left;
 }
 
-
 .quote-content {
-    font-size: 20px;
-    color: #8a8a8a;
-    position: relative;
-    line-height: 1.4;
-    margin-bottom: 10px;
+  font-size: 20px;
+  color: #8a8a8a;
+  position: relative;
+  line-height: 1.4;
+  margin-bottom: 10px;
 }
 
 .quote-content::before {
-    content: "“";
-    font-size: 40px;
-    color: #c5a6ff;
-    position: absolute;
-    left: -25px;
-    top: -10px;
+  content: '“';
+  font-size: 40px;
+  color: #c5a6ff;
+  position: absolute;
+  left: -25px;
+  top: -10px;
 }
 
 .quote-author {
-    margin-top: 10px;
-    font-size: 14px;
-    color: #a0a0a0;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #a0a0a0;
 }
-

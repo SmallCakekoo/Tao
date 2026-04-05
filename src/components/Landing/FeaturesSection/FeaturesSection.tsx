@@ -18,7 +18,8 @@ const features = [
   {
     id: 'energy',
     title: 'Energy Tracking',
-    description: 'Visualize your emotional peaks and valleys to understand your productivity cycles.',
+    description:
+      'Visualize your emotional peaks and valleys to understand your productivity cycles.',
     icon: IconChartBar,
     color: 'var(--base-orange)',
     bgColor: 'var(--orange-100)',
@@ -26,7 +27,8 @@ const features = [
   {
     id: 'recommendations',
     title: 'Recommendations',
-    description: "Personalized activities like 'Time to rest' based on your biological data.",
+    description:
+      "Personalized activities like 'Time to rest' based on your biological data.",
     icon: IconStar,
     color: 'var(--base-violet)',
     bgColor: 'var(--violet-100)',
@@ -42,7 +44,8 @@ const features = [
   {
     id: 'confidence',
     title: 'Confidence Journal',
-    description: 'Reflection space to build academic self-efficacy and celebrate small wins.',
+    description:
+      'Reflection space to build academic self-efficacy and celebrate small wins.',
     icon: IconBook,
     color: 'var(--accent-yellow)',
     bgColor: '#fff9e6',
@@ -50,7 +53,8 @@ const features = [
   {
     id: 'burnout',
     title: 'Burnout Indicator',
-    description: 'Early warning system that alerts you when load exceeds recovery capacity.',
+    description:
+      'Early warning system that alerts you when load exceeds recovery capacity.',
     icon: IconShield,
     color: 'var(--base-orange)',
     bgColor: 'var(--orange-100)',
@@ -58,7 +62,8 @@ const features = [
   {
     id: 'insights',
     title: 'Insights Dashboard',
-    description: 'Visual correlations between sleep, mood, workload, and academic performance.',
+    description:
+      'Visual correlations between sleep, mood, workload, and academic performance.',
     icon: IconLeaf,
     color: 'var(--base-violet)',
     bgColor: 'var(--violet-100)',
@@ -117,8 +122,8 @@ export const FeaturesSection = () => {
           <div className="landing-features-text">
             <h2>Features for better growth.</h2>
             <p>
-              A comprehensive toolkit designed to help you navigate
-              the pressures of student life with zero friction.
+              A comprehensive toolkit designed to help you navigate the pressures of
+              student life with zero friction.
             </p>
           </div>
 

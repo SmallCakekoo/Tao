@@ -147,9 +147,9 @@
 }
 
 @media (max-width: 768px) {
-.landing .landing-invisible-cost{
+  .landing .landing-invisible-cost {
     min-height: 100vh;
-}
+  }
 
   .landing-invisible-cost {
     min-height: auto;

@@ -12,8 +12,8 @@ export const Terms = () => {
         <section>
           <h2>1. Acceptance of Terms</h2>
           <p>
-            By accessing or using Tao, you agree to be bound by these Terms of Service
-            and all applicable laws and regulations.
+            By accessing or using Tao, you agree to be bound by these Terms of Service and
+            all applicable laws and regulations.
           </p>
         </section>
         <section>
@@ -26,8 +26,8 @@ export const Terms = () => {
         <section>
           <h2>3. Disclaimer</h2>
           <p>
-            The materials on Tao are provided "as is". Tao makes no warranties,
-            expressed or implied, and hereby disclaims all other warranties.
+            The materials on Tao are provided "as is". Tao makes no warranties, expressed
+            or implied, and hereby disclaims all other warranties.
           </p>
         </section>
       </main>

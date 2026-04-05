@@ -45,7 +45,9 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .landing-how-card:hover {
@@ -116,12 +118,12 @@
 .bar-small {
   height: 8px;
   width: 32px;
-  background: #E5E7F5;
+  background: #e5e7f5;
   border-radius: var(--radius-xs);
 }
 
 .bar-small.active {
-  background: #8A6CFD;
+  background: #8a6cfd;
 }
 
 .check-placeholders {
@@ -133,7 +135,7 @@
 
 .placeholder-long {
   width: 90%;
-  background: #E5E7F5;
+  background: #e5e7f5;
   border-radius: var(--radius-sm);
 }
 
@@ -158,21 +160,29 @@
   border-radius: 50%;
 }
 
-.dot.d1 { background: #6E8FFF; }
-.dot.d2 { background: #ADC2FF; }
-.dot.d3 { background: #E5E7F5; }
-.dot.d4 { background: #FFEB95; }
-.dot.d5 { background: #FFD444; }
+.dot.d1 {
+  background: #6e8fff;
+}
+.dot.d2 {
+  background: #adc2ff;
+}
+.dot.d3 {
+  background: #e5e7f5;
+}
+.dot.d4 {
+  background: #ffeb95;
+}
+.dot.d5 {
+  background: #ffd444;
+}
 
 .check-line-bottom {
   height: 16px;
   width: 90%;
-  background: #FF8362;
+  background: #ff8362;
   border-radius: var(--radius-sm);
   margin: 0 auto;
 }
-
-
 
 .cursor-mock {
   position: absolute;
@@ -205,7 +215,7 @@
 .header-rect {
   width: 65px;
   height: 14px;
-  background: #E5E7F5;
+  background: #e5e7f5;
   border-radius: var(--radius-xs);
   margin-bottom: 6px;
 }
@@ -213,7 +223,7 @@
 .header-line {
   width: 40px;
   height: 6px;
-  background: #E5E7F5;
+  background: #e5e7f5;
   border-radius: 2px;
 }
 
@@ -225,7 +235,7 @@
 .header-right span {
   width: 15px;
   height: 15px;
-  background: #E5E7F5;
+  background: #e5e7f5;
   border-radius: 50%;
 }
 
@@ -244,8 +254,8 @@
   bottom: 4px;
   width: calc(100% - 12px);
   height: calc(100% - 12px);
-  border-left: 2px solid #E2E8F0;
-  border-bottom: 2px solid #E2E8F0;
+  border-left: 2px solid #e2e8f0;
+  border-bottom: 2px solid #e2e8f0;
 }
 
 /* Axis arrows and markers */
@@ -256,8 +266,8 @@
   left: -4px;
   width: 6px;
   height: 6px;
-  border-left: 2px solid #E2E8F0;
-  border-top: 2px solid #E2E8F0;
+  border-left: 2px solid #e2e8f0;
+  border-top: 2px solid #e2e8f0;
   transform: rotate(45deg);
 }
 
@@ -268,8 +278,8 @@
   right: -6px;
   width: 6px;
   height: 6px;
-  border-right: 2px solid #E2E8F0;
-  border-top: 2px solid #E2E8F0;
+  border-right: 2px solid #e2e8f0;
+  border-top: 2px solid #e2e8f0;
   transform: rotate(45deg);
 }
 
@@ -280,7 +290,7 @@
   right: 0;
   bottom: 0;
   height: 100%;
-  background-image: 
+  background-image:
     linear-gradient(to right, #f1f5f9 1px, transparent 1px),
     linear-gradient(to top, #f1f5f9 1px, transparent 1px);
   background-size: 20% 20%;
@@ -303,11 +313,9 @@
 .sync-footer span {
   flex: 1;
   aspect-ratio: 1;
-  background: #E5E7F5;
+  background: #e5e7f5;
   border-radius: var(--radius-sm);
 }
-
-
 
 /* Balance Illustration */
 .illustration-balance {
@@ -318,14 +326,15 @@
 .balance-notebook {
   width: 100%;
   height: 100%;
-  border: 2px solid #ADC2FF;
+  border: 2px solid #adc2ff;
   border-radius: var(--radius-sm);
   display: flex;
   position: relative;
   background: transparent;
 }
 
-.notebook-left, .notebook-right {
+.notebook-left,
+.notebook-right {
   flex: 1;
   padding: 10px;
   display: flex;
@@ -339,7 +348,7 @@
   top: 0;
   bottom: 0;
   width: 1px;
-  background: #ADC2FF;
+  background: #adc2ff;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -349,26 +358,31 @@
 .notebook-spine span {
   width: 6px;
   height: 1px;
-  background: #ADC2FF;
+  background: #adc2ff;
 }
 
 .nb-rect {
   width: 25px;
   height: 15px;
-  background: #E5E7EB;
+  background: #e5e7eb;
   border-radius: var(--radius-xs);
 }
 
-.nb-lines span, .nb-lines-full span {
+.nb-lines span,
+.nb-lines-full span {
   display: block;
   height: 4px;
-  background: #F3F4F6;
+  background: #f3f4f6;
   border-radius: 2px;
   margin-bottom: 4px;
 }
 
-.nb-lines span { width: 100%; }
-.nb-lines-full span { width: 100%; }
+.nb-lines span {
+  width: 100%;
+}
+.nb-lines-full span {
+  width: 100%;
+}
 
 .nb-stickies {
   display: flex;
@@ -383,8 +397,12 @@
   border-radius: var(--radius-xs);
 }
 
-.sticky.orange { background: #FF9E84; }
-.sticky.purple { background: #E2D7FF; }
+.sticky.orange {
+  background: #ff9e84;
+}
+.sticky.purple {
+  background: #e2d7ff;
+}
 
 .landing-how-line-wrap {
   position: absolute;
@@ -402,4 +420,3 @@
     max-width: 400px;
   }
 }
-

@@ -17,7 +17,9 @@ export const PersonalizedRedirectOverlay = ({
     <div className="personalized-overlay-backdrop" role="dialog" aria-modal="true">
       <div className="personalized-overlay-card">
         <h3>Almost ready!</h3>
-        <p className="overlay-description">You need to register today's feelings first.</p>
+        <p className="overlay-description">
+          You need to register today's feelings first.
+        </p>
 
         <img src={pencilImg} alt="Pencil illustration" className="overlay-pencil" />
 

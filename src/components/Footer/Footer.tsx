@@ -14,8 +14,8 @@ export const Footer = () => {
             <img src={logoFull} alt="Tao Logo" />
           </Link>
           <p className="landing-footer-tagline">
-            Empowering students to thrive through intelligent energy and mood
-            management. Built with intention for the academic community.
+            Empowering students to thrive through intelligent energy and mood management.
+            Built with intention for the academic community.
           </p>
           <a
             href="https://github.com/SmallCakekoo/Tao"
@@ -43,8 +43,20 @@ export const Footer = () => {
           </div>
           <div className="landing-footer-col">
             <h4>Support</h4>
-            <a href="https://github.com/SmallCakekoo/tAO" target="_blank" rel="noopener noreferrer">Documentation</a>
-            <a href="https://github.com/SmallCakekoo/tAO" target="_blank" rel="noopener noreferrer">Contributions</a>
+            <a
+              href="https://github.com/SmallCakekoo/tAO"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Documentation
+            </a>
+            <a
+              href="https://github.com/SmallCakekoo/tAO"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Contributions
+            </a>
           </div>
         </div>
       </div>

@@ -29,13 +29,11 @@
   font-family: var(--font-family);
 }
 
-
 .landing-nav-logo img {
   height: 1.75rem; /* 28px */
   width: auto;
   object-fit: contain;
 }
-
 
 .landing-nav-actions {
   display: flex;
@@ -54,5 +52,3 @@
 .landing-nav-link:hover {
   color: var(--base-black);
 }
-
-

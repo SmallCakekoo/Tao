@@ -1,117 +1,116 @@
-.edit-profile{
-    width: 100%;
-    min-height: 100vh;
-    background: var(--bg-color);
-    overflow-x: hidden;
-    font-family: var(--font-family);
+.edit-profile {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--bg-color);
+  overflow-x: hidden;
+  font-family: var(--font-family);
 }
 
 .editProfile-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-left: 8%;
-    margin-top: 5%;
-    margin-right: 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 8%;
+  margin-top: 5%;
+  margin-right: 8%;
 }
 
 .editProfile-header-title {
-    display: flex;
-    align-items: center;
-    font-weight: 500;
-    color: #393939;
-    gap: 16px;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  color: #393939;
+  gap: 16px;
 }
 
 .editProfile-header-title h1 {
-    font-size: 54px;
+  font-size: 54px;
 }
 
 .editProfile-name {
-    color: #A1A1A1;
-    margin-left: 5vh;
+  color: #a1a1a1;
+  margin-left: 5vh;
 }
 
 .logout-button {
-    background-color: #FF5B5B;
+  background-color: #ff5b5b;
 }
 
 /* oculto en desktop */
 .logout-button--mobile {
-    display: none;
+  display: none;
 }
 
 .editProfile-content {
-    display: flex;
-    align-items: flex-start;
-    margin-left: 8%;
-    margin-right: 8%;
+  display: flex;
+  align-items: flex-start;
+  margin-left: 8%;
+  margin-right: 8%;
 }
 
 .left-column {
-    width: 40%;
-    display: flex;
-    justify-content: flex-start;
+  width: 40%;
+  display: flex;
+  justify-content: flex-start;
 }
 
 .right-column {
-    width: 50%;
-    display: flex;
+  width: 50%;
+  display: flex;
 }
 
 /* ── Responsive ── */
 @media (max-width: 768px) {
+  .editProfile-header {
+    margin-top: 8%;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
 
-    .editProfile-header {
-        margin-top: 8%;
-        margin-left: 5%;
-        margin-right: 5%;
-    }
+  .editProfile-header-title h1 {
+    font-size: 28px;
+  }
 
-    .editProfile-header-title h1 {
-        font-size: 28px;
-    }
+  .editProfile-header-title {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
 
-    .editProfile-header-title {
-        flex-wrap: wrap;
-        gap: 12px;
-    }
+  /* oculta el de desktop */
+  .logout-container {
+    display: none;
+  }
 
-    /* oculta el de desktop */
-    .logout-container {
-        display: none;
-    }
+  /* muestra el de mobile */
+  .logout-button--mobile {
+    display: inline-flex;
+    font-size: 12px;
+    padding: 8px 14px;
+    border-radius: 20px;
+  }
 
-    /* muestra el de mobile */
-    .logout-button--mobile {
-        display: inline-flex;
-        font-size: 12px;
-        padding: 8px 14px;
-        border-radius: 20px;
-    }
+  .editProfile-content {
+    flex-direction: column;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
 
-    .editProfile-content {
-        flex-direction: column;
-        margin-left: 5%;
-        margin-right: 5%;
-    }
+  .left-column {
+    width: 100%;
+  }
 
-    .left-column {
-        width: 100%;
-    }
-
-    .right-column {
-        width: 100%;
-    }
+  .right-column {
+    width: 100%;
+  }
 }
 
 @media (max-width: 480px) {
-    .editProfile-header-title h1 {
-        font-size: 20px;
-    }
+  .editProfile-header-title h1 {
+    font-size: 20px;
+  }
 
-    .logout-button--mobile {
-        font-size: 11px;
-        padding: 6px 12px;
-    }
+  .logout-button--mobile {
+    font-size: 11px;
+    padding: 6px 12px;
+  }
 }

@@ -23,64 +23,91 @@ export const WhyTaoSection = () => {
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Animation for the entrance of components
-      gsap.fromTo(leftRef.current, { opacity: 0, x: -24 }, {
-        opacity: 1, x: 0, duration: 0.6,
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', toggleActions: 'play none none reverse' },
-      });
-      gsap.fromTo(tableRef.current, { opacity: 0, x: 24 }, {
-        opacity: 1, x: 0, duration: 0.6, delay: 0.15,
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 78%', toggleActions: 'play none none reverse' },
-      });
+      gsap.fromTo(
+        leftRef.current,
+        { opacity: 0, x: -24 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.6,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      );
+      gsap.fromTo(
+        tableRef.current,
+        { opacity: 0, x: 24 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.6,
+          delay: 0.15,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 78%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      );
 
       // Row reordering logic using Draggable
-      const rowElements = Array.from(document.querySelectorAll('.comparison-row')) as HTMLDivElement[];
+      const rowElements = Array.from(
+        document.querySelectorAll('.comparison-row')
+      ) as HTMLDivElement[];
       if (rowElements.length === 0) return;
       const rowHeight = rowElements[0].offsetHeight;
-      
+
       rowElements.forEach((el, i) => {
         Draggable.create(el, {
           type: 'y',
           bounds: '.comparison-table',
           edgeResistance: 0.8,
-          onPress: function() {
-            gsap.to(this.target, { 
-              scale: 1.04, 
+          onPress: function () {
+            gsap.to(this.target, {
+              scale: 1.04,
               backgroundColor: '#ffffff',
               boxShadow: '0 12px 28px rgba(0,0,0,0.12)',
-              zIndex: 100 
+              zIndex: 100,
             });
           },
-          onDrag: function() {
+          onDrag: function () {
             const dragY = this.y;
             const currentIndex = i;
             const targetIndex = Math.round(dragY / (rowHeight + 4)) + currentIndex; // factor in margin
-            
-            if (targetIndex !== currentIndex && targetIndex >= 0 && targetIndex < rowElements.length) {
+
+            if (
+              targetIndex !== currentIndex &&
+              targetIndex >= 0 &&
+              targetIndex < rowElements.length
+            ) {
               const diff = targetIndex - currentIndex;
               // Push other rows
               rowElements.forEach((other, j) => {
                 if (other === this.target) return;
-                
+
                 let yOffset = 0;
                 if (diff > 0 && j > currentIndex && j <= targetIndex) {
                   yOffset = -(rowHeight + 4);
                 } else if (diff < 0 && j < currentIndex && j >= targetIndex) {
-                  yOffset = (rowHeight + 4);
+                  yOffset = rowHeight + 4;
                 }
-                
+
                 gsap.to(other, { y: yOffset, duration: 0.3, ease: 'power2.out' });
               });
             }
           },
-          onRelease: function() {
-            gsap.to(this.target, { 
-              scale: 1, 
+          onRelease: function () {
+            gsap.to(this.target, {
+              scale: 1,
               backgroundColor: '#ffffff',
               boxShadow: 'none',
-              zIndex: 1 
+              zIndex: 1,
             });
             gsap.to(rowElements, { y: 0, duration: 0.4, ease: 'power2.inOut' });
-          }
+          },
         });
       });
     }, sectionRef);
@@ -93,9 +120,8 @@ export const WhyTaoSection = () => {
         <div className="landing-why-left" ref={leftRef}>
           <h2>Why tao?</h2>
           <p className="landing-why-subtitle">
-            Most productivity apps focus solely on output. Tao 
-            focuses on the human engine behind the output. 
-            Zero guilt, zero friction.
+            Most productivity apps focus solely on output. Tao focuses on the human engine
+            behind the output. Zero guilt, zero friction.
           </p>
           <ul className="landing-why-list">
             <li>

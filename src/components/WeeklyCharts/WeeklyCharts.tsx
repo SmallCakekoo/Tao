@@ -5,22 +5,19 @@ import {
   YAxis,
   ResponsiveContainer,
   ReferenceLine,
-} from "recharts";
-import { weeklyData } from "./WeeklyData";
-import { CustomDot } from "./CustomDot";
+} from 'recharts';
+import { weeklyData } from './WeeklyData';
+import { CustomDot } from './CustomDot';
 
 export const WeeklyChart = () => {
   return (
     <ResponsiveContainer width="100%" height={180}>
-        <LineChart
-            data={weeklyData}
-            margin={{ top: 15, right: 28, left: 28, bottom: 4 }}
-        >
+      <LineChart data={weeklyData} margin={{ top: 15, right: 28, left: 28, bottom: 4 }}>
         <XAxis
           dataKey="day"
-          axisLine={{ stroke: "#E5E7EB" }}
+          axisLine={{ stroke: '#E5E7EB' }}
           tickLine={false}
-          tick={{ fontSize: 13, fill: "#9CA3AF" }}
+          tick={{ fontSize: 13, fill: '#9CA3AF' }}
           dy={10}
         />
 

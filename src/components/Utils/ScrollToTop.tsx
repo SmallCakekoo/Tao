@@ -13,7 +13,7 @@ export const ScrollToTop = () => {
         return;
       }
     }
-    
+
     // Otherwise, scroll to top on every route change
     window.scrollTo(0, 0);
   }, [pathname, hash]);

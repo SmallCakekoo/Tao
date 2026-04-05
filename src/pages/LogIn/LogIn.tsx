@@ -28,7 +28,7 @@ export const LogIn = () => {
     });
 
     if (error) {
-      setLoading(false)
+      setLoading(false);
       if (error.message === 'Invalid login credentials') {
         setError('Hmm, that email or password doesn’t look right...');
       } else {

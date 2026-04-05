@@ -92,7 +92,7 @@ export const Diary = () => {
           {!isMobile && <DiaryButtons setCamera={setCamera} />}
         </aside>
       </div>
-      <MobileNavBar/>
+      <MobileNavBar />
     </>
   );
 };

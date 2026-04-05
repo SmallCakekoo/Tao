@@ -19,8 +19,8 @@ export const PrivacyPolicy = () => {
         <section>
           <h2>2. Data Collection</h2>
           <p>
-            We collect information you provide directly to us, such as when you create
-            an account or log your mood and energy levels.
+            We collect information you provide directly to us, such as when you create an
+            account or log your mood and energy levels.
           </p>
         </section>
         <section>

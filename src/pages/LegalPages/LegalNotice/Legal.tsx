@@ -12,14 +12,15 @@ export const Legal = () => {
         <section>
           <h2>General Information</h2>
           <p>
-            Tao is a platform designed to help people optimize their academic/professional performance through improved mental health and energy management.
+            Tao is a platform designed to help people optimize their academic/professional
+            performance through improved mental health and energy management.
           </p>
         </section>
         <section>
           <h2>Intellectual Property</h2>
           <p>
-            All content, including text, graphics, logos, and software, is the property
-            of Tao Labs Inc. and is protected by international copyright laws.
+            All content, including text, graphics, logos, and software, is the property of
+            Tao Labs Inc. and is protected by international copyright laws.
           </p>
         </section>
       </main>

@@ -1,4 +1,4 @@
 export type FeedbackProps = {
-    message: string;
-    type?: "success" | "error";
+  message: string;
+  type?: 'success' | 'error';
 };

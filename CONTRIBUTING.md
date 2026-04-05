@@ -11,11 +11,11 @@ guidelines.
 
 We use the following structure:
 
--   main → production-ready code
--   develop → integration branch
--   feature/feature-name → new features
--   fix/issue-name → bug fixes
--   chore/task-name → maintenance tasks
+- main → production-ready code
+- develop → integration branch
+- feature/feature-name → new features
+- fix/issue-name → bug fixes
+- chore/task-name → maintenance tasks
 
 Never commit directly to main.
 
@@ -36,14 +36,14 @@ Examples:
 
 Commit types:
 
--   feat
--   fix
--   refactor
--   docs
--   style
--   chore
--   wip
--   test
+- feat
+- fix
+- refactor
+- docs
+- style
+- chore
+- wip
+- test
 
 All commits must be written in English.
 
@@ -64,11 +64,11 @@ At least one reviewer approval is required before merging.
 
 ## Code Standards
 
--   Use clear and descriptive variable names.
--   Keep components small and reusable.
--   Avoid duplicated logic.
--   Follow clean code principles.
--   Use semantic HTML for accessibility.
+- Use clear and descriptive variable names.
+- Keep components small and reusable.
+- Avoid duplicated logic.
+- Follow clean code principles.
+- Use semantic HTML for accessibility.
 
 ---
 
@@ -85,9 +85,9 @@ At least one reviewer approval is required before merging.
 
 If you find a bug:
 
--   Provide steps to reproduce
--   Include screenshots if necessary
--   Describe expected vs actual behavior
+- Provide steps to reproduce
+- Include screenshots if necessary
+- Describe expected vs actual behavior
 
 ---
 

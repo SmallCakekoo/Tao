@@ -67,7 +67,6 @@ export const AgendaForm = ({
         />
 
         <div className="priority-container">
-
           <select
             className="priority-select"
             value={priority}

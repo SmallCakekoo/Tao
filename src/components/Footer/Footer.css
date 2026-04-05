@@ -55,7 +55,9 @@
   color: var(--base-violet);
   background: transparent;
   text-decoration: none;
-  transition: background 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s;
   margin-top: var(--space-xs);
 }
 

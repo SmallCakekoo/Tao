@@ -24,13 +24,14 @@
   top: -200px; /* Start higher to avoid the cut */
   left: -2%;
   width: 100%;
-  height: calc(55% + 200px); 
+  height: calc(55% + 200px);
   pointer-events: none;
   z-index: 0;
 }
 
 /* Ensure sections are transparent so the line shows through */
-.landing-how, .landing-features {
+.landing-how,
+.landing-features {
   background-color: transparent !important;
   position: relative;
   z-index: 1;

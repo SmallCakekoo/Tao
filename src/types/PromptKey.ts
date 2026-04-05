@@ -1,4 +1,4 @@
-  export type PromptKey =
+export type PromptKey =
   | 'calm'
   | 'motivated'
   | 'organize'

@@ -1,34 +1,32 @@
 .date {
-    display: flex;
-    flex-direction: column;
-    padding: var(--space-sm) var(--space-lg);
-    justify-content: center;
-    align-items: center;
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--light-stroke, #DDDDEA);
-    opacity: 0.5;
-    background: #FFF;
-    aspect-ratio: 1 / 1;  
-    width: 100%;
-    max-height: 100px;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-sm) var(--space-lg);
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--light-stroke, #ddddea);
+  opacity: 0.5;
+  background: #fff;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  max-height: 100px;
 
-    /* Soft Shadow */
-    box-shadow: 0 2px 4.8px 0 rgba(0, 0, 0, 0.05);
+  /* Soft Shadow */
+  box-shadow: 0 2px 4.8px 0 rgba(0, 0, 0, 0.05);
 }
 
-
 .day {
-    margin: 0;
+  margin: 0;
 }
 
 .day-num {
-    margin: 0;
+  margin: 0;
 }
 
 @media (max-width: 425px) {
-    .date {
-        max-width: 32px;
-        padding: var(--space-sm) var(--space-md);
-
-    }
+  .date {
+    max-width: 32px;
+    padding: var(--space-sm) var(--space-md);
+  }
 }

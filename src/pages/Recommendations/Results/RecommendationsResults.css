@@ -414,8 +414,8 @@
     padding-bottom: 0.8rem;
   }
 
-  .results-content h1{
-  font-size: var(--text-h4);
+  .results-content h1 {
+    font-size: var(--text-h4);
   }
 
   .focus-card-text p {

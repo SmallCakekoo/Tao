@@ -34,20 +34,16 @@ export const AgendaContent = () => {
   }, []);
 
   const completeTask = async (task: TaskInterface) => {
-  try {
-    const updatedTask = await toggleTaskInDB(task);
+    try {
+      const updatedTask = await toggleTaskInDB(task);
 
-    if (!updatedTask) return;
+      if (!updatedTask) return;
 
-    setTasks((prev) =>
-      prev.map((t) =>
-        t.id === updatedTask.id ? updatedTask : t
-      )
-    );
-  } catch (err) {
-    console.error(err);
-  }
-};
+      setTasks((prev) => prev.map((t) => (t.id === updatedTask.id ? updatedTask : t)));
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const removeTask = async (task: TaskInterface) => {
     const { error } = await supabase.from('tasks').delete().eq('id', task.id);

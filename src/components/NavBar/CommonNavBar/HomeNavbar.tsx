@@ -24,16 +24,28 @@ export const HomeNavbar = () => {
           <img src={logoFull} alt="Tao logo" />
         </Link>
         <div className="home-nav-actions">
-          <Link to="/home" className={`home-nav-link ${isActive('/home') ? 'active' : ''}`}>
+          <Link
+            to="/home"
+            className={`home-nav-link ${isActive('/home') ? 'active' : ''}`}
+          >
             Home
           </Link>
-          <Link to="/diary" className={`home-nav-link ${isActive('/diary') ? 'active' : ''}`}>
+          <Link
+            to="/diary"
+            className={`home-nav-link ${isActive('/diary') ? 'active' : ''}`}
+          >
             Diary
           </Link>
-          <Link to="/agenda" className={`home-nav-link ${isActive('/agenda') ? 'active' : ''}`}>
+          <Link
+            to="/agenda"
+            className={`home-nav-link ${isActive('/agenda') ? 'active' : ''}`}
+          >
             Agenda
           </Link>
-          <Link to="/profile" className={`home-nav-link ${isActive('/profile') ? 'active' : ''}`}>
+          <Link
+            to="/profile"
+            className={`home-nav-link ${isActive('/profile') ? 'active' : ''}`}
+          >
             Profile
           </Link>
         </div>

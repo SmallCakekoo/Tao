@@ -1,5 +1,5 @@
-import "./WeeklyWidgetCharts.css";
-import { WeeklyChart } from "./WeeklyCharts";
+import './WeeklyWidgetCharts.css';
+import { WeeklyChart } from './WeeklyCharts';
 
 export const WeeklyWidgetChart = () => {
   return (

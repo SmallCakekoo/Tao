@@ -1,4 +1,4 @@
-import './Polaroid.css'
+import './Polaroid.css';
 import type { PolaroidProps } from '../../../types/PolaroidProps';
 
 export const Polaroid = ({ src, isPrinting }: PolaroidProps) => {

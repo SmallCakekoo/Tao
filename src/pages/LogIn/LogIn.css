@@ -133,3 +133,7 @@
 .fadeInUp-animation {
   animation: 2s fadeInUp;
 }
+
+.error {
+  color: var(--orange-500);
+}

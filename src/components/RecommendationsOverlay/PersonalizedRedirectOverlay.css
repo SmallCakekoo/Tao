@@ -1,0 +1,142 @@
+.personalized-overlay-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  background: rgba(57, 57, 57, 0.32);
+  display: grid;
+  place-items: center;
+  padding: var(--space-md);
+}
+
+.personalized-overlay-card {
+  width: 100%;
+  max-width: 28rem;
+  min-height: auto;
+  border-radius: 1.5rem;
+  border: none;
+  background: var(--bg-color);
+  box-shadow: 0 18px 34px rgba(20, 20, 20, 0.16);
+  padding: 2rem 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.personalized-overlay-card h3 {
+  margin: 0;
+  font-size: var(--text-h4);
+  line-height: 1.1;
+  font-weight: 500;
+}
+.overlay-description {
+  margin: 0.8rem 0 0;
+  font-size: var(--text-body);
+  color: var(--black-300);
+  line-height: 1.4;
+}
+.overlay-description {
+  margin: 0.8rem 0 0;
+  font-size: var(--text-body);
+  color: var(--black-300);
+  line-height: 1.4;
+}
+
+.overlay-pencil {
+  display: block;
+  width: 11.75rem;
+  align-self: center;
+  margin: 1.25rem 0 1.1rem;
+}
+
+.personalized-overlay-actions {
+  margin-top: var(--space-md);
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+
+.overlay-secondary {
+  background: #fff;
+  color: #ff5735;
+  border: 1px solid var(--light-stroke);
+  height: 2.75rem;
+  min-width: 8.5rem;
+  font-size: var(--text-body);
+  order: 2;
+  cursor: pointer;
+}
+
+.overlay-secondary:hover {
+  background: #fff;
+}
+
+.overlay-primary {
+  background: var(--base-orange);
+  color: #fff;
+  height: 2.75rem;
+  min-width: 8.5rem;
+  font-size: var(--text-button);
+  order: 1;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .personalized-overlay-backdrop {
+    padding: 1.15rem;
+    align-items: center;
+  }
+
+  .personalized-overlay-card {
+    max-width: 22rem;
+    min-height: 34rem;
+    border-radius: 1.25rem;
+    padding: 1.85rem 1.75rem 1.6rem;
+  }
+
+  .personalized-overlay-card h3 {
+    font-size: clamp(2rem, 8.4vw, 2.35rem);
+    line-height: 1.04;
+  }
+
+  .overlay-description {
+    margin: 0.75rem 0 0;
+    font-size: clamp(0.95rem, 3.8vw, 1.05rem);
+    line-height: 1.35;
+  }
+
+  .overlay-pencil {
+    width: min(13rem, 62%);
+    margin: 1.45rem auto 1.35rem;
+  }
+
+  .personalized-overlay-actions {
+    margin-top: auto;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .overlay-primary,
+  .overlay-secondary {
+    width: 100%;
+    min-width: 0;
+    height: 2.8rem;
+    border-radius: 0.95rem;
+    font-size: 1.12rem;
+  }
+
+  .overlay-secondary {
+    background: #efeff6;
+    border-color: #d9d9e7;
+  }
+}
+
+@media (max-width: 420px) {
+  .personalized-overlay-card {
+    max-width: 21.5rem;
+    min-height: 33rem;
+    padding-inline: 1.55rem;
+  }
+
+  .personalized-overlay-card h3 {
+    font-size: clamp(1.78rem, 8vw, 2.2rem);
+  }
+}

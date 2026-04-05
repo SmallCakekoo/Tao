@@ -55,6 +55,7 @@
   --base-black: #393939;
   --black-300: #747474;
   --black-150: #A1A1A1;
+  --black-0: #CDCDCD;
 
   --violet-500: #6C37FF;
   --base-violet: #895fff;
@@ -179,4 +180,3 @@ input:placeholder-shown {
 input:focus {
   outline: none;
 }
-

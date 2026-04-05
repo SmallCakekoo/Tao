@@ -1,67 +1,84 @@
-import { useState } from "react";
-import "./AgendaForm.css";
-import type {TaskInterface}  from "../../types/AgendaTypes";
+import { useState } from 'react';
+import './AgendaForm.css';
+import type { TaskInterface } from '../../types/AgendaTypes';
+import { supabase } from '../../lib/supabaseClient';
 
+export const AgendaForm = ({
+  setTasks,
+}: {
+  setTasks: React.Dispatch<React.SetStateAction<TaskInterface[]>>;
+}) => {
+  const [taskName, setTaskName] = useState('');
+  const [taskDescription, setTaskDescription] = useState('');
+  const [priority, setPriority] = useState('');
 
-export const AgendaForm = ({ setTasks }: { setTasks: React.Dispatch<React.SetStateAction<TaskInterface[]>> }) => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
 
-    const [taskName, setTaskName] = useState("");
-    const [taskDescription, setTaskDescription] = useState("");
-    const [priority, setPriority] = useState("");
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
+    if (!user) {
+        return;
+    }
 
-        const newTask: TaskInterface = {
-            name: taskName,
-            description: taskDescription,
-            priority: priority
-        };
-
-        setTasks((prev) => [...prev, newTask]);
-
-        setTaskName("");
-        setTaskDescription("");
-        setPriority("");
+    const newTask: TaskInterface = {
+      name: taskName,
+      description: taskDescription,
+      priority: priority,
+      complete: false,
+      user_id: user.id
     };
 
-    return (
-        <div className="form-container">
-            <h5>Adding a new task</h5>
+    const { data, error } = await supabase.from('tasks').insert([newTask]).select();
 
-            <form>
-                <input
-                    type="text"
-                    placeholder="Task name"
-                    value={taskName}
-                    onChange={(e) => setTaskName(e.target.value)}
-                />
+    if (error) {
+        console.error(error);
+        return;
+    }
 
-                <input
-                    type="text"
-                    placeholder="Task description"
-                    value={taskDescription}
-                    onChange={(e) => setTaskDescription(e.target.value)}
-                />
+    if (data) {
+        setTasks((prev) => [...prev, ...data]);
+    }
 
-                <div className="priority-container">
-                    <label>Priority level</label>
+    setTaskName('');
+    setTaskDescription('');
+    setPriority('');
+  };
 
-                    <select
-                        value={priority}
-                        onChange={(e) => setPriority(e.target.value)}
-                    >
-                        <option value="">Select priority</option>
-                        <option value="low">When there’s time (Low)</option>
-                        <option value="medium">Work calmly (Medium)</option>
-                        <option value="high">Objective (High)</option>
-                    </select>
-                </div>
+  return (
+    <div className="form-container">
+      <h5>Adding a new task</h5>
 
-                <button onClick={handleSubmit}>
-                    Add Task
-                </button>
-            </form>
+      <form>
+        <input
+          type="text"
+          placeholder="Task name"
+          value={taskName}
+          onChange={(e) => setTaskName(e.target.value)}
+        />
+
+        <input
+          type="text"
+          placeholder="Task description"
+          value={taskDescription}
+          onChange={(e) => setTaskDescription(e.target.value)}
+        />
+
+        <div className="priority-container">
+          <label>Priority level</label>
+
+          <select value={priority} onChange={(e) => setPriority(e.target.value)}>
+            <option value="">Select priority</option>
+            <option value="low">When there’s time (Low)</option>
+            <option value="medium">Work calmly (Medium)</option>
+            <option value="high">Objective (High)</option>
+          </select>
         </div>
-    );
+
+        <button onClick={handleSubmit}>Add Task</button>
+      </form>
+    </div>
+  );
 };

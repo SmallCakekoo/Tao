@@ -19,6 +19,26 @@
   transition: transform 0.25s ease;
 }
 
+.todo-widget2 {
+  border-radius: 20px;
+  width: 45%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid var(--light-stroke, #ddddea);
+  background-position: bottom 10% center;
+  background-repeat: no-repeat;
+
+  /* Soft Shadow */
+  box-shadow: 0 2px 4.8px 0 rgba(0, 0, 0, 0.05);
+  padding-top: var(--space-md);
+  padding-bottom: var(--space-md);
+  padding-left: var(--space-sm);
+  padding-right: var(--space-sm);
+  transition: transform 0.25s ease;
+}
+
 .todo-widget:hover {
   transform: translateY(-10px);
 }
@@ -59,4 +79,21 @@
   .create-new {
     font-size: 1.1rem;
   }
+}
+
+
+.task-el {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-xs);
+  width: 100%;
+  justify-content: space-between;
+}
+
+.task-name {
+  margin: 8px;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

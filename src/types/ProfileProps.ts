@@ -14,7 +14,10 @@ export interface EditQuoteProps {
     setAuthor: (author: string) => void;
 }
 
-export type DotsProps = {
-    cx?: number;
-    cy?: number;
-};
+export interface DotsProps {
+  cx?: number;
+  cy?: number;
+  payload?: {
+    value: number;
+  };
+}

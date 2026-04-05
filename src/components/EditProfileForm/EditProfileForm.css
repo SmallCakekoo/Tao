@@ -58,3 +58,37 @@ p {
     padding: 12px;
     border-radius: 12px;
 }
+
+@media (max-width: 768px) {
+
+    button{
+        
+        height: 50%;
+    }
+    
+    .change-password-button {
+        width: 100%;
+        padding: 8px;
+        border-radius: 12px;
+    }
+
+    .editProfile-form-container {
+        max-width: 100%;
+    }
+    .cancel-button{
+        background-color: #FFFDFD;
+        color: #FF4131;
+        border: 1px solid #DDDDEA;
+        width: 100%;
+        padding: 8px;
+        border-radius: 12px;
+    }
+    .save-button {
+        background-color: #FFFDFD;
+        color: #1F8A4C;
+        border: 1px solid #DDDDEA;
+        width: 100%;
+        padding: 8px;
+        border-radius: 12px;
+    }
+}

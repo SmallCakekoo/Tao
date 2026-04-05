@@ -17,9 +17,11 @@
 
 .editProfile-header-title {
     display: flex;
+    align-items: center;
     font-weight: 500;
     color: #393939;
-}   
+    gap: 16px;
+}
 
 .editProfile-header-title h1 {
     font-size: 54px;
@@ -34,11 +36,14 @@
     background-color: #FF5B5B;
 }
 
+/* oculto en desktop */
+.logout-button--mobile {
+    display: none;
+}
+
 .editProfile-content {
     display: flex;
-    
     align-items: flex-start;
-
     margin-left: 8%;
     margin-right: 8%;
 }
@@ -49,9 +54,64 @@
     justify-content: flex-start;
 }
 
-
 .right-column {
     width: 50%;
     display: flex;
 }
 
+/* ── Responsive ── */
+@media (max-width: 768px) {
+
+    .editProfile-header {
+        margin-top: 8%;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+
+    .editProfile-header-title h1 {
+        font-size: 28px;
+    }
+
+    .editProfile-header-title {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    /* oculta el de desktop */
+    .logout-container {
+        display: none;
+    }
+
+    /* muestra el de mobile */
+    .logout-button--mobile {
+        display: inline-flex;
+        font-size: 12px;
+        padding: 8px 14px;
+        border-radius: 20px;
+    }
+
+    .editProfile-content {
+        flex-direction: column;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+
+    .left-column {
+        width: 100%;
+    }
+
+    .right-column {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .editProfile-header-title h1 {
+        font-size: 20px;
+    }
+
+    .logout-button--mobile {
+        font-size: 11px;
+        padding: 6px 12px;
+    }
+}

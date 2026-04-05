@@ -54,3 +54,11 @@ h3{
     font-size: 14px;
     color: #929292;
 }
+
+.save-quote-button {
+    height: 20%;
+    border: none;
+    padding: 8px;
+    border-radius: 12px;
+    width: 100%;
+}

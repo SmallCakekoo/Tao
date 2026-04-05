@@ -2,18 +2,19 @@ import './EditQuote.css'
 import { useState } from "react";
 import type { EditQuoteProps } from '../../types/ProfileProps';
 
-export const EditQuote = ({ setQuote, setAuthor }: EditQuoteProps) => {
+export const EditQuote = ({ setQuote, setAuthor, onSave }: EditQuoteProps & { onSave: (message: string, type: "success" | "error") => void }) => {
 
     const [quoteInput, setQuoteInput] = useState("");
     const [authorInput, setAuthorInput] = useState("");
 
     const handleSave = () => {
-        if (quoteInput.trim() !== "") {
-            setQuote(quoteInput);
+        if (quoteInput.trim() === "" && authorInput.trim() === "") {
+            onSave("Please fill in at least one field.", "error");
+            return;
         }
-        if (authorInput.trim() !== "") {
-            setAuthor(authorInput);
-        }
+        if (quoteInput.trim() !== "") setQuote(quoteInput);
+        if (authorInput.trim() !== "") setAuthor(authorInput);
+        onSave("Quote saved!", "success");
     };
 
     return(
@@ -40,7 +41,7 @@ export const EditQuote = ({ setQuote, setAuthor }: EditQuoteProps) => {
                 <p>You will be able to read your quote as motivation inside of your agenda.</p>
 
                 {/* 👇 botón local (opcional) */}
-                <button onClick={handleSave}>Save Quote</button>
+                <button className='save-quote-button' onClick={handleSave}>Save Quote</button>
             </div>
         </div>
     )

@@ -14,7 +14,7 @@ export const WeeklyChart = () => {
     <ResponsiveContainer width="100%" height={180}>
         <LineChart
             data={weeklyData}
-            margin={{ top: 5, right: 28, left: 28, bottom: 4 }}
+            margin={{ top: 15, right: 28, left: 28, bottom: 4 }}
         >
         <XAxis
           dataKey="day"

@@ -3,21 +3,27 @@ import { useState } from "react";
 import type { EditProfileFormProps } from "../../types/ProfileProps";
 import { ChangePassword } from "../ChangePasswordOverlay/ChangePassword";
 
-export const EditProfileForm = ({ setUserName }: EditProfileFormProps) => {
+export const EditProfileForm = ({ setUserName, onSave }: EditProfileFormProps & { onSave: (message: string, type: "success" | "error") => void }) => {
 
     const [nameInput, setNameInput] = useState("");
     const [showChangePassword, setShowChangePassword] = useState(false);
 
     const handleSave = () => {
-        if (nameInput.trim() !== "") {
-            setUserName(nameInput);
+        if (nameInput.trim() === "") {
+            onSave("Name cannot be empty.", "error");
+            return;
         }
+        setUserName(nameInput);
+        onSave("Profile updated!", "success");
     };
 
     return(
         <>
             {showChangePassword && (
-                <ChangePassword onClose={() => setShowChangePassword(false)} />
+                <ChangePassword 
+                    onClose={() => setShowChangePassword(false)} 
+                    onSave={onSave}
+                />
             )}
 
             <div className="editProfile-form-container">
@@ -34,7 +40,7 @@ export const EditProfileForm = ({ setUserName }: EditProfileFormProps) => {
                     <p>Edit Email</p>
                     <input type="email" placeholder="Edit Email" />
 
-                    <button type="button" onClick={() => setShowChangePassword(true)}>
+                    <button type="button" className="change-password-button" onClick={() => setShowChangePassword(true)}>
                         Change Password
                     </button>
                 </form>

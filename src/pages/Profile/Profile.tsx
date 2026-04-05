@@ -9,34 +9,35 @@ import { WeeklyWidgetChart } from '../../components/WeeklyCharts/WeeklyWidgetCha
 
 export const Profile = ({ userName }: { userName: string }) => {
     const navigate = useNavigate();
-        return(
-            <div className="profile">
-                <HomeNavbar />
-                <AnimatedLine />
+    return(
+        <div className="profile">
+            <HomeNavbar />
+            <AnimatedLine />
 
-                <div className="profile-header">
-                    <div className="profile-header-title">
-                        <h1 className='profile-display'>Profile</h1>
-                        <h1 className='profile-name'>Hello, {userName}!</h1>
-                    </div>
+            <div className="profile-header">
+                <div className="profile-header-title">
+                    <h1 className='profile-display'>Profile</h1>
+                    <h1 className='profile-name'>Hello, {userName}!</h1>
+                    <button className='editProfile-button editProfile-button--mobile' onClick={() => navigate("/editprofile")}>Edit Profile</button>
+                </div>
 
-                    <div className="editProfile-container">
-                        <button className='editProfile-button' onClick={() => navigate("/editprofile")}>Edit Profile</button>
-                    </div>
+                <div className="editProfile-container">
+                    <button className='editProfile-button' onClick={() => navigate("/editprofile")}>Edit Profile</button>
                 </div>
-                <div className="profile-content">
-                        <div className="profile-left">
-                            <Weekly />
-                            <WeeklyWidgetChart />
-                        </div>
-                        <div className="profile-right">
-                            <div className="widgets">
-                                <DiaryWidget />
-                                <ToDoWidget />
-                            </div>
-                        </div>
-                </div>
-             
             </div>
-        )
+
+            <div className="profile-content">
+                <div className="profile-left">
+                    <Weekly />
+                    <WeeklyWidgetChart />
+                </div>
+                <div className="profile-right">
+                    <div className="widgets">
+                        <DiaryWidget />
+                        <ToDoWidget />
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
 }

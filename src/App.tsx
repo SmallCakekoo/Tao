@@ -32,7 +32,7 @@ import { BreathingExercise } from './pages/BreathingExercise/BreathingExercise';
 import { EditFeelings } from './pages/EditFeelings/EditFeelings';
 
 function App() {
-  const [userName, setUserName] = useState('Migue');
+  const [, setUserName] = useState('Migue');
   const [userQuote, setUserQuote] = useState(
     "The key is not to prioritize what's on your schedule, but to schedule your priorities."
   );

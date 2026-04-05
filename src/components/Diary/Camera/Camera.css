@@ -75,10 +75,16 @@
 .countdown {
     font-family: var(--font-family);
   position: absolute;
+   top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   font-size: 80px;
   font-weight: bold;
-  color: white;
+  color: var(--base-blue);
   z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .flash {

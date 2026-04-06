@@ -2,6 +2,7 @@ import './Profile.css';
 import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabaseClient';
 import { HomeNavbar } from '../../components/NavBar/CommonNavBar/HomeNavbar';
+import { MobileNavBar } from '../../components/NavBar/MobileNavBar/MobileNavBar';
 import { AnimatedLine } from '../../components/Home/AnimatedLine/AnimatedLine';
 import { useNavigate } from 'react-router-dom';
 import { DiaryWidget } from '../../components/DiaryWidget/DiaryWidget';
@@ -13,6 +14,13 @@ export const Profile = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState('');
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     const checkUser = async () => {
@@ -54,7 +62,7 @@ export const Profile = () => {
   if (loading) return null;
   return (
     <div className="profile">
-      <HomeNavbar />
+      {!isMobile && <HomeNavbar />}
       <AnimatedLine />
 
       <div className="profile-header">
@@ -88,6 +96,7 @@ export const Profile = () => {
           </div>
         </div>
       </div>
+      <MobileNavBar />
     </div>
   );
 };

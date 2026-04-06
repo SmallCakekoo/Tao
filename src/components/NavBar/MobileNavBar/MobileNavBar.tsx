@@ -19,7 +19,7 @@ export const MobileNavBar = () => {
     const isEditFeelingsRoute = pathname.startsWith('/edit-feelings/');
 
     if (path === '/profile') {
-      return isFormRoute || isEditFeelingsRoute;
+      return pathname === '/profile' || isFormRoute || isEditFeelingsRoute;
     }
 
     // If we're in /edit-feelings/*, check if it matches the form version

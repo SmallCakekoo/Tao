@@ -88,3 +88,22 @@
 .task-header h5 {
   margin-right: 12px;
 }
+
+@media (max-width: 768px) {
+  .task-card {
+    padding: 16px;
+  }
+
+  .task-content h5 {
+    font-size: 16px;
+  }
+
+  .task-description {
+    font-size: 14px;
+  }
+
+  .task-check input {
+    width: 24px;
+    height: 24px;
+  }
+}

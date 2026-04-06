@@ -3,6 +3,7 @@ h5 {
   margin: 2vh 0 2vh 0;
 }
 
+
 .priority-container {
   display: flex;
   flex-direction: column;
@@ -89,4 +90,41 @@ form button {
   display: flex;
   flex-direction: column;
   align-items: end;
+}
+
+
+@media (max-width: 768px) {
+  form {
+    width: 100%;
+  }
+
+  form button {
+    width: 100%;
+  }
+
+  .form-container {
+    align-items: stretch;
+  }
+
+  form {
+    width: 100%;
+    padding-bottom: 20vh;
+  }
+
+  form button {
+    width: 100%;
+  }
+
+  .form-container {
+    align-items: stretch;
+    padding: 0 5%;
+  }
+
+  .form-container input {
+    padding: 10px 12px;
+  }
+
+  .priority-select {
+    height: 2.2rem;
+  }
 }

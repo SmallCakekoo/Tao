@@ -4,21 +4,44 @@ import { HomeNavbar } from '../../components/NavBar/CommonNavBar/HomeNavbar';
 import { MobileNavBar } from '../../components/NavBar/MobileNavBar/MobileNavBar';
 import { AgendaContent } from '../../components/AgendaContent/AgendaContent';
 import { useEffect, useState } from 'react';
+import { supabase } from '../../lib/supabaseClient';
 
 export const Agenda = ({
-  userQuote,
-  userQuoteAuthor,
-}: {
-  userQuote: string;
-  userQuoteAuthor: string;
 }) => {
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
+  const [quote, setQuote] = useState({quote: '', author: ''})
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  useEffect(() => {
+      const getQuote = async () => {
+        const { data: userData } = await supabase.auth.getUser();
+  
+        if (!userData.user) return;
+  
+        const { data, error } = await supabase
+          .from('quotes')
+          .select('*')
+          .eq('user_id', userData.user.id)
+          .single();
+  
+        if (error) {
+          console.error(error.message);
+          return;
+        }
+  
+        setQuote({
+          quote: data.quote,
+          author: data.author
+        });
+      };
+  
+      getQuote();
+    }, []);
 
   return (
     <div className="agenda">
@@ -32,8 +55,8 @@ export const Agenda = ({
         </div>
 
         <div className="diary-quote-container">
-          <h5 className="quote-content">{userQuote}</h5>
-          <p className="quote-author">{userQuoteAuthor}</p>
+          <h5 className="quote-content">{quote.quote}</h5>
+          <p className="quote-author">— {quote.author}</p>
         </div>
       </div>
 

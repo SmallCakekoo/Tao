@@ -32,12 +32,7 @@ import { BreathingExercise } from './pages/BreathingExercise/BreathingExercise';
 import { EditFeelings } from './pages/EditFeelings/EditFeelings';
 
 function App() {
-  const [, setUserName] = useState('Migue');
-  const [userQuote, setUserQuote] = useState(
-    "The key is not to prioritize what's on your schedule, but to schedule your priorities."
-  );
-  const [userQuoteAuthor, setUserQuoteAuthor] = useState('— Stephen Covey');
-
+  
   return (
     <>
       <ScrollToTop />
@@ -52,7 +47,7 @@ function App() {
         <Route path="/diary" element={<Diary />} />
         <Route
           path="/agenda"
-          element={<Agenda userQuote={userQuote} userQuoteAuthor={userQuoteAuthor} />}
+          element={<Agenda/>}
         />
         <Route path="/form" element={<Form />}>
           <Route index element={<FormIntro />} />
@@ -63,11 +58,7 @@ function App() {
         <Route
           path="/editprofile"
           element={
-            <EditProfile
-              setUserName={setUserName}
-              setUserQuote={setUserQuote}
-              setUserQuoteAuthor={setUserQuoteAuthor}
-            />
+            <EditProfile/>
           }
         />
         <Route path="/form/edit-feelings" element={<EditFeelings />} />

@@ -1,23 +1,37 @@
 import './EditQuote.css';
 import { useState } from 'react';
 import type { EditQuoteProps } from '../../types/ProfileProps';
+import { supabase } from '../../lib/supabaseClient';
 
 export const EditQuote = ({
-  setQuote,
-  setAuthor,
   onSave,
+  userId,
 }: EditQuoteProps & { onSave: (message: string, type: 'success' | 'error') => void }) => {
   const [quoteInput, setQuoteInput] = useState('');
   const [authorInput, setAuthorInput] = useState('');
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (quoteInput.trim() === '' && authorInput.trim() === '') {
       onSave('Please fill in at least one field.', 'error');
       return;
     }
-    if (quoteInput.trim() !== '') setQuote(quoteInput);
-    if (authorInput.trim() !== '') setAuthor(authorInput);
-    onSave('Quote saved!', 'success');
+    if (quoteInput.trim() !== '' && authorInput.trim() !== '') {
+      const { data, error } = await supabase
+      .from('quotes')
+      .update({
+        quote: quoteInput,
+        author: authorInput,
+      })
+      .eq('user_id', userId)
+      .select();
+
+    if (error) {
+      return;
+    }
+    if (data) {
+      onSave('Quote saved!', 'success');
+    }
+    }
   };
 
   return (

@@ -18,12 +18,16 @@ export const AgendaContent = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-
   useEffect(() => {
     const fetchTasks = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
-      const { data, error } = await supabase.from('tasks').select('*').eq('user_id', user.id);
+      const { data, error } = await supabase
+        .from('tasks')
+        .select('*')
+        .eq('user_id', user.id);
       if (error) return;
       if (data) setTasks(data);
     };
@@ -58,7 +62,9 @@ export const AgendaContent = () => {
           <div className="add-task-container">
             <h5>You have no tasks yet!</h5>
             {!isMobile && (
-              <button className="add-button" onClick={() => setShowForm(true)}>+</button>
+              <button className="add-button" onClick={() => setShowForm(true)}>
+                +
+              </button>
             )}
           </div>
           <img className="emptyImage" src={agendaEmpty} alt="Empty Agenda" />
@@ -76,7 +82,11 @@ export const AgendaContent = () => {
       {tasks.length > 0 && !isMobile && (
         <div className="agenda-layout">
           <div className="tasks-column">
-            <AgendaTasks tasks={tasks} completeTask={completeTask} removeTask={removeTask} />
+            <AgendaTasks
+              tasks={tasks}
+              completeTask={completeTask}
+              removeTask={removeTask}
+            />
           </div>
           <div className="form-column">
             <AgendaForm setTasks={setTasks} />
@@ -87,15 +97,20 @@ export const AgendaContent = () => {
       {/* ── Tasks mobile ── */}
       {tasks.length > 0 && isMobile && (
         <div className="tasks-mobile">
-          <AgendaTasks tasks={tasks} completeTask={completeTask} removeTask={removeTask} />
+          <AgendaTasks
+            tasks={tasks}
+            completeTask={completeTask}
+            removeTask={removeTask}
+          />
         </div>
       )}
 
       {/* FAB — aparece siempre en mobile excepto cuando el form está abierto */}
       {isMobile && !showForm && (
-        <button className="fab-button" onClick={() => setShowForm(true)}>+</button>
+        <button className="fab-button" onClick={() => setShowForm(true)}>
+          +
+        </button>
       )}
-
     </div>
   );
 };

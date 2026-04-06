@@ -6,12 +6,24 @@
   font-family: var(--font-family);
 }
 
+.edit-profile .back {
+  margin-left: 8%;
+  margin-right: 8%;
+  margin-top: 6.6rem;
+  align-items: center;
+}
+
+.edit-profile .back-p {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
 .editProfile-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-left: 8%;
-  margin-top: 5%;
+  margin-top: 1.75rem;
   margin-right: 8%;
 }
 
@@ -59,21 +71,42 @@
   display: flex;
 }
 
-/* ── Responsive ── */
+/* responsive */
 @media (max-width: 768px) {
-  .editProfile-header {
-    margin-top: 8%;
-    margin-left: 5%;
-    margin-right: 5%;
+  /* deja espacio para la mobile navbar fija */
+  .edit-profile {
+    padding-bottom: 8rem;
   }
 
-  .editProfile-header-title h1 {
-    font-size: 28px;
+  /* baja y alinea la flecha en mobile */
+  .edit-profile .back {
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 1.8rem;
+  }
+
+  .edit-profile .back-p {
+    font-size: 1rem;
+  }
+
+  .editProfile-header {
+    margin-top: 1rem;
+    margin-left: 5%;
+    margin-right: 5%;
+    align-items: flex-start;
+    gap: 0.75rem;
   }
 
   .editProfile-header-title {
+    width: 100%;
+    justify-content: space-between;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 0.75rem;
+  }
+
+  .editProfile-header-title h1 {
+    font-size: clamp(1.5rem, 6vw, 1.85rem);
+    margin: 0;
   }
 
   /* oculta el de desktop */
@@ -84,15 +117,18 @@
   /* muestra el de mobile */
   .logout-button--mobile {
     display: inline-flex;
-    font-size: 12px;
-    padding: 8px 14px;
-    border-radius: 20px;
+    font-size: 0.75rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: 1.25rem;
+    min-height: 2rem;
   }
 
   .editProfile-content {
     flex-direction: column;
     margin-left: 5%;
     margin-right: 5%;
+    gap: 1.25rem;
+    align-items: stretch;
   }
 
   .left-column {
@@ -101,16 +137,18 @@
 
   .right-column {
     width: 100%;
+    margin-top: 0;
   }
 }
 
 @media (max-width: 480px) {
+  /* reduce tamaño visual en pantallas pequeñas */
   .editProfile-header-title h1 {
-    font-size: 20px;
+    font-size: 1.25rem;
   }
 
   .logout-button--mobile {
-    font-size: 11px;
-    padding: 6px 12px;
+    font-size: 0.68rem;
+    padding: 0.35rem 0.7rem;
   }
 }

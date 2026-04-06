@@ -7,6 +7,10 @@ import '../Form.css';
 import './FormResults.css';
 
 // Se usa import.meta.url para resolver correctamente las rutas de estos assets dentro del módulo.
+
+// Nota para luego: Actualmente FORM_RESULT_ITEMS es una lista estática (hardcoded).
+// En el futuro, estos valores deberían generarse dinámicamente segun lo
+// recogido durante el flujo del formulario.
 const FORM_RESULT_ITEMS = [
   {
     icon: new URL('../../../assets/energy.png', import.meta.url).href,
@@ -42,9 +46,14 @@ const FORM_RESULT_ITEMS = [
 
 export const FormResults = () => {
   const navigate = useNavigate();
+  // 'answers' contiene todas las respuestas acumuladas desde todas las preguntas del formulario.
   const { answers } = useOutletContext<FormOutletContext>();
 
   const handleRecommendationsClick = () => {
+    // Nota temporal: Aunque estamos guardando las respuestas en el 'localStorage',
+    // todavía no estamos leyendo estos datos desde otras partes de la app (como las recomendaciones)
+    // ni enviándolos a una base de datos real. Es una persistencia temporal ya que pretendemos
+    // montar directamente la base de datos.
     localStorage.setItem(
       'tao:daily-check-in',
       JSON.stringify({
@@ -53,6 +62,7 @@ export const FormResults = () => {
       })
     );
 
+    // Aquí guardamos las respuestas finalizadas para que puedan ser usadas por las recomendaciones.
     navigate('/recommendations', { state: { source: 'form' } });
   };
 

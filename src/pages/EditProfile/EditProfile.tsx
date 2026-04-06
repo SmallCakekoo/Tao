@@ -1,6 +1,7 @@
 import './EditProfile.css';
 import { useState, useEffect } from 'react';
 import { HomeNavbar } from '../../components/NavBar/CommonNavBar/HomeNavbar';
+import { MobileNavBar } from '../../components/NavBar/MobileNavBar/MobileNavBar';
 import { EditProfileForm } from '../../components/EditProfileForm/EditProfileForm';
 import { BackButton } from '../../components/BackButton/BackButton';
 import { EditQuote } from '../../components/EditQuote/EditQuote';
@@ -14,8 +15,16 @@ export const EditProfile = () => {
   const [toastType, setToastType] = useState<'success' | 'error'>('success');
   const [name, setName] = useState('');
   const [userId, setUserId] = useState('');
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const triggerToast = (message: string, type: 'success' | 'error') => {
     setToastMessage(message);
@@ -29,7 +38,7 @@ export const EditProfile = () => {
       const { data: userData } = await supabase.auth.getUser();
 
       if (!userData.user) return;
-      
+
       setUserId(userData.user.id);
 
       const { data: profile, error } = await supabase
@@ -49,7 +58,6 @@ export const EditProfile = () => {
     getName();
   }, []);
 
-
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) {
@@ -60,7 +68,7 @@ export const EditProfile = () => {
 
   return (
     <div className="edit-profile">
-      <HomeNavbar />
+      {!isMobile && <HomeNavbar />}
       <BackButton />
 
       {showToast && <FeedbackMessage message={toastMessage} type={toastType} />}
@@ -69,7 +77,9 @@ export const EditProfile = () => {
         <div className="editProfile-header-title">
           <h1 className="editProfile-display">Edit Profile</h1>
 
-          <button className="logout-button logout-button--mobile">Log Out</button>
+          <button className="logout-button logout-button--mobile" onClick={signOut}>
+            Log Out
+          </button>
         </div>
         <div className="logout-container">
           <button className="logout-button" onClick={signOut}>
@@ -83,12 +93,10 @@ export const EditProfile = () => {
           <EditProfileForm name={name} userId={userId} onSave={triggerToast} />
         </div>
         <div className="right-column">
-          <EditQuote
-            onSave={triggerToast}
-            userId={userId}
-          />
+          <EditQuote onSave={triggerToast} userId={userId} />
         </div>
       </div>
+      <MobileNavBar />
     </div>
   );
 };

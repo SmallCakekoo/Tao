@@ -24,11 +24,11 @@ export const EditProfileForm = ({
       .update({ name: nameInput })
       .eq('id', userId)
       .select();
-    if(error) {
+    if (error) {
       return;
     }
-    if(data) {
-     onSave('Profile updated!', 'success');
+    if (data) {
+      onSave('Profile updated!', 'success');
     }
   };
 

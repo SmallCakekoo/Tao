@@ -17,20 +17,20 @@ export const EditQuote = ({
     }
     if (quoteInput.trim() !== '' && authorInput.trim() !== '') {
       const { data, error } = await supabase
-      .from('quotes')
-      .update({
-        quote: quoteInput,
-        author: authorInput,
-      })
-      .eq('user_id', userId)
-      .select();
+        .from('quotes')
+        .update({
+          quote: quoteInput,
+          author: authorInput,
+        })
+        .eq('user_id', userId)
+        .select();
 
-    if (error) {
-      return;
-    }
-    if (data) {
-      onSave('Quote saved!', 'success');
-    }
+      if (error) {
+        return;
+      }
+      if (data) {
+        onSave('Quote saved!', 'success');
+      }
     }
   };
 

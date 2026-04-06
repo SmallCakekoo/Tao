@@ -4,7 +4,7 @@
   max-width: 320px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
 /* Form */
@@ -15,7 +15,7 @@
   width: 100%;
 }
 
-p {
+.editProfile-form-container p {
   margin-bottom: 1px;
 }
 /* Inputs */
@@ -29,7 +29,7 @@ p {
 
 /* Botón dentro del form */
 .editProfile-form-container form button {
-  margin-top: 20px;
+  margin-top: 16px;
   width: 100%;
   border-radius: 12px;
 }
@@ -38,7 +38,7 @@ p {
 .editProfile-buttons-container {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 10px;
   width: 100%;
 }
 
@@ -61,10 +61,6 @@ p {
 }
 
 @media (max-width: 768px) {
-  button {
-    height: 50%;
-  }
-
   .change-password-button {
     width: 100%;
     padding: 8px;
@@ -73,7 +69,26 @@ p {
 
   .editProfile-form-container {
     max-width: 100%;
+    gap: 14px;
+    padding-bottom: 0;
+    margin-bottom: 0;
   }
+
+  .editProfile-form-container form {
+    gap: 6px;
+    margin-bottom: 0;
+    padding-bottom: 1rem;
+  }
+
+  .editProfile-form-container form button {
+    margin-top: 12px;
+  }
+
+  .editProfile-buttons-container {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
   .cancel-button {
     background-color: #fffdfd;
     color: #ff4131;

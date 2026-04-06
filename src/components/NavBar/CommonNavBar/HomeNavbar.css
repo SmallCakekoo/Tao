@@ -1,0 +1,92 @@
+.home-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: transparent;
+  width: 100%;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.home-navbar.scrolled {
+  background: white;
+  border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+.home-navbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 8%;
+  margin: 0;
+  max-width: 100%;
+}
+
+.home-nav-logo {
+  display: flex;
+  align-items: center;
+}
+
+.home-nav-logo img {
+  height: 2rem;
+  width: auto;
+}
+
+.home-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4xl);
+}
+
+.home-nav-link {
+  color: var(--black-300);
+  text-decoration: none;
+  font-size: var(--text-body);
+  font-weight: 500;
+  transition: all 0.2s ease;
+  position: relative;
+  padding: 0.5rem 0;
+}
+
+.home-nav-link:hover {
+  color: var(--base-violet);
+  font-weight: 600;
+}
+
+.home-nav-link.active {
+  color: var(--base-violet);
+  font-weight: 600;
+}
+
+/* Subtle indicator for active state if needed, though image doesn't show one besides color */
+/* .home-nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--base-violet);
+  border-radius: 2px;
+} */
+
+@media (max-width: 768px) {
+  .home-navbar {
+    margin: 0;
+    border-radius: 0;
+  }
+
+  .home-navbar-container {
+    padding: 1rem var(--space-md);
+  }
+
+  .home-nav-actions {
+    gap: var(--space-md);
+  }
+
+  .home-nav-link {
+    font-size: var(--text-sm);
+  }
+}

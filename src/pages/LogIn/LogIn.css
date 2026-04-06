@@ -1,0 +1,137 @@
+.login {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--bg-color);
+  overflow-x: hidden;
+  font-family: var(--font-family);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: var(--space-3xl);
+  gap: var(--space-xl);
+}
+
+.mobile-svg {
+  display: none;
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .login {
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    gap: var(--space-md);
+    align-items: flex-start;
+    padding-bottom: var(--space-xl);
+  }
+
+  .gradient-box {
+    display: none;
+  }
+
+  .mobile-svg {
+    display: block;
+  }
+
+  .form-area {
+    margin-top: -150px;
+    width: 100%;
+  }
+
+  .form-area form {
+    width: 100%;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .login {
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    gap: var(--space-md);
+    align-items: flex-start;
+    padding-bottom: var(--space-xl);
+  }
+
+  .welcome {
+    font-size: var(--text-h4);
+  }
+
+  .form-area {
+    width: 100%;
+    margin-left: 10% !important;
+  }
+
+  .form-area form {
+    width: 100% !important;
+  }
+}
+
+.form-area {
+  margin-left: var(--space-2xl);
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.welcome {
+  margin: 0;
+  animation-name: fadeInUp;
+  animation-duration: 1s;
+}
+
+.first {
+  margin-top: 0;
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-lg);
+  animation-name: fadeInUp;
+  animation-duration: 1s;
+}
+
+.form-area form {
+  display: flex;
+  width: 60%;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-lg);
+}
+
+.form-area button {
+  width: 110%;
+}
+
+.form-label {
+  display: flex;
+  width: 100%;
+  gap: var(--space-xs);
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.form-label input {
+  width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  font-size: var(--text-body);
+}
+
+@keyframes fadeInUp {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
+.fadeInUp-animation {
+  animation: 2s fadeInUp;
+}
+
+.error {
+  color: var(--orange-500);
+}

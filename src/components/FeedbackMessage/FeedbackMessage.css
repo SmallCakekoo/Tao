@@ -1,0 +1,22 @@
+.feedback-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 24px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 9999;
+  white-space: nowrap;
+}
+
+.feedback-toast--success {
+  background-color: #1f8a4c;
+  color: white;
+}
+
+.feedback-toast--error {
+  background-color: #ff4131;
+  color: white;
+}

@@ -1,0 +1,161 @@
+.recommendations-hub-page {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--bg-color);
+  background-image: none;
+}
+
+.recommendations-hub-page::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: min(72rem, 86vw);
+  height: min(24rem, 42vh);
+  background: url('../../../assets/big-field.png') no-repeat bottom right;
+  background-size: contain;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.recommendations-hub-page .line-contain {
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.recommendations-hub-main {
+  min-height: calc(100dvh - 7.5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: calc(var(--space-4xl) + var(--space-sm));
+  padding-bottom: calc(var(--space-4xl) + var(--space-md));
+  position: relative;
+  z-index: 1;
+}
+
+.recommendations-hub-main .recs-back {
+  margin-bottom: var(--space-xl);
+}
+
+.recommendations-hub-main .recommendations-hero {
+  margin-top: 0;
+}
+
+.recommendations-hero {
+  margin-top: 4rem;
+  max-width: 44rem;
+}
+
+.recommendations-hero h1 {
+  margin: 0;
+  font-size: var(--text-h3);
+  line-height: 1.05;
+}
+
+.recommendations-hero p {
+  margin: 0.9rem 0 0;
+  color: var(--black-300);
+  max-width: 44rem;
+}
+
+.recs-source-hint {
+  display: block;
+  margin-top: 0.6rem;
+  color: var(--black-300);
+}
+
+.recommendations-choice-grid {
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.75rem;
+  width: min(68rem, 100%);
+}
+
+.recommendation-choice-card {
+  border: 1px solid var(--light-stroke);
+  border-radius: 0.9rem;
+  background: #f7f7fb;
+  padding: 1.7rem 1.45rem 1.2rem;
+  box-shadow: none;
+}
+
+.recommendation-choice-card h3 {
+  margin: 0;
+  font-size: clamp(2rem, 1.8vw, 2.1rem);
+  line-height: 1.1;
+}
+
+.recommendation-choice-card h3 span {
+  color: var(--base-violet);
+}
+
+.recommendation-choice-card p {
+  margin: var(--space-sm) 0 var(--space-md);
+  color: var(--black-300);
+}
+
+.recommendation-choice-card button {
+  min-width: 13.5rem;
+}
+
+@media (max-width: 992px) {
+  .recommendations-hub-page .home-navbar {
+    display: none;
+  }
+
+  .recommendations-hub-page::after {
+    width: 100%;
+    height: min(15rem, 30vh);
+    background-image: url('../../../assets/big-field-resposive.png');
+    background-position: bottom center;
+    background-size: cover;
+  }
+
+  .recommendations-hub-main {
+    min-height: 100dvh;
+    justify-content: flex-start;
+    padding-top: var(--space-xl);
+    padding-bottom: calc(var(--space-4xl) + 9rem);
+  }
+
+  .recommendations-hub-main .recs-back {
+    margin-bottom: var(--space-lg);
+  }
+
+  .recommendations-hero {
+    margin-top: 0;
+  }
+
+  .recommendations-hero p {
+    max-width: 31rem;
+  }
+
+  .recommendations-choice-grid {
+    margin-top: var(--space-xl);
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+
+  .recommendation-choice-card {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(2px);
+  }
+
+  .recommendation-choice-card h3 {
+    font-size: clamp(1.6rem, 5.2vw, 2rem);
+    line-height: 1.12;
+  }
+
+  .recommendation-choice-card p {
+    margin-bottom: var(--space-sm);
+  }
+
+  .recommendation-choice-card button {
+    width: 100%;
+    min-width: 0;
+  }
+}

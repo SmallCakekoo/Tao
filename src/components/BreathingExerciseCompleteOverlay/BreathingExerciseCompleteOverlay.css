@@ -1,0 +1,119 @@
+.breathing-complete-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: grid;
+  place-items: center;
+  padding: var(--space-md);
+  background: rgba(25, 24, 29, 0.5);
+  backdrop-filter: blur(8px);
+}
+
+.breathing-complete-card {
+  width: min(34rem, 100%);
+  border-radius: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.48);
+  background:
+    radial-gradient(circle at top, rgba(255, 204, 187, 0.4), transparent 44%),
+    var(--bg-color);
+  box-shadow: 0 24px 60px rgba(31, 19, 16, 0.22);
+  padding: 2rem;
+  text-align: center;
+}
+
+.breathing-complete-card h2 {
+  margin: 0.5rem 0 0;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.05;
+}
+
+.breathing-complete-copy {
+  margin: 1rem auto 0;
+  max-width: 28rem;
+  color: var(--black-300);
+}
+
+.breathing-complete-stats {
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.breathing-complete-stats div {
+  border-radius: 1.25rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.72);
+  display: grid;
+  gap: 0.35rem;
+}
+
+.breathing-complete-stats strong {
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  color: var(--base-orange);
+}
+
+.breathing-complete-stats span {
+  color: var(--black-300);
+  font-size: var(--text-sm);
+}
+
+.breathing-complete-actions {
+  margin-top: 1.6rem;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.breathing-complete-primary,
+.breathing-complete-secondary {
+  min-width: 10.5rem;
+  height: 2.9rem;
+  padding: 0 1.15rem;
+  border-radius: var(--radius-lg);
+}
+
+.breathing-complete-primary {
+  background: var(--base-orange);
+  color: #fff;
+  font-size: var(--text-button);
+  box-shadow: 0 10px 22px rgba(255, 126, 91, 0.24);
+}
+
+.breathing-complete-secondary {
+  background: #fff;
+  color: var(--base-orange);
+  border: 1px solid var(--light-stroke);
+}
+
+.breathing-complete-primary:hover {
+  background: var(--orange-500);
+}
+
+.breathing-complete-secondary:hover {
+  background: #fff;
+}
+
+.breathing-complete-primary:focus-visible,
+.breathing-complete-secondary:focus-visible {
+  outline: 2px solid var(--orange-300);
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  .breathing-complete-card {
+    padding: 1.5rem 1.2rem;
+    border-radius: 1.5rem;
+  }
+
+  .breathing-complete-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .breathing-complete-primary,
+  .breathing-complete-secondary {
+    width: 100%;
+    min-width: 0;
+  }
+}

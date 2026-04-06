@@ -1,0 +1,130 @@
+h5 {
+  color: #747474;
+  margin: 2vh 0 2vh 0;
+}
+
+
+.priority-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.priority-container label {
+  color: var(--black-300);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.priority-select {
+  width: 100%;
+  height: 2.9rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--light-stroke);
+  background: var(--bg-light-gray);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+  color: var(--black-300);
+  font-family: var(--font-family);
+  font-size: var(--text-body);
+  padding: 0 2.75rem 0 var(--space-sm);
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23747474' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 0.95rem;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.priority-select::-ms-expand {
+  display: none;
+}
+
+.priority-select:hover {
+  background: var(--bg-light-gray);
+  border-color: var(--violet-200);
+}
+
+.priority-select:focus {
+  outline: none;
+  border-color: var(--base-violet);
+  box-shadow: 0 0 0 2px var(--violet-100);
+}
+
+.priority-select:active {
+  transform: none;
+  background: var(--bg-light-gray);
+}
+
+.priority-select option {
+  background: #ffffff;
+  color: var(--black-300);
+  font-family: var(--font-family);
+  font-size: var(--text-body);
+  padding: 0.55rem 0.65rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 50vh;
+}
+
+.form-container input {
+  font-family: 'DM Sans', sans-serif;
+  font-size: var(--text-body);
+}
+
+form button {
+  width: 25vh;
+  padding: 2vh;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+
+
+@media (max-width: 768px) {
+  form {
+    width: 100%;
+  }
+
+  form button {
+    width: 100%;
+  }
+
+  .form-container {
+    align-items: stretch;
+  }
+
+  form {
+    width: 100%;
+    padding-bottom: 20vh;
+  }
+
+  form button {
+    width: 100%;
+  }
+
+  .form-container {
+    align-items: stretch;
+    padding: 0 5%;
+  }
+
+  .form-container input {
+    padding: 10px 12px;
+  }
+
+  .priority-select {
+    height: 2.2rem;
+  }
+}

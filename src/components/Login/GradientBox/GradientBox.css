@@ -1,0 +1,89 @@
+.gradient-box {
+  min-height: 90vh;
+  width: 54%;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(180deg, #b59aff 0%, #ffcec0 100%);
+  padding: var(--space-2xl);
+  color: var(--bg-color);
+}
+
+.gradient-box img {
+  width: 28%;
+  margin-bottom: 10%;
+}
+
+.message {
+  color: var(--bg-color, #fffdfd);
+}
+
+.glad {
+  margin: 0;
+  animation-name: fadeInUp;
+  animation-duration: 0.6s;
+  color: var(--bg-color, #fffdfd);
+}
+
+.ready {
+  margin: 0;
+  animation-name: fadeInUp;
+  animation-duration: 0.8s;
+  color: var(--bg-color, #fffdfd);
+}
+
+@media (max-width: 768px) {
+  .gradient-box {
+    width: 100%;
+    min-height: 450px;
+    border-radius: 0;
+    margin-bottom: 12px;
+
+    background-image: url('/src/assets/wave-shape.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center bottom;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .gradient-box img {
+    width: 20%;
+    margin-bottom: 8px;
+  }
+}
+
+@media (max-width: 600px) {
+  .gradient-box {
+    width: 100%;
+    min-height: 360px;
+    border-radius: 0;
+    margin-bottom: 20%;
+
+    background-image: url('/src/assets/wave-shape.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center bottom;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: var(--space-sm);
+    padding-right: var(--space-sm);
+  }
+
+  .gradient-box img {
+    width: 20%;
+    margin-bottom: 8px;
+  }
+
+  .ready {
+    font-size: var(--text-h5);
+  }
+  .gradient-box img {
+    width: 24%;
+    margin-bottom: 8px;
+  }
+}

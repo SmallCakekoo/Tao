@@ -1,0 +1,55 @@
+.week {
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  align-self: flex-start;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 100%;
+  gap: var(--space-lg);
+  border: 1px solid var(--light-stroke, #ddddea);
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
+
+  padding-top: min(var(--space-md), 10%);
+  padding-left: min(var(--space-lg), 5%);
+  padding-right: min(var(--space-lg), 5%);
+  padding-bottom: min(var(--space-md), 5%);
+
+  /* Soft Shadow */
+  box-shadow: 0 2px 4.8px 0 rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 768px) {
+  .week {
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 8px;
+    padding-bottom: 8px; /* space for scroll */
+    max-width: 100%;
+  }
+}
+
+.overview {
+  margin-top: 0;
+}
+
+.days::-webkit-scrollbar {
+  display: none;
+}
+
+.days {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-md);
+  overflow-x: auto;
+  overflow-y: hidden;
+  -ms-overflow-style: none;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}

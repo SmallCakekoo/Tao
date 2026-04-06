@@ -1,0 +1,30 @@
+.weekly-widget {
+  width: 100%;
+  max-width: 600px;
+
+  padding: 10px;
+  border-radius: 20px;
+
+  border: 1px solid #ddddea;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.weekly-widget h4 {
+  color: #393939;
+  font-size: 24px;
+  margin-top: 5px;
+  margin-bottom: 0;
+  margin-left: 28px;
+}
+
+/* 👇 contenedor del gráfico */
+.chart-container {
+  margin-top: 0%;
+  border-radius: 16px;
+  width: 100%;
+  padding: 10px;
+  height: 190px; /* 👈 reducido de 250px */
+}

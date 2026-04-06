@@ -1,30 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
 :root {
-  /* Font Family */
+  /* Font - DM Sans everywhere */
   font-family: 'DM Sans', sans-serif;
   --font-family: 'DM Sans', sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   /* Headings */
-  --text-h1: 90px;
-  --text-h2: 64px;
-  --text-h3: 45px;
-  --text-h4: 32px;
-  --text-h5: 23px;
-  --text-body: 16px;
-  --text-button: 18px;
+  --text-h1: 5.625rem; /* 90px */
+  --text-h2: 4rem; /* 64px */
+  --text-h3: 2.8125rem; /* 45px */
+  --text-h4: 2rem; /* 32px */
+  --text-h5: 1.4375rem; /* 23px */
+  --text-body: 1rem; /* 16px */
+  --text-sm: 0.875rem; /* 14px */
+  --text-button: 1.125rem; /* 18px */
 
   /* Body */
-  --font-body-size: 16px;
+  --font-body-size: 1rem;
+
+  /* Spacing */
+  --space-xs: 0.5rem; /* 8px */
+  --space-sm: 1rem; /* 16px */
+  --space-md: 1.5rem; /* 24px */
+  --space-lg: 2rem; /* 32px */
+  --space-xl: 3rem; /* 48px */
+  --space-2xl: 4rem; /* 64px */
+  --space-3xl: 5rem; /* 80px */
+  --space-4xl: 6.25rem; /* 100px */
+  --space-5xl: 7.5rem; /* 120px */
+  --section-padding-y: 5rem;
+  --section-padding-x: 1.5rem;
+  --container-max: 75rem; /* 1200px */
+  --content-max: 45rem; /* 720px */
+
+  /* Border Radii */
+  --radius-xs: 0.25rem; /* 4px */
+  --radius-sm: 0.5rem; /* 8px */
+  --radius-md: 0.75rem; /* 12px */
+  --radius-lg: 1rem; /* 16px */
+  --radius-xl: 1.5rem; /* 24px */
+  --radius-full: 6.25rem; /* 100px / Pill style */
 
   /* Colors */
   --bg-color: #fffdfd;
   --light-stroke: #ddddea;
   --bg-light-gray: #f5f5fb;
   --base-black: #393939;
+  --black-300: #747474;
+  --black-150: #a1a1a1;
+  --black-0: #cdcdcd;
+
+  --violet-500: #6c37ff;
   --base-violet: #895fff;
+  --violet-200: #c4afff;
+  --violet-100: #e2d7ff;
+
+  --accent-yellow: #ffd93d;
+  --yellow-600: #d2b338;
+  --yellow-500: #ffda46;
+  --base-yellow: #ffe16b;
+  --yellow-100: #fffdfd;
+
+  --orange-500: #ff5e32;
   --base-orange: #ff7e5b;
   --orange-300: #ff9e84;
+  --orange-100: #ffdfd6;
+  --orange-50: #fff0eb;
+
   --base-blue: #668dff;
 
   /* Base Colors */
@@ -48,10 +96,17 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
+  min-width: 20rem; /* 320px */
   min-height: 100vh;
+  font-family: var(--font-family);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: var(--font-family);
 }
 
 h1 {
@@ -76,22 +131,27 @@ h5 {
 }
 p {
   font-size: var(--text-body);
+  font-family: var(--font-family);
 }
 
-button {
-  color: var(--bg-color, #FFFDFD);
+button,
+input[type='button'],
+input[type='submit'],
+input[type='reset'] {
+  color: var(--bg-color, #fffdfd);
   font-family: var(--font-family);
   font-size: var(--text-button);
   font-weight: 500;
+  cursor: pointer;
 
   display: inline-flex;
-  height: 50px;
-  padding: 14px 54px;
+  height: 3.125rem; /* 50px */
+  padding: 0.875rem 3.375rem; /* 14px 54px */
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 0.625rem; /* 10px */
 
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   border: none;
   overflow: hidden;
 
@@ -104,4 +164,26 @@ button {
 
 button:hover {
   background-color: var(--orange-300, #ff9e84);
+}
+
+input {
+  display: flex;
+  font-family: (--font-family);
+  padding: var(--space-sm);
+  align-items: center;
+  align-self: stretch;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--light-stroke, #ddddea);
+  background: var(--bg-light-gray);
+
+  /* Soft Shadow */
+  box-shadow: 0 2px 4.8px 0 rgba(0, 0, 0, 0.05);
+}
+
+input:placeholder-shown {
+  color: var(--black-150);
+}
+
+input:focus {
+  outline: none;
 }

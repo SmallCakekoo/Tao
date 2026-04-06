@@ -1,0 +1,69 @@
+.edit-quote h3 {
+  color: #668dff;
+  font-size: 32px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.edit-quote {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Card principal */
+.edit-quote > div {
+  background-color: #fffdfd;
+  width: 100%;
+  max-width: 500px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  padding: 25px;
+  border-radius: 20px;
+  border: 1px solid #ddddea;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* Contenedor inputs */
+.edit-quote > div > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Input principal (quote grande) */
+.edit-quote input:first-child {
+  width: 100%;
+  padding: 20px;
+  border-radius: 16px;
+}
+
+/* Input secundario (autor) */
+.edit-quote input:last-child {
+  width: 60%;
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.edit-quote input {
+  font-family: 'DM Sans', sans-serif;
+  font-size: var(--text-body);
+}
+
+/* Texto inferior */
+.edit-quote p {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #929292;
+}
+
+.save-quote-button {
+  height: 20%;
+  border: none;
+  padding: 8px;
+  border-radius: 12px;
+  width: 100%;
+}

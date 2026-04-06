@@ -1,0 +1,140 @@
+.intention {
+  width: 90%;
+  min-width: 400px;
+  padding: var(--space-sm);
+  border-radius: 20px;
+  background: var(--bg-light-gray);
+  margin-top: var(--space-xs);
+  margin-bottom: var(--space-sm);
+
+  /* Soft Shadow */
+  box-shadow: 0 2px 4.8px 0 rgba(0, 0, 0, 0.05);
+
+  display: grid;
+  grid-template-rows: auto 0fr;
+
+  transition: grid-template-rows 0.35s ease;
+}
+
+.intention.collapsed {
+  grid-template-rows: auto 0fr;
+}
+
+.intention.expanded {
+  grid-template-rows: auto 1fr;
+}
+
+.what {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.what.expanded {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.what.collapsed {
+  font-size: 0.98rem;
+  color: var(--black-150);
+  margin: 0;
+}
+
+.int-content {
+  overflow: hidden;
+  width: 80%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  opacity: 0;
+  transform: translateY(-0.8rem);
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.intention.expanded .content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.int-content.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.small-text {
+  font-size: 0.68rem;
+  margin: 0;
+}
+
+.small-btn {
+  padding-top: var(--space-xs);
+  padding-bottom: var(--space-xs);
+  height: 2.5rem;
+  margin-top: var(--space-sm);
+  cursor: pointer;
+  text-wrap: nowrap;
+}
+
+.top.expanded {
+  color: var(--base-blue);
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.top.collapsed {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.icon {
+  color: var(--base-blue);
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .intention {
+    width: 100%;
+    min-width: 0;
+  }
+  .icon {
+    color: var(--base-blue);
+    cursor: pointer;
+  }
+  .small-btn {
+    width: 180px;
+  }
+}
+
+.overlay-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background-color: rgba(0, 0, 0, 0.4);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 1000;
+}
+
+.arrows {
+  color: var(--base-blue);
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.icon.disabled {
+  color: var(--black-0);
+}

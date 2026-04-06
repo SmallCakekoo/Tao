@@ -1,0 +1,14 @@
+button.int-button {
+  border-radius: 12px;
+  border: 1px solid var(--Light-Stroke, #ddddea);
+  background-color: #fafafe;
+  color: var(--black-400);
+  padding-top: 1px;
+  padding-bottom: 1px;
+  margin-bottom: var(--space-xs);
+  width: 100%;
+}
+
+button.int-button.selected {
+  border: 2px solid var(--Light-Stroke, var(--base-blue));
+}

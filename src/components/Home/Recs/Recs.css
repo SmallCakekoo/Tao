@@ -1,0 +1,58 @@
+.recs {
+  border-radius: 20px;
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-lg);
+  border: 1px solid var(--light-stroke, #ddddea);
+  background-image: url('../../../assets/meditation.png');
+  background-size: 24%;
+  background-position: right 10% center;
+  background-repeat: no-repeat;
+  margin-bottom: var(--space-md);
+
+  /* Soft Shadow */
+  box-shadow: 0 2px 4.8px 0 rgba(0, 0, 0, 0.05);
+
+  padding-top: min(var(--space-xl), 10%);
+  padding-left: min(var(--space-lg), 5%);
+  padding-right: min(var(--space-lg), 5%);
+  padding-bottom: min(var(--space-lg), 5%);
+}
+
+.recs:hover .message-r {
+  color: var(--base-orange);
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+}
+
+.message {
+  color: var(--black-400);
+}
+
+.message-r {
+  margin: 0;
+  font-size: 1.7rem;
+  transition: color 0.5s ease;
+}
+
+.message-p {
+  width: 60%;
+  margin: 0;
+  font-size: var(--text-sm);
+}
+
+@media (max-width: 768px) {
+  .message-r {
+    font-size: 1.5rem;
+  }
+  .message-p {
+    font-size: 0.8rem;
+    width: 70%;
+  }
+}

@@ -1,6 +1,6 @@
 import './App.css';
+
 import { Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
 
 import { Landing } from './pages/Landing/Landing';
 import { LogIn } from './pages/LogIn/LogIn';
@@ -30,9 +30,9 @@ import { RecommendationsResults } from './pages/Recommendations/Results/Recommen
 
 import { BreathingExercise } from './pages/BreathingExercise/BreathingExercise';
 import { EditFeelings } from './pages/EditFeelings/EditFeelings';
+import { NotFound } from './pages/NotFound/NotFound';
 
 function App() {
-  
   return (
     <>
       <ScrollToTop />
@@ -45,22 +45,14 @@ function App() {
         <Route path="/terms" element={<Terms />} />
         <Route path="/home" element={<Home />} />
         <Route path="/diary" element={<Diary />} />
-        <Route
-          path="/agenda"
-          element={<Agenda/>}
-        />
+        <Route path="/agenda" element={<Agenda />} />
         <Route path="/form" element={<Form />}>
           <Route index element={<FormIntro />} />
           <Route path="question/:questionId" element={<FormQuestion />} />
           <Route path="results" element={<FormResults />} />
         </Route>
         <Route path="/profile" element={<Profile />} />
-        <Route
-          path="/editprofile"
-          element={
-            <EditProfile/>
-          }
-        />
+        <Route path="/editprofile" element={<EditProfile />} />
         <Route path="/form/edit-feelings" element={<EditFeelings />} />
         <Route path="/edit-feelings" element={<EditFeelings />} />
         <Route path="/recommendations" element={<Recommendations />} />
@@ -68,6 +60,7 @@ function App() {
         <Route path="/recommendations/loading" element={<RecommendationsLoading />} />
         <Route path="/recommendations/results" element={<RecommendationsResults />} />
         <Route path="/recommendations/breathing" element={<BreathingExercise />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );

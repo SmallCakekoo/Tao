@@ -3,7 +3,6 @@ h5 {
   margin: 2vh 0 2vh 0;
 }
 
-
 .priority-container {
   display: flex;
   flex-direction: column;
@@ -91,7 +90,6 @@ form button {
   flex-direction: column;
   align-items: end;
 }
-
 
 @media (max-width: 768px) {
   form {

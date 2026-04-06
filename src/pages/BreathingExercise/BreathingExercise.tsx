@@ -21,6 +21,7 @@ export const BreathingExercise = () => {
   const isComplete = elapsed >= TOTAL_SECONDS;
 
   // Avanza el contador cada segundo mientras el ejercicio no esté en pausa.
+  // Es vital limpiar el intervalo al desmontar el componente para evitar memory leaks.
   useEffect(() => {
     if (isPaused || isComplete) {
       return;
@@ -70,6 +71,10 @@ export const BreathingExercise = () => {
           </p>
 
           <div className="breathing-circle-wrap">
+            {/* 
+              El círculo visual sincroniza su estado de animación (CSS Keyframes) 
+              con el estado de pausa de React.
+            */}
             <div
               className={`breathing-circle breathing-circle-${phase}`}
               style={{ animationPlayState: isPaused ? 'paused' : 'running' }}

@@ -19,7 +19,8 @@ import type {
 import '../RecommendationsShared.css';
 import './RecommendationsResults.css';
 
-// The idea of variants A and B is to have a different set of recommendations following the FIGMA design.
+// Los variantes A y B permiten mostrar diferentes sets de recomendaciones
+// basadas en la emoción del usuario, siguiendo el diseño de Figma.
 
 const CARDS_BY_VARIANT: Record<'A' | 'B', RecommendationCard[]> = {
   A: [
@@ -96,6 +97,8 @@ export const RecommendationsResults = () => {
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const dragStartY = useRef<number | null>(null);
 
+  // Determinamos qué variante mostrar basándonos en el sentimiento seleccionado.
+  // Por ejemplo, sentimientos físicos como "tired" disparan la Variante A.
   const variant: 'A' | 'B' = !selectedFeeling
     ? 'B'
     : selectedFeeling === 'tired' || selectedFeeling === 'body-hurts'
@@ -126,6 +129,9 @@ export const RecommendationsResults = () => {
     // TODO: Add logic to save the current recommendation card to the diary.
   };
 
+  // --- Logica de Gestos (Pointer Events) ---
+  // Implementamos un sistema manual de "drag-to-paginate" en lugar de scroll estándar.
+
   const onPointerDown: PointerEventHandler<HTMLElement> = (event) => {
     const target = event.target as HTMLElement;
     if (target.closest('button')) {
@@ -138,6 +144,7 @@ export const RecommendationsResults = () => {
   };
 
   const onPointerMove: PointerEventHandler<HTMLElement> = (event) => {
+    // Calculamos la diferencia de movimiento y limitamos el desplazamiento visual (offset).
     if (dragStartY.current === null) {
       return;
     }
@@ -147,6 +154,7 @@ export const RecommendationsResults = () => {
   };
 
   const onPointerEnd: PointerEventHandler<HTMLElement> = () => {
+    // Si el usuario movió la tarjeta más de 64px, cambiamos de slide.
     if (dragOffset > 64) {
       goNext();
     } else if (dragOffset < -64) {

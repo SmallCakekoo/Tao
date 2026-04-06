@@ -24,12 +24,11 @@ const stickers = [
   { emotionSrc: greatIcon, size: 74, left: '45%', top: '12%' },
 ];
 
-/**
- * Rough profile of the top edge of the field SVG.
- * Coordinates based on viewbox: 1920 x 238
- */
+// Nota: El fieldViewbox es una recreación del viewbox original de la web de Tao.
 const fieldViewbox = { width: 1920, height: 238 };
 
+// Mapa de coordenadas que representa el "suelo" o la silueta de la colina SVG.
+// Se usa para que los stickers con gravedad sepan dónde detenerse al caer.
 const fieldProfile = [
   { x: 0, y: 62 },
   { x: 120, y: 92 },
@@ -86,6 +85,11 @@ export const HeroSection = () => {
     return () => ctx.revert();
   }, []);
 
+  /**
+   * Esta función calcula dinámicamente la altura del suelo en un punto X específico.
+   * Interpola entre los puntos del 'fieldProfile' teniendo en cuenta el redimensionado
+   * del contenedor (object-fit: cover).
+   */
   const getGroundY = useCallback((centerX: number) => {
     const section = sectionRef.current;
     const hill = hillRef.current;
@@ -99,7 +103,7 @@ export const HeroSection = () => {
     const svgW = fieldViewbox.width;
     const svgH = fieldViewbox.height;
 
-    // Calculation to match object-fit: cover + object-position: bottom center
+    // Cálculo para coincidir con object-fit: cover + object-position: bottom center
     const scale = Math.max(sectionWidth / svgW, hillHeight / svgH);
     const renderedW = svgW * scale;
     const renderedH = svgH * scale;
@@ -119,6 +123,7 @@ export const HeroSection = () => {
       const b = fieldProfile[i + 1];
 
       if (clampedX >= a.x && clampedX <= b.x) {
+        // Interpolación lineal entre dos puntos del perfil del suelo
         const t = (clampedX - a.x) / (b.x - a.x);
         svgY = lerp(a.y, b.y, t);
         break;

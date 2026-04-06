@@ -67,3 +67,31 @@
   border-radius: 12px;
   width: 100%;
 }
+
+/* ajustes mobile */
+@media (max-width: 768px) {
+  .edit-quote {
+    margin-top: 0;
+    width: 100%;
+  }
+
+  .edit-quote > div {
+    max-width: 100%;
+    padding: 18px;
+    border-radius: 16px;
+  }
+
+  .edit-quote h3 {
+    font-size: 2rem;
+    margin-top: 0;
+  }
+
+  .edit-quote input:first-child {
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .edit-quote input:last-child {
+    width: 100%;
+  }
+}

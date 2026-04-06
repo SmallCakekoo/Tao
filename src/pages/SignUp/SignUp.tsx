@@ -81,7 +81,7 @@ export const SignUp = () => {
         {success ? (
           <div className="success-box">
             <BackButton />
-            <h3 className="check-email">Check your email</h3>
+            <h3 className="check-email">Account created</h3>
             <p>Time to enter your calm space! Login now to start your journey.</p>
             <Link to="/login">Go to login</Link>
             <img src={airplane} alt="Paper airplane" className="airplane" />

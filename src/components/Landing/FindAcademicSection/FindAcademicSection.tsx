@@ -1,7 +1,9 @@
 import { useRef, useEffect, useCallback, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../../Button/Button';
+import { supabase } from '../../../lib/supabaseClient';
 import type { Body } from '../../../types/LandingTypes';
 import meditationImg from '../../../assets/meditation.png';
 import awfulIcon from '../../../assets/stickers/awful.svg';
@@ -39,6 +41,7 @@ const bounce = 0.3; // Coeficiente de restitución (rebote)
 const friction = 0.8; // Fricción al tocar el suelo
 
 export const FindAcademicSection = () => {
+  const navigate = useNavigate();
   const [renderedStickers, setRenderedStickers] = useState(stickers);
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -312,12 +315,17 @@ export const FindAcademicSection = () => {
     []
   );
 
+  const handleStartNowClick = async () => {
+    const { data } = await supabase.auth.getSession();
+    navigate(data.session ? '/home' : '/login');
+  };
+
   return (
     <section className="find-academic-section" ref={sectionRef}>
       <div className="find-academic-cta">
         <h2 ref={headingRef}>Find your academic rhythm.</h2>
         <p>Be part of the students building a healthier way to succeed.</p>
-        <Button ref={ctaRef} type="button">
+        <Button ref={ctaRef} type="button" onClick={handleStartNowClick}>
           Start Now
         </Button>
       </div>

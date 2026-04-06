@@ -3,6 +3,30 @@ import { Link, useLocation } from 'react-router-dom';
 import logoFull from '../../../assets/logo-full.svg';
 import './HomeNavbar.css';
 
+const navItems = [
+  { path: '/home', label: 'Home' },
+  { path: '/diary', label: 'Diary' },
+  { path: '/agenda', label: 'Agenda' },
+  { path: '/profile', label: 'Profile' },
+] as const;
+
+const resolveDesktopActivePath = (pathname: string) => {
+  const isProfileRelatedRoute =
+    pathname === '/profile' ||
+    pathname === '/editprofile' ||
+    pathname === '/form' ||
+    pathname.startsWith('/form/') ||
+    pathname === '/edit-feelings' ||
+    pathname.startsWith('/edit-feelings/');
+
+  if (isProfileRelatedRoute) return '/profile';
+  if (pathname === '/home' || pathname.startsWith('/home/')) return '/home';
+  if (pathname === '/diary' || pathname.startsWith('/diary/')) return '/diary';
+  if (pathname === '/agenda' || pathname.startsWith('/agenda/')) return '/agenda';
+
+  return null;
+};
+
 export const HomeNavbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
@@ -14,8 +38,7 @@ export const HomeNavbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const isActive = (path: string) => location.pathname === path;
+  const activePath = resolveDesktopActivePath(location.pathname);
 
   return (
     <nav className={`home-navbar ${scrolled ? 'scrolled' : ''}`}>
@@ -24,30 +47,16 @@ export const HomeNavbar = () => {
           <img src={logoFull} alt="Tao logo" />
         </Link>
         <div className="home-nav-actions">
-          <Link
-            to="/home"
-            className={`home-nav-link ${isActive('/home') ? 'active' : ''}`}
-          >
-            Home
-          </Link>
-          <Link
-            to="/diary"
-            className={`home-nav-link ${isActive('/diary') ? 'active' : ''}`}
-          >
-            Diary
-          </Link>
-          <Link
-            to="/agenda"
-            className={`home-nav-link ${isActive('/agenda') ? 'active' : ''}`}
-          >
-            Agenda
-          </Link>
-          <Link
-            to="/profile"
-            className={`home-nav-link ${isActive('/profile') ? 'active' : ''}`}
-          >
-            Profile
-          </Link>
+          {navItems.map((item) => (
+            <Link
+              key={item.path}
+              to={item.path}
+              className={`home-nav-link ${activePath === item.path ? 'active' : ''}`}
+              aria-current={activePath === item.path ? 'page' : undefined}
+            >
+              {item.label}
+            </Link>
+          ))}
         </div>
       </div>
     </nav>

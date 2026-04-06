@@ -1,8 +1,10 @@
 import { useRef, useEffect, useCallback } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useNavigate } from 'react-router-dom';
 import { DraggableSticker } from '../DraggableSticker/DraggableSticker';
 import { Button } from '../../Button/Button';
+import { supabase } from '../../../lib/supabaseClient';
 import fieldImg from '../../../assets/field-landing.svg';
 import './HeroSection.css';
 
@@ -47,11 +49,18 @@ const fieldProfile = [
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
 export const HeroSection = () => {
+  const navigate = useNavigate();
   const badgeRef = useRef<HTMLParagraphElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const ctaRef = useRef<HTMLButtonElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const hillRef = useRef<HTMLDivElement>(null);
+
+  // Handle CTA click based on authentication status
+  const handleGetStartedClick = async () => {
+    const { data } = await supabase.auth.getSession();
+    navigate(data.session ? '/home' : '/signup');
+  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -146,7 +155,12 @@ export const HeroSection = () => {
         Your personal hub for mental clarity and productivity.
       </h1>
 
-      <Button ref={ctaRef} type="button" className="landing-hero-cta">
+      <Button
+        ref={ctaRef}
+        type="button"
+        className="landing-hero-cta"
+        onClick={handleGetStartedClick}
+      >
         Get started
       </Button>
 

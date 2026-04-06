@@ -134,11 +134,15 @@ p {
   font-family: var(--font-family);
 }
 
-button {
+button,
+input[type='button'],
+input[type='submit'],
+input[type='reset'] {
   color: var(--bg-color, #fffdfd);
   font-family: var(--font-family);
   font-size: var(--text-button);
   font-weight: 500;
+  cursor: pointer;
 
   display: inline-flex;
   height: 3.125rem; /* 50px */

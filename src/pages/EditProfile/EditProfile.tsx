@@ -1,21 +1,21 @@
 import './EditProfile.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { HomeNavbar } from '../../components/NavBar/CommonNavBar/HomeNavbar';
 import { EditProfileForm } from '../../components/EditProfileForm/EditProfileForm';
 import { BackButton } from '../../components/BackButton/BackButton';
 import { EditQuote } from '../../components/EditQuote/EditQuote';
 import { FeedbackMessage } from '../../components/FeedbackMessage/FeedbackMessage';
+import { supabase } from '../../lib/supabaseClient';
+import { useNavigate } from 'react-router-dom';
 
-type Props = {
-  setUserName: (name: string) => void;
-  setUserQuote: (quote: string) => void;
-  setUserQuoteAuthor: (author: string) => void;
-};
-
-export const EditProfile = ({ setUserName, setUserQuote, setUserQuoteAuthor }: Props) => {
+export const EditProfile = () => {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [toastType, setToastType] = useState<'success' | 'error'>('success');
+  const [name, setName] = useState('');
+  const [userId, setUserId] = useState('');
+
+  const navigate = useNavigate();
 
   const triggerToast = (message: string, type: 'success' | 'error') => {
     setToastMessage(message);
@@ -23,6 +23,41 @@ export const EditProfile = ({ setUserName, setUserQuote, setUserQuoteAuthor }: P
     setShowToast(true);
     setTimeout(() => setShowToast(false), 2500);
   };
+
+  useEffect(() => {
+    const getName = async () => {
+      const { data: userData } = await supabase.auth.getUser();
+
+      if (!userData.user) return;
+      
+      setUserId(userData.user.id);
+
+      const { data: profile, error } = await supabase
+        .from('profiles')
+        .select('name')
+        .eq('id', userData.user.id)
+        .single();
+
+      if (error) {
+        console.error(error.message);
+        return;
+      }
+
+      setName(profile.name);
+    };
+
+    getName();
+  }, []);
+
+
+  const signOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      return;
+    }
+    navigate('/');
+  };
+
   return (
     <div className="edit-profile">
       <HomeNavbar />
@@ -37,19 +72,20 @@ export const EditProfile = ({ setUserName, setUserQuote, setUserQuoteAuthor }: P
           <button className="logout-button logout-button--mobile">Log Out</button>
         </div>
         <div className="logout-container">
-          <button className="logout-button">Log Out</button>
+          <button className="logout-button" onClick={signOut}>
+            Log Out
+          </button>
         </div>
       </div>
 
       <div className="editProfile-content">
         <div className="left-column">
-          <EditProfileForm setUserName={setUserName} onSave={triggerToast} />
+          <EditProfileForm name={name} userId={userId} onSave={triggerToast} />
         </div>
         <div className="right-column">
           <EditQuote
-            setQuote={setUserQuote}
-            setAuthor={setUserQuoteAuthor}
             onSave={triggerToast}
+            userId={userId}
           />
         </div>
       </div>

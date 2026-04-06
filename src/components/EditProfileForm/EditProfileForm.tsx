@@ -2,9 +2,11 @@ import './EditProfileForm.css';
 import { useState } from 'react';
 import type { EditProfileFormProps } from '../../types/ProfileProps';
 import { ChangePassword } from '../ChangePasswordOverlay/ChangePassword';
+import { supabase } from '../../lib/supabaseClient';
 
 export const EditProfileForm = ({
-  setUserName,
+  name,
+  userId,
   onSave,
 }: EditProfileFormProps & {
   onSave: (message: string, type: 'success' | 'error') => void;
@@ -12,13 +14,22 @@ export const EditProfileForm = ({
   const [nameInput, setNameInput] = useState('');
   const [showChangePassword, setShowChangePassword] = useState(false);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (nameInput.trim() === '') {
       onSave('Name cannot be empty.', 'error');
       return;
     }
-    setUserName(nameInput);
-    onSave('Profile updated!', 'success');
+    const { data, error } = await supabase
+      .from('profiles')
+      .update({ name: nameInput })
+      .eq('id', userId)
+      .select();
+    if(error) {
+      return;
+    }
+    if(data) {
+     onSave('Profile updated!', 'success');
+    }
   };
 
   return (
@@ -32,7 +43,7 @@ export const EditProfileForm = ({
           <p>Edit Name</p>
           <input
             type="text"
-            placeholder="Edit Name"
+            placeholder={name}
             value={nameInput}
             onChange={(e) => setNameInput(e.target.value)}
           />

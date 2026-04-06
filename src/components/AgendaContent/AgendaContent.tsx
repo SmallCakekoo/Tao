@@ -18,6 +18,7 @@ export const AgendaContent = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+
   useEffect(() => {
     const fetchTasks = async () => {
       const { data: { user } } = await supabase.auth.getUser();

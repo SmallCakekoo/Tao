@@ -60,6 +60,12 @@ export const SignUp = () => {
         if (profileError) {
           setError('Your account was created, try logging in');
         }
+        await supabase.from('quotes').insert({
+          quote: "The key is not to prioritize what's on your schedule, but to schedule your priorities",
+          author: "Stephen Covey",
+          user_id: data.user.id,
+        });
+  
         setSuccess(true);
       }
     }

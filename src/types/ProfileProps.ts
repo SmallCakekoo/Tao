@@ -6,12 +6,12 @@ export interface EditProfileProps {
 }
 
 export interface EditProfileFormProps {
-  setUserName: (name: string) => void;
+  name: string;
+  userId: string;
 }
 
 export interface EditQuoteProps {
-  setQuote: (quote: string) => void;
-  setAuthor: (author: string) => void;
+  userId: string;
 }
 
 export interface DotsProps {

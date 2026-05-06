@@ -30,14 +30,42 @@ const moodOptions: MoodOption[] = [
   { value: 'great', image: greatImg, label: 'Great mood' },
 ];
 
+import { calculateDailyCheckin } from '../../lib/checkinEngine';
+import { getTodaysCheckin, saveDailyCheckin } from '../../services/checkinService';
+
 export const EditFeelings = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
   const [energy, setEnergy] = useState<string>('Low Energy');
   const [sleep, setSleep] = useState<string>('4-6 Hours');
   const [stress, setStress] = useState<string>('High stress');
   const [dailyLoad, setDailyLoad] = useState<string>('Heavy');
   const [mood, setMood] = useState<MoodValue>('neutral');
   const [openDropdown, setOpenDropdown] = useState<SelectKey | null>(null);
+
+  useEffect(() => {
+    const loadData = async () => {
+      setLoading(true);
+      const data = await getTodaysCheckin();
+      if (data) {
+        // Map scores back to labels
+        if (data.energy_score !== undefined) setEnergy(energyOptions[data.energy_score]);
+        if (data.sleep_score !== undefined) setSleep(sleepOptions[data.sleep_score]);
+        if (data.stress_score !== undefined) setStress(stressOptions[data.stress_score]);
+        if (data.daily_load_score !== undefined) setDailyLoad(loadOptions[data.daily_load_score]);
+        
+        // Cargar la carita que el usuario escogió directamente desde la DB
+        if (data.face_result) {
+          setMood(data.face_result as MoodValue);
+        } else if (data.mood_score !== undefined) {
+          const moodOption = moodOptions[data.mood_score];
+          if (moodOption) setMood(moodOption.value);
+        }
+      }
+      setLoading(false);
+    };
+    loadData();
+  }, []);
 
   useEffect(() => {
     const closeOnOutsideClick = (event: MouseEvent) => {
@@ -51,24 +79,34 @@ export const EditFeelings = () => {
     return () => document.removeEventListener('click', closeOnOutsideClick);
   }, []);
 
-  const handleSave = () => {
-    // localStorage.setItem(
-    //   'tao:daily-check-in-edit',
-    //   JSON.stringify({
-    //     energy,
-    //     sleep,
-    //     mood,
-    //     stress,
-    //     dailyLoad,
-    //     savedAt: new Date().toISOString(),
-    //   })
-    // );
-    navigate('/form');
+  const handleSave = async () => {
+    const scores = {
+      energy_score: energyOptions.indexOf(energy),
+      sleep_score: sleepOptions.indexOf(sleep),
+      mood_score: moodOptions.findIndex(o => o.value === mood),
+      stress_score: stressOptions.indexOf(stress),
+      daily_load_score: loadOptions.indexOf(dailyLoad),
+    };
+
+    const engineResults = calculateDailyCheckin(scores);
+    // La carita la escoge el usuario directamente
+    const results = { ...engineResults, face_result: mood };
+    const { success } = await saveDailyCheckin(scores, results);
+
+    if (success) {
+      navigate('/home');
+    } else {
+      alert('Failed to save changes. Please try again.');
+    }
   };
 
   const handleCancel = () => {
-    navigate('/form');
+    navigate('/home');
   };
+
+  if (loading) {
+    return <div className="loading-state">Loading your feelings...</div>;
+  }
 
   const toggleDropdown = (key: SelectKey) => {
     setOpenDropdown((prev) => (prev === key ? null : key));

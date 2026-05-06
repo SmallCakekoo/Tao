@@ -1,6 +1,5 @@
 import './Profile.css';
 import { useEffect, useState } from 'react';
-import { supabase } from '../../lib/supabaseClient';
 import { HomeNavbar } from '../../components/NavBar/CommonNavBar/HomeNavbar';
 import { MobileNavBar } from '../../components/NavBar/MobileNavBar/MobileNavBar';
 import { AnimatedLine } from '../../components/Home/AnimatedLine/AnimatedLine';
@@ -9,11 +8,11 @@ import { DiaryWidget } from '../../components/DiaryWidget/DiaryWidget';
 import { Weekly } from '../../components/Weekly/Weekly';
 import { ToDoWidget } from '../../components/ToDoWidget/ToDoWidget';
 import { WeeklyWidgetChart } from '../../components/WeeklyCharts/WeeklyWidgetCharts';
+import { useAuth } from '../../contexts/AuthContext';
 
 export const Profile = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
-  const [name, setName] = useState('');
+  const { user, profile, loading } = useAuth();
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
 
   useEffect(() => {
@@ -22,44 +21,17 @@ export const Profile = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Redirigir si no hay sesión
   useEffect(() => {
-    const checkUser = async () => {
-      const { data } = await supabase.auth.getSession();
-
-      if (!data.session) {
-        navigate('/login');
-      } else {
-        setLoading(false);
-      }
-    };
-
-    checkUser();
-  }, [navigate]);
-
-  useEffect(() => {
-    const getProfile = async () => {
-      const { data: userData } = await supabase.auth.getUser();
-
-      if (!userData.user) return;
-
-      const { data: profile, error } = await supabase
-        .from('profiles')
-        .select('name')
-        .eq('id', userData.user.id)
-        .single();
-
-      if (error) {
-        console.error(error.message);
-        return;
-      }
-
-      setName(profile.name);
-    };
-
-    getProfile();
-  }, []);
+    if (!loading && !user) {
+      navigate('/login');
+    }
+  }, [loading, user, navigate]);
 
   if (loading) return null;
+
+  const name = profile?.name ?? '';
+
   return (
     <div className="profile">
       {!isMobile && <HomeNavbar />}
@@ -100,3 +72,4 @@ export const Profile = () => {
     </div>
   );
 };
+

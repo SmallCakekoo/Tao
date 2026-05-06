@@ -3,12 +3,10 @@ import './AgendaContent.css';
 import { AgendaForm } from '../AgendaForm/AgendaForm';
 import { AgendaTasks } from '../AgendaTasks/AgendaTasks';
 import agendaEmpty from '../../assets/tasks-empty.png';
-import type { TaskInterface } from '../../types/AgendaTypes';
-import { supabase } from '../../lib/supabaseClient';
-import { toggleTaskInDB } from '../../lib/tasks';
+import { useTasks } from '../../contexts/TasksContext';
 
 export const AgendaContent = () => {
-  const [tasks, setTasks] = useState<TaskInterface[]>([]);
+  const { tasks, setTasks, toggleTask, removeTask } = useTasks();
   const [showForm, setShowForm] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
@@ -18,41 +16,7 @@ export const AgendaContent = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) return;
-      const { data, error } = await supabase
-        .from('tasks')
-        .select('*')
-        .eq('user_id', user.id);
-      if (error) return;
-      if (data) setTasks(data);
-    };
-    fetchTasks();
-  }, []);
 
-  const completeTask = async (task: TaskInterface) => {
-    try {
-      const updatedTask = await toggleTaskInDB(task);
-      if (!updatedTask) return;
-      setTasks((prev) => prev.map((t) => (t.id === updatedTask.id ? updatedTask : t)));
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const removeTask = async (task: TaskInterface) => {
-    const { error } = await supabase.from('tasks').delete().eq('id', task.id);
-    if (error) return;
-    setTasks((prev) => {
-      const updated = prev.filter((t) => t.id !== task.id);
-      if (updated.length === 0) setShowForm(false); // 👈 vuelve al empty state
-      return updated;
-    });
-  };
 
   return (
     <div>
@@ -84,8 +48,11 @@ export const AgendaContent = () => {
           <div className="tasks-column">
             <AgendaTasks
               tasks={tasks}
-              completeTask={completeTask}
-              removeTask={removeTask}
+              completeTask={toggleTask}
+              removeTask={(task) => {
+                removeTask(task);
+                if (tasks.length === 1) setShowForm(false);
+              }}
             />
           </div>
           <div className="form-column">
@@ -99,8 +66,11 @@ export const AgendaContent = () => {
         <div className="tasks-mobile">
           <AgendaTasks
             tasks={tasks}
-            completeTask={completeTask}
-            removeTask={removeTask}
+            completeTask={toggleTask}
+            removeTask={(task) => {
+              removeTask(task);
+              if (tasks.length === 1) setShowForm(false);
+            }}
           />
         </div>
       )}

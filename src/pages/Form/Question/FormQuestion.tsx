@@ -123,12 +123,12 @@ export const FormQuestion = () => {
 
               {question.id === 3 ? (
                 <div className="faces-list">
-                  {question.options.map((option) => (
+                  {question.options.map((option, index) => (
                     <button
                       key={option}
-                      className={`face-btn ${selectedOption === option ? 'selected' : ''}`}
+                      className={`face-btn ${selectedOption === index ? 'selected' : ''}`}
                       onClick={() =>
-                        setAnswers((prev) => ({ ...prev, [question.id]: option }))
+                        setAnswers((prev) => ({ ...prev, [question.id]: index }))
                       }
                     >
                       <img
@@ -140,12 +140,12 @@ export const FormQuestion = () => {
                 </div>
               ) : (
                 <div className="options-list">
-                  {question.options.map((option) => (
+                  {question.options.map((option, index) => (
                     <button
                       key={option}
-                      className={`option-btn ${selectedOption === option ? 'selected' : ''}`}
+                      className={`option-btn ${selectedOption === index ? 'selected' : ''}`}
                       onClick={() =>
-                        setAnswers((prev) => ({ ...prev, [question.id]: option }))
+                        setAnswers((prev) => ({ ...prev, [question.id]: index }))
                       }
                     >
                       {option}
@@ -157,7 +157,7 @@ export const FormQuestion = () => {
               <button
                 className="btn-primary continue-btn"
                 onClick={handleNext}
-                disabled={!selectedOption}
+                disabled={selectedOption === undefined}
               >
                 Continue
               </button>

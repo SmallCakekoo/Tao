@@ -15,17 +15,6 @@ export const Recommendations = () => {
   const location = useLocation();
   const routeState = (location.state ?? {}) as RecommendationRouteState;
 
-  // const DAILY_CHECK_IN_KEY = 'tao:daily-check-in';
-  // const raw = localStorage.getItem(DAILY_CHECK_IN_KEY);
-  // let lastCheckInDate: string | null = null;
-  // if (raw) {
-  //   try {
-  //     const parsed = JSON.parse(raw);
-  //     if (parsed?.savedAt) {
-  //       lastCheckInDate = new Date(parsed.savedAt).toLocaleDateString();
-  //     }
-  //   } catch {}
-  // } This logic is for the last check-in date, but theres no an local key, temporarily.
   const lastCheckInDate: string | null = null;
 
   return (

@@ -1,5 +1,5 @@
 import { Day } from './Day/Day';
-import { weeklyData } from '../WeeklyCharts/WeeklyData';
+import { useCheckin } from '../../contexts/CheckinContext';
 import './Weekly.css';
 
 const buildWeekDateMap = () => {
@@ -41,6 +41,7 @@ const buildWeekDateMap = () => {
 
 export const Weekly = () => {
   const weekDateMap = buildWeekDateMap();
+  const { weeklyData } = useCheckin();
 
   return (
     <>

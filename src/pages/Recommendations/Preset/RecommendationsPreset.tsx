@@ -4,21 +4,11 @@ import { AnimatedLine } from '../../../components/Home/AnimatedLine/AnimatedLine
 import { PresetFeelingButton } from '../../../components/Recommendations/PresetFeelingButton';
 import logoFace from '../../../assets/logo-face.svg';
 import type { PresetFeeling } from '../../../types/RecommendationTypes';
-import tiredIcon from '../../../assets/tired.png';
-import stressedIcon from '../../../assets/stressed.png';
-import boredIcon from '../../../assets/bored.png';
-import hurtsIcon from '../../../assets/hurts.png';
-import distractedIcon from '../../../assets/distracted.png';
+import { PRESET_OPTIONS } from '../../../data/recommendationData';
 import '../RecommendationsShared.css';
 import './RecommendationsPreset.css';
 
-const PRESET_OPTIONS: Array<{ feeling: PresetFeeling; label: string; icon: string }> = [
-  { feeling: 'tired', label: 'I feel tired', icon: tiredIcon },
-  { feeling: 'stressed', label: 'I feel stressed', icon: stressedIcon },
-  { feeling: 'bored', label: 'I feel bored', icon: boredIcon },
-  { feeling: 'body-hurts', label: 'My body hurts', icon: hurtsIcon },
-  { feeling: 'distracted', label: 'I feel distracted', icon: distractedIcon },
-];
+
 
 export const RecommendationsPreset = () => {
   const navigate = useNavigate();

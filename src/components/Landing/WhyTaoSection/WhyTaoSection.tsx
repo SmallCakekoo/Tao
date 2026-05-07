@@ -7,13 +7,7 @@ import './WhyTaoSection.css';
 
 gsap.registerPlugin(ScrollTrigger, Draggable);
 
-const comparison = [
-  { label: 'METRIC', tao: 'Wellness', traditional: 'Tasks' },
-  { label: 'APPROACH', tao: 'Proactive', traditional: 'Reactive' },
-  { label: 'DATA', tao: 'Energy', traditional: 'Deadlines' },
-  { label: 'GOAL', tao: 'Sustainable', traditional: 'Short-term' },
-  { label: 'FOCUS', tao: 'Deepwork', traditional: 'Multitasking' },
-];
+import { comparison } from '../../../data/landingContent';
 
 export const WhyTaoSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -53,8 +47,8 @@ export const WhyTaoSection = () => {
         }
       );
 
-      // Lógica de reordenación de filas usando GSAP Draggable.
-      // Permite al usuario arrastrar las filas de la tabla de comparación.
+      // Row reordering logic using GSAP Draggable.
+      // Allows the user to drag rows in the comparison table.
       const rowElements = Array.from(
         document.querySelectorAll('.comparison-row')
       ) as HTMLDivElement[];

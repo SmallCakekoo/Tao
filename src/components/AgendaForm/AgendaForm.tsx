@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './AgendaForm.css';
-import type { TaskInterface } from '../../types/AgendaTypes';
+import type { TaskInterface } from '../../types/TaskTypes';
 import { supabase } from '../../lib/supabaseClient';
 
 export const AgendaForm = ({

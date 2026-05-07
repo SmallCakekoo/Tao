@@ -1,4 +1,4 @@
-import { useRef, useState, type PointerEventHandler } from 'react';
+import { useRef, useState, useEffect, type PointerEventHandler } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
   IconChevronDown,
@@ -11,16 +11,13 @@ import { MobileNavBar } from '../../../components/NavBar/MobileNavBar/MobileNavB
 import logoFace from '../../../assets/logo-face.svg';
 import yogaImg from '../../../assets/yoga.png';
 import breatheImg from '../../../assets/breathe.png';
-import type { PresetFeeling } from '../../../types/RecommendationTypes';
 import type {
   RecommendationCard,
   ResultsState,
 } from '../../../types/RecommendationViewTypes';
+import { getPersonalizedRecommendations } from '../../../services/recommendationService';
 import '../RecommendationsShared.css';
 import './RecommendationsResults.css';
-
-// Los variantes A y B permiten mostrar diferentes sets de recomendaciones
-// basadas en la emoción del usuario, siguiendo el diseño de Figma.
 
 const CARDS_BY_VARIANT: Record<'A' | 'B', RecommendationCard[]> = {
   A: [
@@ -91,25 +88,45 @@ export const RecommendationsResults = () => {
   const location = useLocation();
   const state = (location.state ?? {}) as ResultsState;
 
-  const selectedFeeling: PresetFeeling | null = state.feeling ?? null;
+  const [cards, setCards] = useState<RecommendationCard[]>([]);
+  const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [dragOffset, setDragOffset] = useState<number>(0);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const dragStartY = useRef<number | null>(null);
 
-  // Determinamos qué variante mostrar basándonos en el sentimiento seleccionado.
-  // Por ejemplo, sentimientos físicos como "tired" disparan la Variante A.
-  const variant: 'A' | 'B' = !selectedFeeling
-    ? 'B'
-    : selectedFeeling === 'tired' || selectedFeeling === 'body-hurts'
-      ? 'A'
-      : 'B';
+  useEffect(() => {
+    const fetchRecommendations = async () => {
+      setLoading(true);
+      if (state.source === 'form' && state.results) {
+        const fetched = await getPersonalizedRecommendations(state.results.macrostate);
+        
+        const mapped: RecommendationCard[] = fetched.map((rec, index) => ({
+          title: rec.title,
+          subtitle: '',
+          body: [rec.description],
+          sideTone: index % 2 === 0 ? 'peach' : 'blue',
+          titleMuted: index === 0 ? state.results?.macrostate : '',
+          bodySpacing: 'normal',
+        }));
 
-  const cards = CARDS_BY_VARIANT[variant];
+        setCards(mapped);
+      } else {
+        const selectedFeeling = state.feeling ?? null;
+        const variant: 'A' | 'B' = !selectedFeeling
+          ? 'B'
+          : selectedFeeling === 'tired' || selectedFeeling === 'body-hurts'
+            ? 'A'
+            : 'B';
+        setCards(CARDS_BY_VARIANT[variant]);
+      }
+      setLoading(false);
+    };
 
-  // We derive a safe index instead of resetting state in an effect to satisfy ESLint/react-hooks.
-  // This index have a logic of takes the min between the current index and the last index of the cards, so if the cards are less than before it will not break.
-  const effectiveIndex = Math.min(currentIndex, cards.length - 1);
+    fetchRecommendations();
+  }, [state]);
+
+  const effectiveIndex = Math.min(currentIndex, cards.length > 0 ? cards.length - 1 : 0);
   const canGoNext = effectiveIndex < cards.length - 1;
   const canGoPrev = effectiveIndex > 0;
 
@@ -126,45 +143,46 @@ export const RecommendationsResults = () => {
   };
 
   const handleAddCardToDiary = () => {
-    // TODO: Add logic to save the current recommendation card to the diary.
+    // TODO: Add logic to save to diary
   };
-
-  // --- Logica de Gestos (Pointer Events) ---
-  // Implementamos un sistema manual de "drag-to-paginate" en lugar de scroll estándar.
 
   const onPointerDown: PointerEventHandler<HTMLElement> = (event) => {
     const target = event.target as HTMLElement;
-    if (target.closest('button')) {
-      return;
-    }
-
+    if (target.closest('button')) return;
     dragStartY.current = event.clientY;
     setIsDragging(true);
     event.currentTarget.setPointerCapture(event.pointerId);
   };
 
   const onPointerMove: PointerEventHandler<HTMLElement> = (event) => {
-    // Calculamos la diferencia de movimiento y limitamos el desplazamiento visual (offset).
-    if (dragStartY.current === null) {
-      return;
-    }
-
+    if (dragStartY.current === null) return;
     const delta = event.clientY - dragStartY.current;
     setDragOffset(Math.max(-100, Math.min(100, delta)));
   };
 
   const onPointerEnd: PointerEventHandler<HTMLElement> = () => {
-    // Si el usuario movió la tarjeta más de 64px, cambiamos de slide.
-    if (dragOffset > 64) {
-      goNext();
-    } else if (dragOffset < -64) {
-      goPrev();
-    }
-
+    if (dragOffset > 64) goNext();
+    else if (dragOffset < -64) goPrev();
     dragStartY.current = null;
     setDragOffset(0);
     setIsDragging(false);
   };
+
+  if (loading) {
+    return <div className="loading-state">Generating your recommendations...</div>;
+  }
+
+  if (cards.length === 0) {
+    return (
+      <div className="recommendations-page results-page">
+        <HomeNavbar />
+        <section className="results-empty">
+          <h1>No recommendations found</h1>
+          <button type="button" onClick={() => navigate('/form')}>Back to check-in</button>
+        </section>
+      </div>
+    );
+  }
 
   const content = cards[effectiveIndex];
 
@@ -176,132 +194,96 @@ export const RecommendationsResults = () => {
         <span>Back</span>
       </button>
       <main className="recommendations-main">
-        {!selectedFeeling ? (
-          <section className="results-empty">
-            <h1>Your preset session expired.</h1>
-            <p>Please select how you feel again to generate recommendations.</p>
-            <button type="button" onClick={() => navigate('/recommendations/preset')}>
-              Choose feeling
-            </button>
-          </section>
-        ) : (
-          <section className="results-content">
-            <img src={logoFace} alt="Tao face" className="results-face" />
-            <h1>Your recommendations</h1>
-            <p className="results-static-subtitle">
-              Based on your selection we recommend these activities.
-            </p>
+        <section className="results-content">
+          <img src={logoFace} alt="Tao face" className="results-face" />
+          <h1>Your recommendations</h1>
+          <p className="results-static-subtitle">
+            Based on your state we recommend these activities.
+          </p>
 
-            <div className="focus-card-layout">
-              <article
-                className={`focus-card draggable-card ${isDragging ? 'is-dragging' : ''}`}
-                onPointerDown={onPointerDown}
-                onPointerMove={onPointerMove}
-                onPointerUp={onPointerEnd}
-                onPointerCancel={onPointerEnd}
-                style={{ transform: `translateY(${dragOffset}px)` }}
-              >
-                <div
-                  className={`focus-card-text ${content.bodySpacing === 'spacious' ? 'spacious-body' : ''}`}
-                >
-                  <h3 className={content.titleMuted ? 'focus-title-with-muted' : ''}>
-                    {content.title}
-                    {content.titleMuted && (
-                      <span className="focus-title-muted">{content.titleMuted}</span>
-                    )}
-                  </h3>
-
-                  {content.subtitle.trim() && (
-                    <p className="focus-card-subtitle">{content.subtitle}</p>
+          <div className="focus-card-layout">
+            <article
+              className={`focus-card draggable-card ${isDragging ? "is-dragging" : ""}`}
+              onPointerDown={onPointerDown}
+              onPointerMove={onPointerMove}
+              onPointerUp={onPointerEnd}
+              onPointerCancel={onPointerEnd}
+              style={{ transform: `translateY(${dragOffset}px)` }}
+            >
+              <div className={`focus-card-text ${content.bodySpacing === "spacious" ? "spacious-body" : ""}`}>
+                <h3 className={content.titleMuted ? "focus-title-with-muted" : ""}>
+                  {content.title}
+                  {content.titleMuted && (
+                    <span className="focus-title-muted">{content.titleMuted}</span>
                   )}
+                </h3>
 
-                  {content.body.map((paragraph, index) => (
-                    <p key={paragraph} className={index === 0 ? 'focus-body-first' : ''}>
-                      {paragraph}
-                    </p>
-                  ))}
+                {content.subtitle && content.subtitle.trim() && (
+                  <p className="focus-card-subtitle">{content.subtitle}</p>
+                )}
 
-                  {content.ctaLabel && (
-                    <button
-                      type="button"
-                      className="button result-inline-cta"
-                      onClick={() => content.ctaRoute && navigate(content.ctaRoute)}
-                    >
-                      {content.ctaLabel}
-                    </button>
-                  )}
+                {content.body.map((paragraph, idx) => (
+                  <p key={idx} className={idx === 0 ? "focus-body-first" : ""}>
+                    {paragraph}
+                  </p>
+                ))}
 
-                  <div className="focus-arrows">
-                    <button
-                      type="button"
-                      className={`arrow-button ${canGoNext ? 'active' : ''}`}
-                      aria-label="Next card"
-                      onClick={goNext}
-                      disabled={!canGoNext}
-                    >
-                      <IconChevronDown size={22} />
-                    </button>
-                    <button
-                      type="button"
-                      className={`arrow-button ${canGoPrev ? 'active' : ''}`}
-                      aria-label="Previous card"
-                      onClick={goPrev}
-                      disabled={!canGoPrev}
-                    >
-                      <IconChevronUp size={22} />
-                    </button>
-                  </div>
-                </div>
-
-                <div
-                  className={`focus-card-side ${content.sideTone} ${content.sideImage ? 'image-only-bg' : ''}`}
-                >
-                  {content.sideImage && (
-                    <img
-                      src={content.sideImage}
-                      alt="Recommendation visual"
-                      className={`focus-side-image ${content.sideImage === breatheImg ? 'focus-side-image--egg' : ''}`}
-                    />
-                  )}
+                {content.ctaLabel && (
                   <button
                     type="button"
-                    className="add-diary-btn"
-                    aria-label="Add card to diary"
-                    onClick={handleAddCardToDiary}
+                    className="button result-inline-cta"
+                    onClick={() => content.ctaRoute && navigate(content.ctaRoute)}
                   >
-                    <span>Add card to diary</span>
-                    <span className="add-diary-icon" aria-hidden="true">
-                      <IconPlus size={24} />
-                    </span>
+                    {content.ctaLabel}
+                  </button>
+                )}
+
+                <div className="focus-arrows">
+                  <button
+                    type="button"
+                    className={`arrow-button ${canGoNext ? "active" : ""}`}
+                    onClick={goNext}
+                    disabled={!canGoNext}
+                  >
+                    <IconChevronDown size={22} />
+                  </button>
+                  <button
+                    type="button"
+                    className={`arrow-button ${canGoPrev ? "active" : ""}`}
+                    onClick={goPrev}
+                    disabled={!canGoPrev}
+                  >
+                    <IconChevronUp size={22} />
                   </button>
                 </div>
-              </article>
-
-              <div className="drag-hint drag-hint-desktop">
-                <p>Drag down to see more</p>
-                <IconChevronDown size={28} />
-                <small>
-                  {effectiveIndex + 1} / {cards.length}
-                </small>
               </div>
-            </div>
 
-            <div className="leave-actions">
-              <button
-                type="button"
-                className="ready-leave"
-                onClick={() => navigate('/home')}
-              >
-                I’m ready to leave
-              </button>
-            </div>
+              <div className={`focus-card-side ${content.sideTone} ${content.sideImage ? "image-only-bg" : ""}`}>
+                {content.sideImage && (
+                  <img src={content.sideImage} alt="Visual" className="focus-side-image" />
+                )}
+                <button type="button" className="add-diary-btn" onClick={handleAddCardToDiary}>
+                  <span>Add card to diary</span>
+                  <span className="add-diary-icon">
+                    <IconPlus size={24} />
+                  </span>
+                </button>
+              </div>
+            </article>
 
-            <div className="drag-hint drag-hint-mobile">
+            <div className="drag-hint">
               <p>Drag down to see more</p>
               <IconChevronDown size={28} />
+              <small>{effectiveIndex + 1} / {cards.length}</small>
             </div>
-          </section>
-        )}
+          </div>
+
+          <div className="leave-actions">
+            <button className="ready-leave" onClick={() => navigate("/home")}>
+              I’m ready to leave
+            </button>
+          </div>
+        </section>
       </main>
       <MobileNavBar />
     </div>

@@ -20,8 +20,8 @@ export const BreathingExercise = () => {
   const [isPaused, setIsPaused] = useState<boolean>(false);
   const isComplete = elapsed >= TOTAL_SECONDS;
 
-  // Avanza el contador cada segundo mientras el ejercicio no esté en pausa.
-  // Es vital limpiar el intervalo al desmontar el componente para evitar memory leaks.
+  // Advances the counter every second while the exercise is not paused.
+  // It is vital to clear the interval on unmount to avoid memory leaks.
   useEffect(() => {
     if (isPaused || isComplete) {
       return;
@@ -41,9 +41,9 @@ export const BreathingExercise = () => {
     return () => window.clearInterval(timer);
   }, [isPaused, isComplete]);
 
-  // La fase cambia cada 10 segundos, alternando entre inhalar y exhalar.
-  // Se usa useMemo para evitar cálculos innecesarios en cada renderizado, ya que solo depende del tiempo transcurrido.
-  // Se podría calcular directamente en el render, pero esto es más eficiente.
+  // The phase changes every 10 seconds, alternating between inhale and exhale.
+  // useMemo is used to avoid unnecessary calculations on each render.
+  // It could be calculated directly in render, but this is more efficient.
   const phase: BreathingPhase = useMemo(() => {
     return Math.floor(elapsed / PHASE_SECONDS) % 2 === 0 ? 'in' : 'out';
   }, [elapsed]);
@@ -72,8 +72,8 @@ export const BreathingExercise = () => {
 
           <div className="breathing-circle-wrap">
             {/* 
-              El círculo visual sincroniza su estado de animación (CSS Keyframes) 
-              con el estado de pausa de React.
+              The visual circle synchronizes its animation state (CSS Keyframes)
+              with the React pause state.
             */}
             <div
               className={`breathing-circle breathing-circle-${phase}`}

@@ -47,7 +47,6 @@ export const Intention = () => {
   };
 
   const getPrompt = async (prompt: PromptKey) => {
-    console.log(prompt);
 
     const prompts = await fetchPrompts(prompt);
 
@@ -57,7 +56,7 @@ export const Intention = () => {
 
   return (
     <>
-      {showOverlay &&
+      {showOverlay && 
         createPortal(
           <div className="overlay-bg">
             <IntentionOverlay

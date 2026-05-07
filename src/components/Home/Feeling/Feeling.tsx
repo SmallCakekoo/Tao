@@ -1,7 +1,14 @@
 import { Link } from 'react-router-dom';
+import type { FullDailyCheckin } from '../../../types/CheckinTypes';
 import './Feeling.css';
 
-export const Feeling = () => {
+interface FeelingProps {
+  checkin?: FullDailyCheckin | null;
+}
+
+export const Feeling = ({ checkin }: FeelingProps) => {
+  const hasCheckin = !!checkin;
+
   return (
     <div className="feeling">
       <div className="message-feel">
@@ -9,11 +16,13 @@ export const Feeling = () => {
           How are you feeling <span>today?</span>
         </h5>
         <p className="message-p">
-          By registering your daily feelings, you can get personalized recommendations.
+          {hasCheckin
+            ? "You've already registered your feelings today. You can update them if you need."
+            : 'By registering your daily feelings, you can get personalized recommendations.'}
         </p>
       </div>
-      <Link to="/form">
-        <button>Register feelings</button>
+      <Link to={hasCheckin ? '/edit-feelings' : '/form'}>
+        <button>{hasCheckin ? 'Edit feelings' : 'Register feelings'}</button>
       </Link>
     </div>
   );

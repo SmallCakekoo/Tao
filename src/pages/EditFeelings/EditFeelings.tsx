@@ -4,40 +4,54 @@ import { IconArrowLeft, IconChevronDown } from '@tabler/icons-react';
 import { HomeNavbar } from '../../components/NavBar/CommonNavBar/HomeNavbar';
 import { MobileNavBar } from '../../components/NavBar/MobileNavBar/MobileNavBar';
 import bgResponsiveLine from '../../assets/bg-responsive-line.svg';
-import awfulImg from '../../assets/stickers/awful.svg';
-import badImg from '../../assets/stickers/bad.svg';
-import neutralImg from '../../assets/stickers/neutral.svg';
-import goodImg from '../../assets/stickers/good.svg';
-import greatImg from '../../assets/stickers/great.svg';
-import type { MoodOption, MoodValue, SelectKey } from '../../types/EditFeelingsTypes';
+import { 
+  energyOptions, 
+  sleepOptions, 
+  stressOptions, 
+  loadOptions, 
+  moodOptions 
+} from '../../data/moodOptions';
+import type { MoodValue, SelectKey } from '../../types/EditFeelingsTypes';
 import './EditFeelings.css';
 
-const energyOptions = ['Low Energy', 'Medium Energy', 'High Energy', 'Very high Energy'];
-const sleepOptions = ['0-3 Hours', '4-6 Hours', '7-9 Hours', '10+ Hours'];
-const stressOptions = [
-  'Low stress or no stress',
-  'Medium stress',
-  'High stress',
-  'Very high stress',
-];
-const loadOptions = ['Light', 'Manageable', 'Heavy', 'Overwhelming'];
 
-const moodOptions: MoodOption[] = [
-  { value: 'awful', image: awfulImg, label: 'Awful mood' },
-  { value: 'bad', image: badImg, label: 'Bad mood' },
-  { value: 'neutral', image: neutralImg, label: 'Neutral mood' },
-  { value: 'good', image: goodImg, label: 'Good mood' },
-  { value: 'great', image: greatImg, label: 'Great mood' },
-];
+
+import { calculateDailyCheckin } from '../../lib/checkinEngine';
+import { getTodaysCheckin, saveDailyCheckin } from '../../services/checkinService';
 
 export const EditFeelings = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
   const [energy, setEnergy] = useState<string>('Low Energy');
   const [sleep, setSleep] = useState<string>('4-6 Hours');
   const [stress, setStress] = useState<string>('High stress');
   const [dailyLoad, setDailyLoad] = useState<string>('Heavy');
   const [mood, setMood] = useState<MoodValue>('neutral');
   const [openDropdown, setOpenDropdown] = useState<SelectKey | null>(null);
+
+  useEffect(() => {
+    const loadData = async () => {
+      setLoading(true);
+      const data = await getTodaysCheckin();
+      if (data) {
+        // Map scores back to labels
+        if (data.energy_score !== undefined) setEnergy(energyOptions[data.energy_score]);
+        if (data.sleep_score !== undefined) setSleep(sleepOptions[data.sleep_score]);
+        if (data.stress_score !== undefined) setStress(stressOptions[data.stress_score]);
+        if (data.daily_load_score !== undefined) setDailyLoad(loadOptions[data.daily_load_score]);
+        
+        // Load the face selected by the user directly from the DB
+        if (data.face_result) {
+          setMood(data.face_result as MoodValue);
+        } else if (data.mood_score !== undefined) {
+          const moodOption = moodOptions[data.mood_score];
+          if (moodOption) setMood(moodOption.value);
+        }
+      }
+      setLoading(false);
+    };
+    loadData();
+  }, []);
 
   useEffect(() => {
     const closeOnOutsideClick = (event: MouseEvent) => {
@@ -51,24 +65,34 @@ export const EditFeelings = () => {
     return () => document.removeEventListener('click', closeOnOutsideClick);
   }, []);
 
-  const handleSave = () => {
-    // localStorage.setItem(
-    //   'tao:daily-check-in-edit',
-    //   JSON.stringify({
-    //     energy,
-    //     sleep,
-    //     mood,
-    //     stress,
-    //     dailyLoad,
-    //     savedAt: new Date().toISOString(),
-    //   })
-    // );
-    navigate('/form');
+  const handleSave = async () => {
+    const scores = {
+      energy_score: energyOptions.indexOf(energy),
+      sleep_score: sleepOptions.indexOf(sleep),
+      mood_score: moodOptions.findIndex(o => o.value === mood),
+      stress_score: stressOptions.indexOf(stress),
+      daily_load_score: loadOptions.indexOf(dailyLoad),
+    };
+
+    const engineResults = calculateDailyCheckin(scores);
+    // The face is selected directly by the user
+    const results = { ...engineResults, face_result: mood };
+    const { success } = await saveDailyCheckin(scores, results);
+
+    if (success) {
+      navigate('/home');
+    } else {
+      console.error('Failed to save changes. Please try again.');
+    }
   };
 
   const handleCancel = () => {
-    navigate('/form');
+    navigate('/home');
   };
+
+  if (loading) {
+    return <div className="loading-state">Loading your feelings...</div>;
+  }
 
   const toggleDropdown = (key: SelectKey) => {
     setOpenDropdown((prev) => (prev === key ? null : key));
@@ -86,7 +110,7 @@ export const EditFeelings = () => {
   return (
     <div className="edit-feelings-page">
       <HomeNavbar />
-      <img src={bgResponsiveLine} alt="" className="edit-feelings-line" />
+      <img src={bgResponsiveLine} alt="Decorative background wave line" className="edit-feelings-line" />
 
       <div className="edit-feelings-container">
         <button className="edit-feelings-back" onClick={() => navigate('/form')}>

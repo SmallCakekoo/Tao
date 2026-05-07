@@ -1,3 +1,4 @@
+import empty from '../../../assets/stickers/empty.svg';
 import awful from '../../../assets/stickers/awful.svg';
 import bad from '../../../assets/stickers/bad.svg';
 import neutral from '../../../assets/stickers/neutral.svg';
@@ -7,7 +8,8 @@ import type { DayProps } from '../../../types/WeeklyProps';
 import './Day.css';
 
 const getMoodIcon = (value: number) => {
-  // map mood score (1-5) to the sticker used in the weekly card
+  // If no check-in for that day, show empty face
+  if (value <= 0) return empty;
   if (value <= 1) return awful;
   if (value <= 2) return bad;
   if (value <= 3) return neutral;

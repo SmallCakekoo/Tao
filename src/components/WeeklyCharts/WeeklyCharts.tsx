@@ -6,10 +6,12 @@ import {
   ResponsiveContainer,
   ReferenceLine,
 } from 'recharts';
-import { weeklyData } from './WeeklyData';
+import { useCheckin } from '../../contexts/CheckinContext';
 import { CustomDot } from './CustomDot';
 
 export const WeeklyChart = () => {
+  const { weeklyData } = useCheckin();
+
   return (
     <ResponsiveContainer width="100%" height={180}>
       <LineChart data={weeklyData} margin={{ top: 15, right: 28, left: 28, bottom: 4 }}>

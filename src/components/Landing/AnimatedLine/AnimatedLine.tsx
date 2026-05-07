@@ -6,7 +6,7 @@ import './AnimatedLine.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Estos path data son una recreación de los paths originales del diseño de tao
+// These path data are a recreation of the original paths from the Tao design
 // M es move to, C es curve to, Z es close path
 const firstPath =
   'M1959 12.0004C1959 12.0004 1850.61 102 1677.5 306.5C1504.4 511 1434 879.5 1581 947.5C1728 1015.5 1795 877 1795 820C1795 763 1736.5 685.5 1607.5 685.5C1478.5 685.5 1161.9 902.5 953.503 1018C700.003 1158.5 369.003 1412 16.0029 1319';
@@ -22,7 +22,7 @@ export const AnimatedLine = ({
   const svgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Esta lógica crea el efecto de "dibujo" de la línea SVG asíncronamente con el scroll.
+    // This logic creates the effect of "drawing" the SVG line asynchronously with the scroll.
     const path = pathRef.current;
     const trigger = triggerSelector
       ? document.querySelector(triggerSelector)
@@ -30,7 +30,7 @@ export const AnimatedLine = ({
     if (!path || !trigger) return;
 
     // Calculamos la longitud total del path para que el dasharray coincida,
-    // permitiendo ocultar y mostrar la línea variando el dashoffset.
+    // allowing to hide and show the line by varying the dashoffset.
     const length = path.getTotalLength();
     path.style.strokeDasharray = String(length);
     path.style.strokeDashoffset = String(length);
@@ -41,7 +41,7 @@ export const AnimatedLine = ({
       ease: 'none',
     });
 
-    // Vinculamos la animación al scroll usando ScrollTrigger.
+    // We link the animation to the scroll using ScrollTrigger.
     const st = ScrollTrigger.create({
       trigger,
       start: variant === 'first' ? 'top bottom' : 'top 75%',

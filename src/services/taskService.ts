@@ -1,5 +1,5 @@
 import { supabase } from '../lib/supabaseClient';
-import type { TaskInterface } from '../types/AgendaTypes';
+import type { TaskInterface } from '../types/TaskTypes';
 
 export const getUserTasks = async (userId: string) => {
   const { data, error } = await supabase

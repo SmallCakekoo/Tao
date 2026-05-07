@@ -5,7 +5,7 @@ import type {
   Macrostate,
   DailyCheckinScores,
   CalculatedCheckin,
-} from '../types/CheckinEngineTypes';
+} from '../types/CheckinTypes';
 
 /**
  * Calculates the Physiological category (F) based on energy and sleep.

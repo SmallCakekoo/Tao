@@ -1,4 +1,4 @@
-import type { CalculatedCheckin } from './CheckinEngineTypes';
+import type { CalculatedCheckin } from './CheckinTypes';
 import type { PresetFeeling } from './RecommendationTypes';
 
 export type LoadingState = {

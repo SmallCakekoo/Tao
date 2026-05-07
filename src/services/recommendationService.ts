@@ -1,5 +1,5 @@
 import { supabase } from '../lib/supabaseClient';
-import type { Macrostate } from '../types/CheckinEngineTypes';
+import type { Macrostate } from '../types/CheckinTypes';
 
 export interface PersonalizedRecommendation {
   id: string;

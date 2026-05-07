@@ -3,7 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../../Button/Button';
-import { supabase } from '../../../lib/supabaseClient';
+import { useAuth } from '../../../contexts/AuthContext';
 import type { Body } from '../../../types/LandingTypes';
 import meditationImg from '../../../assets/meditation.png';
 import awfulIcon from '../../../assets/stickers/awful.svg';
@@ -35,10 +35,10 @@ const stickers = stickerSizes.map((size, i) => ({
   size,
 }));
 
-// Parámetros del motor de física simple para los stickers caóticos.
+// Simple physics engine parameters for chaotic stickers.
 const gravity = 1600;
-const bounce = 0.3; // Coeficiente de restitución (rebote)
-const friction = 0.8; // Fricción al tocar el suelo
+const bounce = 0.3; // Restitution coefficient (bounce)
+const friction = 0.8; // Friction when touching the ground
 
 export const FindAcademicSection = () => {
   const navigate = useNavigate();
@@ -107,7 +107,7 @@ export const FindAcademicSection = () => {
       body.prevY = body.y;
     }
 
-    // --- Motor de Física (Posición y Colisiones con bordes) ---
+    // --- Physics Engine (Position and Edge Collisions) ---
     for (const body of bodies) {
       if (body.dragging) continue;
       body.vy += gravity * dt;
@@ -115,7 +115,7 @@ export const FindAcademicSection = () => {
       body.y += body.vy * dt;
     }
 
-    // Colisión con los límites de la "arena" (contenedor)
+    // Collision with arena limits (container)
     for (const body of bodies) {
       if (body.dragging) continue;
 
@@ -144,8 +144,8 @@ export const FindAcademicSection = () => {
       }
     }
 
-    // --- Resolución de colisiones entre stickers (Círculos) ---
-    // Usamos varias iteraciones para que la resolución de colisiones sea estable.
+    // --- Sticker Collision Resolution (Circles) ---
+    // Multiple iterations used for stable collision resolution.
     for (let iter = 0; iter < 5; iter++) {
       for (let i = 0; i < bodies.length; i++) {
         for (let j = i + 1; j < bodies.length; j++) {
@@ -159,7 +159,7 @@ export const FindAcademicSection = () => {
 
           if (d >= min) continue;
 
-          // Resolvemos el solapamiento separando los círculos equitativamente
+          // Resolve overlap by separating circles equally
           const nx = dx / d;
           const ny = dy / d;
           const overlap = (min - d) * 0.52;
@@ -174,7 +174,7 @@ export const FindAcademicSection = () => {
             b.y += ny * overlap;
           }
 
-          // Respuesta al impulso (choque elástico simplificado)
+          // Impulse response (simplified elastic collision)
           const relVx = b.vx - a.vx;
           const relVy = b.vy - a.vy;
           const dot = relVx * nx + relVy * ny;
@@ -305,7 +305,7 @@ export const FindAcademicSection = () => {
         e.currentTarget.releasePointerCapture(e.pointerId);
       }
 
-      // Al soltar, calculamos la velocidad basada en la última posición previa para dar momentum.
+      // On release, calculate velocity based on last previous position to give momentum.
       body.vx = ((body.x - body.prevX) / 0.016) * 0.6;
       body.vy = ((body.y - body.prevY) / 0.016) * 0.6;
       body.dragging = false;
@@ -315,9 +315,10 @@ export const FindAcademicSection = () => {
     []
   );
 
-  const handleStartNowClick = async () => {
-    const { data } = await supabase.auth.getSession();
-    navigate(data.session ? '/home' : '/login');
+  const { user } = useAuth();
+
+  const handleStartNowClick = () => {
+    navigate(user ? '/home' : '/login');
   };
 
   return (
@@ -349,7 +350,7 @@ export const FindAcademicSection = () => {
             onPointerUp={(e) => handlePointerUp(i, e)}
             onPointerCancel={(e) => handlePointerUp(i, e)}
           >
-            <img src={sticker.src} alt="" draggable={false} />
+            <img src={sticker.src} alt="Decorative mood sticker" draggable={false} />
           </span>
         ))}
       </div>

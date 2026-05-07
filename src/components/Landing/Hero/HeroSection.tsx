@@ -4,7 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useNavigate } from 'react-router-dom';
 import { DraggableSticker } from '../DraggableSticker/DraggableSticker';
 import { Button } from '../../Button/Button';
-import { supabase } from '../../../lib/supabaseClient';
+import { useAuth } from '../../../contexts/AuthContext';
 import fieldImg from '../../../assets/field-landing.svg';
 import './HeroSection.css';
 
@@ -24,11 +24,11 @@ const stickers = [
   { emotionSrc: greatIcon, size: 74, left: '45%', top: '12%' },
 ];
 
-// Nota: El fieldViewbox es una recreación del viewbox original de la web de Tao.
+// Note: fieldViewbox is a recreation of the original viewbox from the Tao website.
 const fieldViewbox = { width: 1920, height: 238 };
 
 // Mapa de coordenadas que representa el "suelo" o la silueta de la colina SVG.
-// Se usa para que los stickers con gravedad sepan dónde detenerse al caer.
+// Used so gravity stickers know where to stop when falling.
 const fieldProfile = [
   { x: 0, y: 62 },
   { x: 120, y: 92 },
@@ -49,6 +49,7 @@ const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
 export const HeroSection = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const badgeRef = useRef<HTMLParagraphElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const ctaRef = useRef<HTMLButtonElement>(null);
@@ -56,9 +57,8 @@ export const HeroSection = () => {
   const hillRef = useRef<HTMLDivElement>(null);
 
   // Handle CTA click based on authentication status
-  const handleGetStartedClick = async () => {
-    const { data } = await supabase.auth.getSession();
-    navigate(data.session ? '/home' : '/signup');
+  const handleGetStartedClick = () => {
+    navigate(user ? '/home' : '/signup');
   };
 
   useEffect(() => {
@@ -103,7 +103,7 @@ export const HeroSection = () => {
     const svgW = fieldViewbox.width;
     const svgH = fieldViewbox.height;
 
-    // Cálculo para coincidir con object-fit: cover + object-position: bottom center
+    // Calculation to match object-fit: cover + object-position: bottom center
     const scale = Math.max(sectionWidth / svgW, hillHeight / svgH);
     const renderedW = svgW * scale;
     const renderedH = svgH * scale;
@@ -123,7 +123,7 @@ export const HeroSection = () => {
       const b = fieldProfile[i + 1];
 
       if (clampedX >= a.x && clampedX <= b.x) {
-        // Interpolación lineal entre dos puntos del perfil del suelo
+        // Linear interpolation between two ground profile points
         const t = (clampedX - a.x) / (b.x - a.x);
         svgY = lerp(a.y, b.y, t);
         break;
@@ -170,7 +170,7 @@ export const HeroSection = () => {
       </Button>
 
       <div className="landing-hero-hill" ref={hillRef} aria-hidden>
-        <img src={fieldImg} alt="" className="landing-hero-hill-img" />
+        <img src={fieldImg} alt="Green fields and hills background" className="landing-hero-hill-img" />
       </div>
     </section>
   );

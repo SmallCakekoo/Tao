@@ -17,12 +17,12 @@ export const ToDoWidget = () => {
     );
   });
 
-  // `tasks` siempre es un array; usamos su longitud para saber si hay elementos.
+  // `tasks` is always an array; we use its length to know if there are elements.
   const hasTasks = tasks.length > 0;
 
   return (
     <>
-      {/* Si hay tareas, mostramos la lista; si no, mostramos el estado vacío con imagen de fondo. */}
+      {/* If there are tasks, show the list; otherwise, show empty state with background image. */}
       {hasTasks ? (
         <div className="todo-widget2">
           {taskEl}

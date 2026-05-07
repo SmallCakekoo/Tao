@@ -8,7 +8,7 @@ import type { DayProps } from '../../../types/WeeklyProps';
 import './Day.css';
 
 const getMoodIcon = (value: number) => {
-  // Si no hay check-in para ese día, mostrar la carita vacía
+  // If no check-in for that day, show empty face
   if (value <= 0) return empty;
   if (value <= 1) return awful;
   if (value <= 2) return bad;

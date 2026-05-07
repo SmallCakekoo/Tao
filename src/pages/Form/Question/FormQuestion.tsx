@@ -59,8 +59,8 @@ export const FormQuestion = () => {
   const navigate = useNavigate();
   const { questionId } = useParams();
 
-  // Obtenemos el estado global del formulario desde el "Outlet" de React Router.
-  // Esto permite que el estado persista mientras navegamos entre preguntas individuales.
+  // Get the global form state from the React Router "Outlet".
+  // This allows the state to persist while navigating between individual questions.
   const { answers, setAnswers } = useOutletContext<FormOutletContext>();
 
   const parsedQuestionId = Number(questionId) as DailyQuestionId;
@@ -79,7 +79,7 @@ export const FormQuestion = () => {
   const selectedOption = answers[question.id];
 
   const handleBack = () => {
-    // Si es la primera pregunta, volvemos a la intro del formulario.
+    // If it's the first question, go back to the form intro.
     if (question.id === 1) {
       navigate('/form');
       return;
@@ -108,7 +108,7 @@ export const FormQuestion = () => {
 
           <section className="form-question">
             <div className="progress-bar">
-              {/* Generamos segmentos de progreso dinámicamente basados en el ID de la pregunta actual */}
+              {/* Dynamically generate progress segments based on current question ID */}
               {FORM_QUESTIONS.map((entry) => (
                 <div
                   key={entry.id}

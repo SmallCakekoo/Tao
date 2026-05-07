@@ -3,18 +3,18 @@ import { IconArrowLeft } from '@tabler/icons-react';
 import { HomeNavbar } from '../../../components/NavBar/CommonNavBar/HomeNavbar';
 import logoFace from '../../../assets/logo-face.svg';
 import type { FormOutletContext } from '../../../types/FormTypes';
-import type { FaceResult } from '../../../types/CheckinEngineTypes';
+import type { FaceResult } from '../../../types/CheckinTypes';
 import { calculateDailyCheckin } from '../../../lib/checkinEngine';
 import { saveDailyCheckin } from '../../../services/checkinService';
 import { useEffect, useState } from 'react';
 import '../Form.css';
 import './FormResults.css';
 
-// Se usa import.meta.url para resolver correctamente las rutas de estos assets dentro del módulo.
+// Use import.meta.url to correctly resolve asset paths within the module.
 
-// Los items se generarán dinámicamente en el componente
+// Items will be dynamically generated in the component
 
-// Mapeo del índice de la pregunta 3 a la carita que el usuario escogió
+// Map question 3 index to the face selected by the user
 const FACE_OPTIONS: FaceResult[] = ['awful', 'bad', 'neutral', 'good', 'great'];
 
 export const FormResults = () => {
@@ -22,7 +22,7 @@ export const FormResults = () => {
   const { answers } = useOutletContext<FormOutletContext>();
   const [isSaving, setIsSaving] = useState(false);
 
-  // Preparar los scores
+  // Prepare scores
   const scores = {
     energy_score: answers[1] ?? 0,
     sleep_score: answers[2] ?? 0,
@@ -31,23 +31,22 @@ export const FormResults = () => {
     daily_load_score: answers[5] ?? 0,
   };
 
-  // Calculamos los resultados usando el motor (sin face_result)
+  // Calculate results using the engine (without face_result)
   const engineResults = calculateDailyCheckin(scores);
 
-  // La carita la escoge el usuario directamente en la pregunta 3
+  // The face is selected by the user in question 3
   const face_result: FaceResult = FACE_OPTIONS[answers[3] ?? 2];
 
-  // Combinamos el cálculo del engine con la cara seleccionada por el usuario
+  // Combine engine results with user selected face
   const results = { ...engineResults, face_result };
 
-  // Guardar automáticamente al llegar a la página de resultados
+  // Save automatically when reaching the results page
   useEffect(() => {
     const persistResult = async () => {
       try {
         setIsSaving(true);
         // Save check-in logic
         await saveDailyCheckin(scores, results);
-        console.log('Check-in saved successfully');
       } catch (err) {
         console.error('Failed to save check-in', err);
       } finally {

@@ -21,7 +21,7 @@ export const Profile = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Redirigir si no hay sesión
+  // Redirect if no session
   useEffect(() => {
     if (!loading && !user) {
       navigate('/login');

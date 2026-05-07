@@ -57,7 +57,6 @@ export const EditQuote = ({
 
         <p>You will be able to read your quote as motivation inside of your agenda.</p>
 
-        {/* 👇 botón local (opcional) */}
         <button className="save-quote-button" onClick={handleSave}>
           Save Quote
         </button>

@@ -14,7 +14,7 @@ export const PresetFeelingButton = ({
       aria-label={label}
     >
       <span>{label}</span>
-      <img src={icon} alt="" aria-hidden="true" />
+      <img src={icon} alt={`${label} mood icon`} aria-hidden="true" />
     </button>
   );
 };

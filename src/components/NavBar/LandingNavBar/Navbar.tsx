@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../../Button/Button';
-import { supabase } from '../../../lib/supabaseClient';
+import { useAuth } from '../../../contexts/AuthContext';
 import logoFull from '../../../assets/logo-full.svg';
 import './Navbar.css';
 
 export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
-  const [ctaTo, setCtaTo] = useState('/signup');
+  const { user } = useAuth();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -15,15 +15,7 @@ export const Navbar = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Check if user is logged in to set the CTA destination
-  useEffect(() => {
-    const setCtaDestination = async () => {
-      const { data } = await supabase.auth.getSession();
-      setCtaTo(data.session ? '/home' : '/signup');
-    };
-
-    void setCtaDestination();
-  }, []);
+  const ctaTo = user ? '/home' : '/signup';
 
   return (
     <nav className={`landing-nav ${scrolled ? 'scrolled' : ''}`}>

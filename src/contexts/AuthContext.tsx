@@ -1,9 +1,9 @@
-// ¿Por qué usar Context aquí?
-// El usuario autenticado es un estado global de toda la aplicación. Se necesita en:
-// 1. Rutas protegidas (para redirigir al login si no hay sesión iniciada).
-// 2. Componentes UI como el Navbar, para mostrar el nombre o foto de perfil del usuario.
-// 3. Diferentes vistas (Home, Profile, Formularios) que necesitan el ID del usuario para hacer peticiones o guardar datos en la base de datos.
-// Usar Context evita tener que pasar la sesión o el usuario por "props" componente por componente.
+// Why use Context here?
+// The authenticated user is a global state for the entire application. It is needed in:
+// 1. Protected routes (to redirect to login if no active session).
+// 2. UI components like the Navbar, to show the username or profile picture.
+// 3. Different views (Home, Profile, Forms) that need the user ID for requests or saving data.
+// Using Context avoids passing the session or user through "props" from component to component.
 
 import {
   createContext,
@@ -15,23 +15,17 @@ import {
 import { supabase } from "../lib/supabaseClient";
 import { getUserProfile } from "../services/authService";
 import type { User, Session } from "@supabase/supabase-js";
-
-type AuthContextType = {
-  user: User | null;
-  profile: any | null; // Tipar esto según tu tabla de perfiles
-  session: Session | null;
-  loading: boolean;
-};
+import type { UserProfile, AuthContextType } from "../types/AuthTypes";
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [user, setUser] = useState<User | null>(null);
-  const [profile, setProfile] = useState<any | null>(null);
+  const [profile, setProfile] = useState<UserProfile | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Función auxiliar para manejar el estado cuando cambia la sesión
+  // Helper function to handle state when session changes
   const handleSession = async (currentSession: Session | null) => {
     setSession(currentSession);
     const currentUser = currentSession?.user ?? null;
@@ -39,11 +33,11 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
     if (currentUser) {
       try {
-        // Obtenemos el perfil usando el servicio que creamos
+        // Get profile using the service we created
         const userProfile = await getUserProfile(currentUser.id);
         setProfile(userProfile);
       } catch (error) {
-        console.error("Error al obtener el perfil:", error);
+        console.error("Error fetching profile:", error);
         setProfile(null);
       }
     } else {
@@ -53,12 +47,12 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   };
 
   useEffect(() => {
-    // 1. Obtener la sesión actual al cargar la app por primera vez
+    // 1. Get current session when loading the app for the first time
     supabase.auth.getSession().then(({ data: { session } }) => {
       handleSession(session);
     });
 
-    // 2. Escuchar cambios de estado en la autenticación 
+    // 2. Listen for auth state changes 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       handleSession(session);
     });
@@ -73,11 +67,11 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   );
 };
 
-// Hook personalizado para usar la autenticación más fácilmente
+// Custom hook to use authentication easily
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error("useAuth debe usarse dentro de un AuthProvider");
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };

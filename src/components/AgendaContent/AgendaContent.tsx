@@ -75,7 +75,7 @@ export const AgendaContent = () => {
         </div>
       )}
 
-      {/* FAB — aparece siempre en mobile excepto cuando el form está abierto */}
+      {/* FAB — always appears on mobile except when the form is open */}
       {isMobile && !showForm && (
         <button className="fab-button" onClick={() => setShowForm(true)}>
           +

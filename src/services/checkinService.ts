@@ -3,7 +3,7 @@ import type {
   DailyCheckinScores,
   CalculatedCheckin,
   FullDailyCheckin,
-} from '../types/CheckinEngineTypes';
+} from '../types/CheckinTypes';
 
 export const saveDailyCheckin = async (
   scores: DailyCheckinScores,

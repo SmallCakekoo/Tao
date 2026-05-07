@@ -16,7 +16,7 @@ export const NotFound: React.FC = () => {
   const stickersRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    // Entrada triunfal para el texto 404 con un ligero escalado y movimiento vertical.
+    // Entrance for the 404 text with slight scaling and vertical movement.
     gsap.fromTo(
       floating404Ref.current,
       { y: 50, opacity: 0, scale: 0.8 },
@@ -39,7 +39,7 @@ export const NotFound: React.FC = () => {
           }
         );
 
-        // Bucle infinito de flotación aleatoria para que los stickers parezcan vivos.
+        // Infinite random floating loop to make stickers feel alive.
         gsap.to(sticker, {
           y: 'random(-25, 25)',
           x: 'random(-20, 20)',
@@ -62,7 +62,7 @@ export const NotFound: React.FC = () => {
       const xPercent = (clientX / innerWidth - 0.5) * 50;
       const yPercent = (clientY / innerHeight - 0.5) * 50;
 
-      // Efecto de paralaje: el texto 404 se mueve ligeramente siguiendo el ratón.
+      // Parallax effect: the 404 text moves slightly following the mouse.
       gsap.to(floating404Ref.current, {
         x: xPercent,
         y: yPercent,
@@ -81,7 +81,7 @@ export const NotFound: React.FC = () => {
           const influenceRange = 250;
 
           if (distance < influenceRange) {
-            // Calculamos el ángulo para "empujar" el sticker lejos del cursor.
+            // Calculate the angle to "push" the sticker away from the cursor.
             const angle = Math.atan2(clientY - centerY, clientX - centerX);
             const moveX = Math.cos(angle) * (1 - distance / influenceRange) * -40;
             const moveY = Math.sin(angle) * (1 - distance / influenceRange) * -40;

@@ -34,3 +34,16 @@ export interface FullDailyCheckin extends DailyCheckinScores, CalculatedCheckin 
   user_id: string;
   checkin_date: string;
 }
+
+export type WeeklyDataPoint = {
+  day: string;
+  value: number;
+  checkin_date: string;
+};
+
+export type CheckinContextType = {
+  todaysCheckin: FullDailyCheckin | null;
+  weeklyData: WeeklyDataPoint[];
+  loading: boolean;
+  refreshCheckin: () => Promise<void>;
+};

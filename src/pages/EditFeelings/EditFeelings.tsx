@@ -54,7 +54,7 @@ export const EditFeelings = () => {
         if (data.stress_score !== undefined) setStress(stressOptions[data.stress_score]);
         if (data.daily_load_score !== undefined) setDailyLoad(loadOptions[data.daily_load_score]);
         
-        // Cargar la carita que el usuario escogió directamente desde la DB
+        // Load the face selected by the user directly from the DB
         if (data.face_result) {
           setMood(data.face_result as MoodValue);
         } else if (data.mood_score !== undefined) {
@@ -89,14 +89,14 @@ export const EditFeelings = () => {
     };
 
     const engineResults = calculateDailyCheckin(scores);
-    // La carita la escoge el usuario directamente
+    // The face is selected directly by the user
     const results = { ...engineResults, face_result: mood };
     const { success } = await saveDailyCheckin(scores, results);
 
     if (success) {
       navigate('/home');
     } else {
-      alert('Failed to save changes. Please try again.');
+      console.error('Failed to save changes. Please try again.');
     }
   };
 
@@ -124,7 +124,7 @@ export const EditFeelings = () => {
   return (
     <div className="edit-feelings-page">
       <HomeNavbar />
-      <img src={bgResponsiveLine} alt="" className="edit-feelings-line" />
+      <img src={bgResponsiveLine} alt="Decorative background wave line" className="edit-feelings-line" />
 
       <div className="edit-feelings-container">
         <button className="edit-feelings-back" onClick={() => navigate('/form')}>

@@ -53,8 +53,8 @@ export const WhyTaoSection = () => {
         }
       );
 
-      // Lógica de reordenación de filas usando GSAP Draggable.
-      // Permite al usuario arrastrar las filas de la tabla de comparación.
+      // Row reordering logic using GSAP Draggable.
+      // Allows the user to drag rows in the comparison table.
       const rowElements = Array.from(
         document.querySelectorAll('.comparison-row')
       ) as HTMLDivElement[];

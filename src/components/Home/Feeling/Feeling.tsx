@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import type { FullDailyCheckin } from '../../../types/CheckinEngineTypes';
+import type { FullDailyCheckin } from '../../../types/CheckinTypes';
 import './Feeling.css';
 
 interface FeelingProps {

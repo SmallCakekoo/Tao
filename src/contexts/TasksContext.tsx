@@ -1,31 +1,23 @@
-// ¿Por qué usar Context aquí?
-// Las tareas (ToDo) se muestran en múltiples lugares al mismo tiempo, por ejemplo en el ToDoWidget de la pantalla de Home 
-// y en la vista completa de la Agenda. Si no usamos Context, cada componente haría su propia petición a Supabase de manera independiente, 
-// lo que causa lentitud, desincronización (completas una tarea en el widget y la agenda no se entera) y exceso de lecturas a la base de datos.
-// Con Context, mantenemos un único estado global de tareas y cualquier componente puede leerlo o modificarlo.
+// Why use Context here?
+// Tasks (ToDo) are shown in multiple places simultaneously, for example in the ToDoWidget on the Home screen
+// and in the full view of the Agenda. If we don't use Context, each component would make its own independent request to Supabase,
+// which causes slowness, desynchronization (completing a task in the widget isn't reflected in the agenda), and excessive database reads.
+// With Context, we maintain a single global state of tasks and any component can read or modify it.
 
 import { createContext, useContext, useState, useEffect, type PropsWithChildren } from "react";
 import { getUserTasks, toggleTaskInDB, deleteTaskInDB } from "../services/taskService";
 import { useAuth } from "./AuthContext";
-import type { TaskInterface } from "../types/AgendaTypes";
-
-type TasksContextType = {
-  tasks: TaskInterface[];
-  setTasks: React.Dispatch<React.SetStateAction<TaskInterface[]>>;
-  loading: boolean;
-  toggleTask: (task: TaskInterface) => Promise<void>;
-  removeTask: (task: TaskInterface) => Promise<void>;
-};
+import type { TaskInterface, TasksContextType } from "../types/TaskTypes";
 
 export const TasksContext = createContext<TasksContextType | undefined>(undefined);
 
 export const TasksProvider = ({ children }: PropsWithChildren) => {
   const [tasks, setTasks] = useState<TaskInterface[]>([]);
   const [loading, setLoading] = useState(true);
-  const { user } = useAuth(); // Obtenemos el usuario del AuthContext
+  const { user } = useAuth(); // Get user from AuthContext
 
   useEffect(() => {
-    // Si no hay usuario, limpiamos las tareas
+    // If no user, clear tasks
     if (!user) {
       setTasks([]);
       setLoading(false);
@@ -38,7 +30,7 @@ export const TasksProvider = ({ children }: PropsWithChildren) => {
         const data = await getUserTasks(user.id);
         setTasks(data || []);
       } catch (error) {
-        console.error("Error al obtener las tareas:", error);
+        console.error("Error fetching tasks:", error);
       } finally {
         setLoading(false);
       }
@@ -49,30 +41,29 @@ export const TasksProvider = ({ children }: PropsWithChildren) => {
 
   const toggleTask = async (task: TaskInterface) => {
     try {
-      // Optimización optimista: actualizar UI inmediatamente
+      // Optimistic UI update: update UI immediately
       setTasks(prev => prev.map(t => (t.id === task.id ? { ...t, complete: !t.complete } : t)));
       
       const updatedTask = await toggleTaskInDB(task);
       if (updatedTask) {
-        // Confirmar con lo de la base de datos
+        // Confirm with database result
         setTasks(prev => prev.map(t => (t.id === updatedTask.id ? updatedTask : t)));
       }
     } catch (error) {
-      // Revertir si hay error
+      // Revert if error
       setTasks(prev => prev.map(t => (t.id === task.id ? { ...t, complete: task.complete } : t)));
       console.error(error);
     }
   };
 
   const removeTask = async (task: TaskInterface) => {
-    if (!task.id) return; // TypeScript ahora sabe que task.id existe
+    if (!task.id) return; // TypeScript now knows task.id exists
 
     try {
-      // Optimización optimista
+      // Optimistic update
       setTasks(prev => prev.filter(t => t.id !== task.id));
       await deleteTaskInDB(task.id);
     } catch (error) {
-      // Revertir (en un caso real podríamos guardar la tarea para volverla a agregar)
       console.error(error);
     }
   };
@@ -87,7 +78,7 @@ export const TasksProvider = ({ children }: PropsWithChildren) => {
 export const useTasks = () => {
   const context = useContext(TasksContext);
   if (context === undefined) {
-    throw new Error("useTasks debe usarse dentro de un TasksProvider");
+    throw new Error("useTasks must be used within a TasksProvider");
   }
   return context;
 };

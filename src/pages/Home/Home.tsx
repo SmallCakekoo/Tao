@@ -24,7 +24,7 @@ export const Home = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Redirigir si no hay sesión
+  // Redirect if no session
   useEffect(() => {
     if (!authLoading && !user) {
       navigate('/login');

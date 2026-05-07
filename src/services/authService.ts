@@ -1,5 +1,5 @@
 import { supabase } from '../lib/supabaseClient';
-import type { SignUpParams } from '../types/AuthTypes';
+import type { SignInParams, SignUpParams } from '../types/AuthTypes';
 
 export const signUpUser = async ({
   email,
@@ -30,6 +30,23 @@ export const signUpUser = async ({
 
   return data.user;
 };
+
+export const signInUser = async ({email, password}: SignInParams) => {
+  const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      if (error.message === 'Invalid login credentials') {
+        throw new Error('Hmm, that email or password doesn’t look right...');
+      } else {
+        throw new Error('Something went wrong, try again');
+      }
+    }
+    return data.user;
+
+}
 
 // Gets current authenticated user from local Supabase session
 export const getCurrentUser = async () => {

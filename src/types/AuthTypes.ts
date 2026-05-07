@@ -22,3 +22,8 @@ export type SignUpParams = {
   password: string;
   name: string;
 };
+
+export type SignInParams = {
+  email: string;
+  password: string;
+}

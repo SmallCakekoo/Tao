@@ -11,3 +11,8 @@ export type AuthContextType = {
   session: Session | null;
   loading: boolean;
 };
+
+export type CreateAccountParams = {
+  id: string;
+  name: string;
+};

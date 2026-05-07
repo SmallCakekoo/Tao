@@ -4,7 +4,8 @@ import { BackButton } from '../../components/BackButton/BackButton';
 import { GradientBox } from '../../components/Login/GradientBox/GradientBox';
 import airplane from '../../assets/airplane.png';
 import { useState } from 'react';
-import { supabase } from '../../lib/supabaseClient';
+import { signUpUser } from '../../services/authService';
+import { createAccount } from '../../services/accountService';
 
 export const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -38,40 +39,27 @@ export const SignUp = () => {
       return setError('Name is required');
     }
 
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          name,
-        },
-      },
-    });
+    try {
+      const user = await signUpUser({
+        email,
+        password,
+        name,
+      });
 
-    if (error) {
-      setError(error.message);
-    } else {
-      
-      if (data.user) {
-        const { error: profileError } = await supabase.from('profiles').insert({
-          id: data.user.id,
+      if (user) {
+        await createAccount({
+          id: user.id,
           name,
         });
-
-        if (profileError) {
-          setError('Your account was created, try logging in');
-        }
-        await supabase.from('quotes').insert({
-          quote:
-            "The key is not to prioritize what's on your schedule, but to schedule your priorities",
-          author: 'Stephen Covey',
-          user_id: data.user.id,
-        });
-
-        setSuccess(true);
       }
+
+      setSuccess(true);
+    } catch (error: any) {
+      setError(error.message);
     }
-  };
+  }
+
+  
 
   return (
     <div className="signup">

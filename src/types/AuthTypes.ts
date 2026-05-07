@@ -16,3 +16,9 @@ export type CreateAccountParams = {
   id: string;
   name: string;
 };
+
+export type SignUpParams = {
+  email: string;
+  password: string;
+  name: string;
+};

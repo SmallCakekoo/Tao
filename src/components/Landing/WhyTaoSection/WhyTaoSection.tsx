@@ -7,13 +7,7 @@ import './WhyTaoSection.css';
 
 gsap.registerPlugin(ScrollTrigger, Draggable);
 
-const comparison = [
-  { label: 'METRIC', tao: 'Wellness', traditional: 'Tasks' },
-  { label: 'APPROACH', tao: 'Proactive', traditional: 'Reactive' },
-  { label: 'DATA', tao: 'Energy', traditional: 'Deadlines' },
-  { label: 'GOAL', tao: 'Sustainable', traditional: 'Short-term' },
-  { label: 'FOCUS', tao: 'Deepwork', traditional: 'Multitasking' },
-];
+import { comparison } from '../../../data/landingContent';
 
 export const WhyTaoSection = () => {
   const sectionRef = useRef<HTMLElement>(null);

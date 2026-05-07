@@ -14,29 +14,38 @@ export const SignUp = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
-  const handleSignUp = async (e: React.SyntheticEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    setError(null);
-
-    if (!email) {
-      return setError('Email is required');
+  const validateSignUp = () => {
+    if (!email.trim()) {
+      return 'Email is required';
     }
 
     if (!email.includes('@')) {
-      return setError('Enter a valid email');
+      return 'Enter a valid email';
     }
 
-    if (!password) {
-      return setError('Password is required');
+    if (!password.trim()) {
+      return 'Password is required';
     }
 
     if (password.length < 6) {
-      return setError('Password must be at least 6 characters');
+      return 'Password must be at least 6 characters';
     }
 
-    if (!name) {
-      return setError('Name is required');
+    if (!name.trim()) {
+      return 'Name is required';
+    }
+
+    return null;
+  };
+
+  const handleSignUp = async (e: React.SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError(null);
+    const validationError = validateSignUp();
+
+    if (validationError) {
+      setError(validationError);
+      return;
     }
 
     try {
@@ -57,9 +66,7 @@ export const SignUp = () => {
     } catch (error: any) {
       setError(error.message);
     }
-  }
-
-  
+  };
 
   return (
     <div className="signup">

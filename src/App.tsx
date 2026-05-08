@@ -1,6 +1,7 @@
 import './App.css';
 
 import { Routes, Route } from 'react-router-dom';
+import ProtectedRoute from './routes/ProtectedRoute';
 
 import { AuthProvider } from './contexts/AuthContext';
 import { TasksProvider } from './contexts/TasksContext';
@@ -51,6 +52,7 @@ function App() {
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/legal" element={<Legal />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="*" element={<NotFound />} />
             <Route path="/home" element={<Home />} />
             <Route path="/diary" element={<Diary />} />
             <Route path="/agenda" element={<Agenda />} />
@@ -68,7 +70,6 @@ function App() {
             <Route path="/recommendations/loading" element={<RecommendationsLoading />} />
             <Route path="/recommendations/results" element={<RecommendationsResults />} />
             <Route path="/recommendations/breathing" element={<BreathingExercise />} />
-            <Route path="*" element={<NotFound />} />
           </Routes>
         </CheckinProvider>
       </TasksProvider>

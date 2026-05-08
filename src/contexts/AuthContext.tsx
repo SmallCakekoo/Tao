@@ -13,7 +13,7 @@ import {
   type PropsWithChildren,
 } from "react";
 import { supabase } from "../lib/supabaseClient";
-import { getUserProfile } from "../services/authService";
+import { getUserProfile } from "../services/profileService";
 import type { User, Session } from "@supabase/supabase-js";
 import type { UserProfile, AuthContextType } from "../types/AuthTypes";
 

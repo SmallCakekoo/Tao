@@ -3,7 +3,6 @@ import './LogIn.css';
 import { BackButton } from '../../components/BackButton/BackButton';
 import { GradientBox } from '../../components/Login/GradientBox/GradientBox';
 import { useState } from 'react';
-import { supabase } from '../../lib/supabaseClient';
 import { useNavigate } from 'react-router-dom';
 import { signInUser } from '../../services/authService';
 

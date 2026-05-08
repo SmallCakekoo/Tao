@@ -5,7 +5,7 @@ import { GradientBox } from '../../components/Login/GradientBox/GradientBox';
 import airplane from '../../assets/airplane.png';
 import { useState } from 'react';
 import { signUpUser } from '../../services/authService';
-import { createAccount } from '../../services/accountService';
+import { createAccount } from '../../services/profileService';
 
 export const SignUp = () => {
   const [email, setEmail] = useState('');

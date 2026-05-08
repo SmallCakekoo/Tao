@@ -5,6 +5,7 @@ import { Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { TasksProvider } from './contexts/TasksContext';
 import { CheckinProvider } from './contexts/CheckinContext';
+import { ProfileProvider } from './contexts/ProfileContext';
 
 import { Landing } from './pages/Landing/Landing';
 import { LogIn } from './pages/LogIn/LogIn';
@@ -39,6 +40,7 @@ import { NotFound } from './pages/NotFound/NotFound';
 function App() {
   return (
     <AuthProvider>
+      <ProfileProvider>
       <TasksProvider>
         <CheckinProvider>
           <ScrollToTop />
@@ -70,6 +72,7 @@ function App() {
           </Routes>
         </CheckinProvider>
       </TasksProvider>
+      </ProfileProvider>
     </AuthProvider>
   );
 }

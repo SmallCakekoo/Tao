@@ -7,7 +7,6 @@ export interface UserProfile {
 
 export type AuthContextType = {
   user: User | null;
-  profile: UserProfile | null;
   session: Session | null;
   loading: boolean;
 };

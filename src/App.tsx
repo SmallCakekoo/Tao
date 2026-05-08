@@ -53,23 +53,24 @@ function App() {
             <Route path="/legal" element={<Legal />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="*" element={<NotFound />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/diary" element={<Diary />} />
-            <Route path="/agenda" element={<Agenda />} />
-            <Route path="/form" element={<Form />}>
-              <Route index element={<FormIntro />} />
-              <Route path="question/:questionId" element={<FormQuestion />} />
-              <Route path="results" element={<FormResults />} />
+
+            <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+            <Route path="/diary" element={<ProtectedRoute><Diary /></ProtectedRoute>} />
+            <Route path="/agenda" element={<ProtectedRoute><Agenda /></ProtectedRoute>} />
+            <Route path="/form" element={<ProtectedRoute><Form /></ProtectedRoute>}>
+              <Route index element={<ProtectedRoute><FormIntro /></ProtectedRoute>} />
+              <Route path="question/:questionId" element={<ProtectedRoute><FormQuestion /></ProtectedRoute>} />
+              <Route path="results" element={<ProtectedRoute><FormResults /></ProtectedRoute>} />
             </Route>
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/editprofile" element={<EditProfile />} />
-            <Route path="/form/edit-feelings" element={<EditFeelings />} />
-            <Route path="/edit-feelings" element={<EditFeelings />} />
-            <Route path="/recommendations" element={<Recommendations />} />
-            <Route path="/recommendations/preset" element={<RecommendationsPreset />} />
-            <Route path="/recommendations/loading" element={<RecommendationsLoading />} />
-            <Route path="/recommendations/results" element={<RecommendationsResults />} />
-            <Route path="/recommendations/breathing" element={<BreathingExercise />} />
+            <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+            <Route path="/editprofile" element={<ProtectedRoute><EditProfile /></ProtectedRoute>} />
+            <Route path="/form/edit-feelings" element={<ProtectedRoute><EditFeelings /></ProtectedRoute>} />
+            <Route path="/edit-feelings" element={<ProtectedRoute><EditFeelings /></ProtectedRoute>} />
+            <Route path="/recommendations" element={<ProtectedRoute><Recommendations /></ProtectedRoute>} />
+            <Route path="/recommendations/preset" element={<ProtectedRoute><RecommendationsPreset /></ProtectedRoute>} />
+            <Route path="/recommendations/loading" element={<ProtectedRoute><RecommendationsLoading /></ProtectedRoute>} />
+            <Route path="/recommendations/results" element={<ProtectedRoute><RecommendationsResults /></ProtectedRoute>} />
+            <Route path="/recommendations/breathing" element={<ProtectedRoute><BreathingExercise /></ProtectedRoute>} />
           </Routes>
         </CheckinProvider>
       </TasksProvider>

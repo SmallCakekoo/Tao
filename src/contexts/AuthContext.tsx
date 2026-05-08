@@ -1,15 +1,14 @@
-
 import {
   createContext,
   useContext,
   useState,
   useEffect,
   type PropsWithChildren,
-} from "react";
-import { supabase } from "../lib/supabaseClient";
-import { getUserProfile } from "../services/profileService";
-import type { User, Session } from "@supabase/supabase-js";
-import type { UserProfile, AuthContextType } from "../types/AuthTypes";
+} from 'react';
+import { getUserProfile } from '../services/profileService';
+import { getCurrentSession, onAuthChange } from '../services/authService';
+import type { User, Session } from '@supabase/supabase-js';
+import type { UserProfile, AuthContextType } from '../types/AuthTypes';
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -29,7 +28,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         const userProfile = await getUserProfile(currentUser.id);
         setProfile(userProfile);
       } catch (error) {
-        console.error("Error fetching profile:", error);
+        console.error('Error fetching profile:', error);
         setProfile(null);
       }
     } else {
@@ -39,11 +38,11 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   };
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    getCurrentSession().then((session) => {
       handleSession(session);
     });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const subscription = onAuthChange((session) => {
       handleSession(session);
     });
 
@@ -60,7 +59,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 };

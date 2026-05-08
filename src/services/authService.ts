@@ -60,3 +60,25 @@ export const signOut = async () => {
   const { error } = await supabase.auth.signOut();
   if (error) throw error;
 };
+
+export const getCurrentSession = async () => {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  return session;
+};
+
+export const onAuthChange = (
+  callback: (session: any) => void
+) => {
+  const {
+    data: { subscription },
+  } = supabase.auth.onAuthStateChange(
+    (_event, session) => {
+      callback(session);
+    }
+  );
+
+  return subscription;
+};

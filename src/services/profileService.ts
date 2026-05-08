@@ -37,3 +37,4 @@ export const getUserProfile = async (userId: string) => {
   if (error) throw error;
   return data;
 };
+

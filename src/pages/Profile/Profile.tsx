@@ -9,10 +9,12 @@ import { Weekly } from '../../components/Weekly/Weekly';
 import { ToDoWidget } from '../../components/ToDoWidget/ToDoWidget';
 import { WeeklyWidgetChart } from '../../components/WeeklyCharts/WeeklyWidgetCharts';
 import { useAuth } from '../../contexts/AuthContext';
+import { useProfile } from '../../contexts/ProfileContext';
 
 export const Profile = () => {
   const navigate = useNavigate();
-  const { user, profile, loading } = useAuth();
+  const { user, loading } = useAuth();
+  const { profile } = useProfile();
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
 
   useEffect(() => {
@@ -21,7 +23,6 @@ export const Profile = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Redirect if no session
   useEffect(() => {
     if (!loading && !user) {
       navigate('/login');

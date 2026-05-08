@@ -11,11 +11,13 @@ import { DiaryWidget } from '../../components/DiaryWidget/DiaryWidget';
 import { ToDoWidget } from '../../components/ToDoWidget/ToDoWidget';
 import { useAuth } from '../../contexts/AuthContext';
 import { useCheckin } from '../../contexts/CheckinContext';
+import { useProfile } from '../../contexts/ProfileContext';
 
 export const Home = () => {
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
   const navigate = useNavigate();
-  const { user, profile, loading: authLoading } = useAuth();
+  const { user, loading: authLoading } = useAuth();
+  const { profile } = useProfile();
   const { todaysCheckin } = useCheckin();
 
   useEffect(() => {
@@ -24,7 +26,6 @@ export const Home = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Redirect if no session
   useEffect(() => {
     if (!authLoading && !user) {
       navigate('/login');

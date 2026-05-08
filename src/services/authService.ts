@@ -45,7 +45,6 @@ export const signInUser = async ({email, password}: SignInParams) => {
       }
     }
     return data.user;
-
 }
 
 // Gets current authenticated user from local Supabase session
@@ -56,18 +55,6 @@ export const getCurrentUser = async () => {
   } = await supabase.auth.getUser();
   if (error) throw error;
   return user;
-};
-
-// Gets user profile from 'profiles' table
-export const getUserProfile = async (userId: string) => {
-  const { data, error } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('id', userId)
-    .single();
-
-  if (error) throw error;
-  return data;
 };
 
 // Signs out current user

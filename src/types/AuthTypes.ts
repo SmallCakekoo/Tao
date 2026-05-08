@@ -7,7 +7,22 @@ export interface UserProfile {
 
 export type AuthContextType = {
   user: User | null;
-  profile: UserProfile | null;
   session: Session | null;
   loading: boolean;
 };
+
+export type CreateAccountParams = {
+  id: string;
+  name: string;
+};
+
+export type SignUpParams = {
+  email: string;
+  password: string;
+  name: string;
+};
+
+export type SignInParams = {
+  email: string;
+  password: string;
+}

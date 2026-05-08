@@ -8,11 +8,11 @@ import { DiaryWidget } from '../../components/DiaryWidget/DiaryWidget';
 import { Weekly } from '../../components/Weekly/Weekly';
 import { ToDoWidget } from '../../components/ToDoWidget/ToDoWidget';
 import { WeeklyWidgetChart } from '../../components/WeeklyCharts/WeeklyWidgetCharts';
-import { useAuth } from '../../contexts/AuthContext';
+import { useProfile } from '../../contexts/ProfileContext';
 
 export const Profile = () => {
   const navigate = useNavigate();
-  const { user, profile, loading } = useAuth();
+  const { profile } = useProfile();
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
 
   useEffect(() => {
@@ -20,15 +20,6 @@ export const Profile = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-
-  // Redirect if no session
-  useEffect(() => {
-    if (!loading && !user) {
-      navigate('/login');
-    }
-  }, [loading, user, navigate]);
-
-  if (loading) return null;
 
   const name = profile?.name ?? '';
 

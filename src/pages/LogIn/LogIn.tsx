@@ -3,8 +3,8 @@ import './LogIn.css';
 import { BackButton } from '../../components/BackButton/BackButton';
 import { GradientBox } from '../../components/Login/GradientBox/GradientBox';
 import { useState } from 'react';
-import { supabase } from '../../lib/supabaseClient';
 import { useNavigate } from 'react-router-dom';
+import { signInUser } from '../../services/authService';
 
 export const LogIn = () => {
   const [error, setError] = useState<null | string>(null);
@@ -22,24 +22,19 @@ export const LogIn = () => {
     if (!password) return setError('Password is required');
 
     setLoading(true);
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    try {
+      const user = await signInUser({
+        email,
+        password,
+      });
 
-    if (error) {
-      setLoading(false);
-      if (error.message === 'Invalid login credentials') {
-        setError('Hmm, that email or password doesn’t look right...');
-      } else {
-        setError('Something went wrong, try again');
+      if (user) {
+        setLoading(false);
+        navigate('/home');
       }
-      return;
+    } catch (error: any) {
+      setError(error.message);
     }
-
-    setLoading(false);
-
-    navigate('/home');
   };
   return (
     <div className="login">

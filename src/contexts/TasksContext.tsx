@@ -9,7 +9,7 @@ export const TasksContext = createContext<TasksContextType | undefined>(undefine
 export const TasksProvider = ({ children }: PropsWithChildren) => {
   const [tasks, setTasks] = useState<TaskInterface[]>([]);
   const [loading, setLoading] = useState(true);
-  const { user } = useAuth(); // Get user from AuthContext
+  const { user } = useAuth();
 
   useEffect(() => {
     if (!user) {

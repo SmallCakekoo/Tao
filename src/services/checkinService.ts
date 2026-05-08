@@ -22,13 +22,11 @@ export const saveDailyCheckin = async (
     {
       user_id: user.id,
       checkin_date: today,
-      // Raw Scores
       energy_score: scores.energy_score,
       sleep_score: scores.sleep_score,
       mood_score: scores.mood_score,
       stress_score: scores.stress_score,
       daily_load_score: scores.daily_load_score,
-      // Categories & Results
       f_category: results.f_category,
       e_category: results.e_category,
       c_category: results.c_category,
@@ -76,7 +74,6 @@ export const getWeeklyCheckins = async (): Promise<FullDailyCheckin[]> => {
   } = await supabase.auth.getUser();
   if (!user) return [];
 
-  // Calcular lunes y domingo de la semana actual
   const today = new Date();
   const currentDay = today.getDay();
   const diffToMonday = currentDay === 0 ? -6 : 1 - currentDay;

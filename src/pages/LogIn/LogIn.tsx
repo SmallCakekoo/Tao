@@ -23,20 +23,18 @@ export const LogIn = () => {
 
     setLoading(true);
     try {
-          const user = await signInUser({
-            email,
-            password,
-          });
-    
-          if (user) {
-            console.log(user);
-          }
-            } catch (error: any) {
-          setError(error.message);
-        }
+      const user = await signInUser({
+        email,
+        password,
+      });
 
-    setLoading(false);
-    navigate('/home');
+      if (user) {
+        setLoading(false);
+        navigate('/home');
+      }
+    } catch (error: any) {
+      setError(error.message);
+    }
   };
   return (
     <div className="login">

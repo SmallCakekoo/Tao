@@ -1,46 +1,29 @@
 import { useState } from 'react';
 import './AgendaForm.css';
 import type { TaskInterface } from '../../types/TaskTypes';
-import { supabase } from '../../lib/supabaseClient';
+import { useTasks } from '../../contexts/TasksContext';
+import { useAuth } from '../../contexts/AuthContext';
 
-export const AgendaForm = ({
-  setTasks,
-}: {
-  setTasks: React.Dispatch<React.SetStateAction<TaskInterface[]>>;
-}) => {
+export const AgendaForm = () => {
+  const { addTask } = useTasks();     // ← lógica de inserción en el context
+  const { user } = useAuth();         // ← usuario desde AuthContext, sin llamar Supabase
   const [taskName, setTaskName] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
   const [priority, setPriority] = useState('');
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      return;
-    }
+    if (!user) return;
 
     const newTask: TaskInterface = {
       name: taskName,
       description: taskDescription,
-      priority: priority,
+      priority,
       complete: false,
       user_id: user.id,
     };
 
-    const { data, error } = await supabase.from('tasks').insert([newTask]).select();
-
-    if (error) {
-      console.error(error);
-      return;
-    }
-
-    if (data) {
-      setTasks((prev) => [...prev, ...data]);
-    }
+    await addTask(newTask);
 
     setTaskName('');
     setTaskDescription('');

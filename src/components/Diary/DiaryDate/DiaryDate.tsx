@@ -7,14 +7,14 @@ type DiaryDateProps = {
 
 export const DiaryDate = ({ date, isSelected, onClick }: DiaryDateProps) => {
   return (
-    <div className="date" onClick={onClick}>
-      <p className="day">
+    <div className={`date ${isSelected ? 'selected' : ''}`} onClick={onClick}>
+      <p className={`day ${isSelected ? 'selected' : ''}`}>
         {' '}
         {date.toLocaleDateString('en-US', {
           weekday: 'short',
         })}
       </p>
-      <h5 className="day-num">{date.getDate()}</h5>
+      <h5 className={`day-num ${isSelected ? 'selected' : ''}`}>{date.getDate()}</h5>
     </div>
   );
 };

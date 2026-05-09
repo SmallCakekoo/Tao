@@ -86,7 +86,7 @@ export const Diary = () => {
           />
         )}
         <aside className="side">
-          <IconChevronUp className="arrow up" onClick={previousWeek}/>
+          <IconChevronUp className="arrow up" onClick={previousWeek} />
           <div className="dates">
             {weekDates.map((date) => (
               <DiaryDate
@@ -97,15 +97,27 @@ export const Diary = () => {
               />
             ))}
           </div>
-          <IconChevronDown className="arrow down" onClick={nextWeek}/>
+          <IconChevronDown className="arrow down" onClick={nextWeek} />
         </aside>
 
         <div className="notebook-wrapper">
           <div className="notebook">
             <div className="page1">
               <div className="date-day">
-                <h5>Saturday</h5>
-                <p>Mar 15, 2026</p>
+                <h5>
+                  {' '}
+                  {selectedDate.toLocaleDateString('en-US', {
+                    weekday: 'long',
+                  })}
+                </h5>
+                <p>
+                  {' '}
+                  {selectedDate.toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric',
+                  })}
+                </p>
               </div>
               <Intention></Intention>
               {isMobile && <DiaryButtons setCamera={setCamera} />}

@@ -14,15 +14,18 @@ import { MobileNavBar } from '../../components/NavBar/MobileNavBar/MobileNavBar'
 import { useAuth } from '../../contexts/AuthContext';
 import { getDiaryEntryByDate } from '../../services/diaryService';
 import { saveDiaryEntry } from '../../services/diaryService';
+import type { PromptKey } from '../../types/PromptKey';
 
 export const Diary = () => {
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
   const [showCamera, setShowCamera] = useState<boolean>(false);
   const [savedImage, setSavedImage] = useState<string | null>(null);
+  const [selected, setSelected] = useState<PromptKey | null>(null);
   // Temporary, to check if image changes in local storage
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-  const [entry, setEntry] = useState<string>("");
+  const [entry, setEntry] = useState<string>('');
+  const [loadingEntry, setLoadingEntry] = useState<boolean>(false);
   const { user } = useAuth();
 
   const getStartOfWeek = (date: Date) => {
@@ -45,6 +48,13 @@ export const Diary = () => {
     return date;
   });
 
+  const changeDate = (date: Date) => {
+    setEntry('');
+    setSelected(null);
+
+    setSelectedDate(date);
+  };
+
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
     window.addEventListener('resize', handleResize);
@@ -64,6 +74,8 @@ export const Diary = () => {
   };
 
   const nextWeek = () => {
+    setEntry('');
+    setSelected(null);
     const next = new Date(selectedDate);
 
     next.setDate(next.getDate() + 7);
@@ -72,6 +84,8 @@ export const Diary = () => {
   };
 
   const previousWeek = () => {
+    setEntry('');
+    setSelected(null);
     const prev = new Date(selectedDate);
 
     prev.setDate(prev.getDate() - 7);
@@ -80,39 +94,43 @@ export const Diary = () => {
   };
 
   useEffect(() => {
-  const fetchEntry = async () => {
+    const fetchEntry = async () => {
+      if (!user) return;
+
+      setLoadingEntry(true);
+
+      try {
+        const data = await getDiaryEntryByDate(user.id, selectedDate);
+
+        if (data) {
+          setEntry(data.content ?? '');
+          setSelected(data.intention ?? null);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoadingEntry(false);
+      }
+    };
+
+    fetchEntry();
+  }, [selectedDate, user]);
+
+  const handleSave = async () => {
     if (!user) return;
+    if (loadingEntry) return;
 
     try {
-      const data =
-        await getDiaryEntryByDate(
-          user.id,
-          selectedDate
-        );
-
-      setEntry(data?.content ?? "");
+      await saveDiaryEntry({
+        userId: user.id,
+        date: selectedDate,
+        content: entry,
+        intention: selected || '',
+      });
     } catch (error) {
       console.error(error);
     }
   };
-
-  fetchEntry();
-}, [selectedDate, user]);
-
-const handleSave = async () => {
-  if (!user) return;
-
-  try {
-    await saveDiaryEntry({
-      userId: user.id,
-      date: selectedDate,
-      content: entry,
-      intention: '',
-    });
-  } catch (error) {
-    console.error(error);
-  }
-};
 
   return (
     <>
@@ -133,7 +151,7 @@ const handleSave = async () => {
                 key={date.toISOString()}
                 date={date}
                 isSelected={date.toDateString() === selectedDate.toDateString()}
-                onClick={() => setSelectedDate(date)}
+                onClick={() => changeDate(date)}
               />
             ))}
           </div>
@@ -159,8 +177,8 @@ const handleSave = async () => {
                   })}
                 </p>
               </div>
-              <Intention></Intention>
-              {isMobile && <DiaryButtons setCamera={setCamera} handleSave={handleSave}/>}
+              <Intention selected={selected} setSelected={setSelected}></Intention>
+              {isMobile && <DiaryButtons setCamera={setCamera} handleSave={handleSave} />}
               <textarea
                 name="entry1"
                 id="entry1"
@@ -182,7 +200,7 @@ const handleSave = async () => {
           </div>
         </div>
         <aside className="options">
-          {!isMobile && <DiaryButtons setCamera={setCamera} handleSave={handleSave}/>}
+          {!isMobile && <DiaryButtons setCamera={setCamera} handleSave={handleSave} />}
         </aside>
       </div>
       <MobileNavBar />

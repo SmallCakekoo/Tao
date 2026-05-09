@@ -27,7 +27,6 @@ const stickers = [
 // Note: fieldViewbox is a recreation of the original viewbox from the Tao website.
 const fieldViewbox = { width: 1920, height: 238 };
 
-// Mapa de coordenadas que representa el "suelo" o la silueta de la colina SVG.
 // Used so gravity stickers know where to stop when falling.
 const fieldProfile = [
   { x: 0, y: 62 },

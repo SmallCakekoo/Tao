@@ -34,13 +34,11 @@ export const EditFeelings = () => {
       setLoading(true);
       const data = await getTodaysCheckin();
       if (data) {
-        // Map scores back to labels
         if (data.energy_score !== undefined) setEnergy(energyOptions[data.energy_score]);
         if (data.sleep_score !== undefined) setSleep(sleepOptions[data.sleep_score]);
         if (data.stress_score !== undefined) setStress(stressOptions[data.stress_score]);
         if (data.daily_load_score !== undefined) setDailyLoad(loadOptions[data.daily_load_score]);
         
-        // Load the face selected by the user directly from the DB
         if (data.face_result) {
           setMood(data.face_result as MoodValue);
         } else if (data.mood_score !== undefined) {

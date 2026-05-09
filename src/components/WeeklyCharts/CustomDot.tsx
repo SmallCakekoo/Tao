@@ -12,7 +12,7 @@ export const CustomDot = ({ cx = 0, cy = 0, payload }: DotsProps) => {
   const getIcon = (value: number) => {
     switch (value) {
       case 1:
-        return awful; // peor
+        return awful;
       case 2:
         return bad;
       case 3:

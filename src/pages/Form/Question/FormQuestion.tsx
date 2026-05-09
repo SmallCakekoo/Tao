@@ -22,8 +22,6 @@ export const FormQuestion = () => {
   const navigate = useNavigate();
   const { questionId } = useParams();
 
-  // Get the global form state from the React Router "Outlet".
-  // This allows the state to persist while navigating between individual questions.
   const { answers, setAnswers } = useOutletContext<FormOutletContext>();
 
   const parsedQuestionId = Number(questionId) as DailyQuestionId;
@@ -42,7 +40,6 @@ export const FormQuestion = () => {
   const selectedOption = answers[question.id];
 
   const handleBack = () => {
-    // If it's the first question, go back to the form intro.
     if (question.id === 1) {
       navigate('/form');
       return;

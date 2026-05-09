@@ -10,11 +10,7 @@ import { useEffect, useState } from 'react';
 import '../Form.css';
 import './FormResults.css';
 
-// Use import.meta.url to correctly resolve asset paths within the module.
 
-// Items will be dynamically generated in the component
-
-// Map question 3 index to the face selected by the user
 const FACE_OPTIONS: FaceResult[] = ['awful', 'bad', 'neutral', 'good', 'great'];
 
 export const FormResults = () => {
@@ -22,7 +18,6 @@ export const FormResults = () => {
   const { answers } = useOutletContext<FormOutletContext>();
   const [isSaving, setIsSaving] = useState(false);
 
-  // Prepare scores
   const scores = {
     energy_score: answers[1] ?? 0,
     sleep_score: answers[2] ?? 0,
@@ -31,21 +26,16 @@ export const FormResults = () => {
     daily_load_score: answers[5] ?? 0,
   };
 
-  // Calculate results using the engine (without face_result)
   const engineResults = calculateDailyCheckin(scores);
 
-  // The face is selected by the user in question 3
   const face_result: FaceResult = FACE_OPTIONS[answers[3] ?? 2];
 
-  // Combine engine results with user selected face
   const results = { ...engineResults, face_result };
 
-  // Save automatically when reaching the results page
   useEffect(() => {
     const persistResult = async () => {
       try {
         setIsSaving(true);
-        // Save check-in logic
         await saveDailyCheckin(scores, results);
       } catch (err) {
         console.error('Failed to save check-in', err);

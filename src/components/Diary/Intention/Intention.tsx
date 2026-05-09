@@ -1,8 +1,6 @@
-// React
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 
-// Icons
 import {
   IconArrowsDiagonalMinimize2,
   IconArrowsDiagonal2,
@@ -10,16 +8,12 @@ import {
   IconChevronRight,
 } from '@tabler/icons-react';
 
-// Internal components
 import { IntentionOverlay } from '../IntentionOverlay/IntentionOverlay';
 
-// Supabase
 import { supabase } from '../../../lib/supabaseClient';
 
-// Types
 import type { PromptKey } from '../../../types/PromptKey';
 
-// Styles
 import './Intention.css';
 
 export const Intention = () => {

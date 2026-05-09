@@ -13,6 +13,7 @@ import { HomeNavbar } from '../../components/NavBar/CommonNavBar/HomeNavbar';
 import { MobileNavBar } from '../../components/NavBar/MobileNavBar/MobileNavBar';
 import { useAuth } from '../../contexts/AuthContext';
 import { getDiaryEntryByDate } from '../../services/diaryService';
+import { saveDiaryEntry } from '../../services/diaryService';
 
 export const Diary = () => {
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
@@ -98,6 +99,21 @@ export const Diary = () => {
   fetchEntry();
 }, [selectedDate, user]);
 
+const handleSave = async () => {
+  if (!user) return;
+
+  try {
+    await saveDiaryEntry({
+      userId: user.id,
+      date: selectedDate,
+      content: entry,
+      intention: '',
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
   return (
     <>
       {!isMobile && <HomeNavbar />}
@@ -144,7 +160,7 @@ export const Diary = () => {
                 </p>
               </div>
               <Intention></Intention>
-              {isMobile && <DiaryButtons setCamera={setCamera} />}
+              {isMobile && <DiaryButtons setCamera={setCamera} handleSave={handleSave}/>}
               <textarea
                 name="entry1"
                 id="entry1"
@@ -166,7 +182,7 @@ export const Diary = () => {
           </div>
         </div>
         <aside className="options">
-          {!isMobile && <DiaryButtons setCamera={setCamera} />}
+          {!isMobile && <DiaryButtons setCamera={setCamera} handleSave={handleSave}/>}
         </aside>
       </div>
       <MobileNavBar />

@@ -13,6 +13,7 @@ export type GradientBoxProps = {
 
 export type DiaryButtonsProps = {
   setCamera: () => void;
+  handleSave: () => void;
 };
 
 export type DraggableStickerProps = {

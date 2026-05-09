@@ -38,14 +38,18 @@ export const saveDiaryEntry = async ({
 }: SaveDiaryEntryParams) => {
   const formattedDate = formatLocalDate(date);
 
-  const { error } = await supabase.from('journal_entries').upsert({
+  const { error } = await supabase.from('journal_entries').upsert(
+  {
     user_id: userId,
     entry_date: formattedDate,
-    intention: intention,
     content,
-
+    intention,
     updated_at: new Date(),
-  });
+  },
+  {
+    onConflict: "user_id,entry_date",
+  }
+)
 
   if (error) {
     throw new Error('Could not save diary entry');

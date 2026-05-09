@@ -1,16 +1,21 @@
-import { Navigate } from "react-router-dom"
-import { useAuth } from "../contexts/AuthContext"
-import type { PropsWithChildren } from "react"
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import type { PropsWithChildren } from "react";
 
-const ProtectedRoute = ({ children }: PropsWithChildren) => {
-  const { user } = useAuth()
+const ProtectedRoute = ({
+  children,
+}: PropsWithChildren) => {
+  const { user, loading } = useAuth();
 
-  if (!user) {
-    return <Navigate to="/login" />
+  if (loading) {
+    return <p>Loading...</p>;
   }
 
-  return children
-}
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
 
-export default ProtectedRoute
+  return children;
+};
 
+export default ProtectedRoute;

@@ -15,6 +15,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { getDiaryEntryByDate } from '../../services/diaryService';
 import { saveDiaryEntry } from '../../services/diaryService';
 import type { PromptKey } from '../../types/PromptKey';
+import type { DiaryContent } from '../../types/DiaryEntryParams';
 
 export const Diary = () => {
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
@@ -24,8 +25,11 @@ export const Diary = () => {
   // Temporary, to check if image changes in local storage
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-  const [entry, setEntry] = useState<string>('');
   const [loadingEntry, setLoadingEntry] = useState<boolean>(false);
+  const [entry, setEntry] = useState<DiaryContent>({
+    area1: '',
+    area2: '',
+  });
   const { user } = useAuth();
 
   const getStartOfWeek = (date: Date) => {
@@ -49,7 +53,10 @@ export const Diary = () => {
   });
 
   const changeDate = (date: Date) => {
-    setEntry('');
+    setEntry({
+      area1: '',
+      area2: '',
+    });
     setSelected(null);
 
     setSelectedDate(date);
@@ -74,7 +81,10 @@ export const Diary = () => {
   };
 
   const nextWeek = () => {
-    setEntry('');
+    setEntry({
+      area1: '',
+      area2: '',
+    });
     setSelected(null);
     const next = new Date(selectedDate);
 
@@ -84,7 +94,10 @@ export const Diary = () => {
   };
 
   const previousWeek = () => {
-    setEntry('');
+    setEntry({
+      area1: '',
+      area2: '',
+    });
     setSelected(null);
     const prev = new Date(selectedDate);
 
@@ -103,7 +116,7 @@ export const Diary = () => {
         const data = await getDiaryEntryByDate(user.id, selectedDate);
 
         if (data) {
-          setEntry(data.content ?? '');
+          setEntry(data.content ?? { area1: '', area2: '' });
           setSelected(data.intention ?? null);
         }
       } catch (error) {
@@ -184,8 +197,13 @@ export const Diary = () => {
                 id="entry1"
                 className="text-entry"
                 placeholder="Feel free to journal your current thoughts or follow the prompt based on your needs"
-                value={entry}
-                onChange={(e) => setEntry(e.target.value)}
+                value={entry.area1}
+                onChange={(e) =>
+                  setEntry((prev) => ({
+                    ...prev,
+                    area1: e.target.value,
+                  }))
+                }
               ></textarea>
             </div>
             <div className="page2">
@@ -194,6 +212,13 @@ export const Diary = () => {
                 id="entry2"
                 className="text-entry"
                 placeholder="Feel free to journal your current thoughts or follow the prompt based on your needs"
+                value={entry.area2}
+                onChange={(e) =>
+                  setEntry((prev) => ({
+                    ...prev,
+                    area2: e.target.value,
+                  }))
+                }
               ></textarea>
               {capturedImage && <Polaroid src={capturedImage} />}
             </div>

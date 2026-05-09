@@ -8,7 +8,7 @@ import { useTasks } from '../../contexts/TasksContext';
 
 export const Agenda = () => {
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
-  const { quote } = useTasks(); // ← viene del context, sin tocar Supabase aquí
+  const { quote } = useTasks();
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);

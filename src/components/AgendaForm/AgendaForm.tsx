@@ -5,8 +5,8 @@ import { useTasks } from '../../contexts/TasksContext';
 import { useAuth } from '../../contexts/AuthContext';
 
 export const AgendaForm = () => {
-  const { addTask } = useTasks();     // ← lógica de inserción en el context
-  const { user } = useAuth();         // ← usuario desde AuthContext, sin llamar Supabase
+  const { addTask } = useTasks();     
+  const { user } = useAuth();        
   const [taskName, setTaskName] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
   const [priority, setPriority] = useState('');

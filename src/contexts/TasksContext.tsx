@@ -16,7 +16,6 @@ import {
 } from "../services/agendaServices";
 import type { TaskInterface } from "../types/TaskTypes";
 
-// — Types —
 interface Quote {
   quote: string;
   author: string;
@@ -32,10 +31,8 @@ interface TasksContextType {
   removeTask: (task: TaskInterface) => Promise<void>;
 }
 
-// — Context —
 const TasksContext = createContext<TasksContextType | undefined>(undefined);
 
-// — Provider —
 export const TasksProvider = ({ children }: PropsWithChildren) => {
   const { user } = useAuth();
 
@@ -105,7 +102,6 @@ export const TasksProvider = ({ children }: PropsWithChildren) => {
   );
 };
 
-// — Hook —
 export const useTasks = () => {
   const context = useContext(TasksContext);
 

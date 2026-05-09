@@ -9,10 +9,8 @@ import {
 } from '@tabler/icons-react';
 
 import { IntentionOverlay } from '../IntentionOverlay/IntentionOverlay';
-
-import { supabase } from '../../../lib/supabaseClient';
-
 import type { PromptKey } from '../../../types/PromptKey';
+import { fetchPrompts } from '../../../services/diaryService';
 
 import './Intention.css';
 
@@ -25,16 +23,6 @@ export const Intention = () => {
 
   const hasPrompts = promptList.length > 0;
   const listLength = promptList.length - 1;
-
-  const fetchPrompts = async (prompt: PromptKey) => {
-    const { data, error } = await supabase.from('prompts').select('*').eq('mood', prompt);
-
-    if (error) {
-      return [];
-    }
-
-    return data?.[0]?.prompts ?? [];
-  };
 
   const selectPrompt = (prompt: PromptKey) => {
     setSelected(prompt);

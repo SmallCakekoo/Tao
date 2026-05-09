@@ -35,7 +35,7 @@ export const EditProfileProvider = ({ children }: PropsWithChildren) => {
 
   const updateName = async (newName: string) => {
     await updateProfileName(userId, newName);
-    await refreshProfile(); // sincroniza el ProfileContext global
+    await refreshProfile();
   };
 
   const saveQuote = async (quote: string, author: string) => {

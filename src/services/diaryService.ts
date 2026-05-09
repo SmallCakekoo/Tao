@@ -1,6 +1,7 @@
 import { supabase } from '../lib/supabaseClient';
 import type { PromptKey } from '../types/PromptKey';
 import type { SaveDiaryEntryParams } from '../types/DiaryEntryParams';
+import { formatLocalDate } from '../utils/date';
 
 export const fetchPrompts = async (prompt: PromptKey) => {
   const { data, error } = await supabase.from('prompts').select('*').eq('mood', prompt);
@@ -13,7 +14,7 @@ export const fetchPrompts = async (prompt: PromptKey) => {
 };
 
 export const getDiaryEntryByDate = async (userId: string, date: Date) => {
-  const formattedDate = date.toISOString().split('T')[0];
+  const formattedDate = formatLocalDate(date);
 
   const { data, error } = await supabase
     .from('journal_entries')
@@ -29,15 +30,20 @@ export const getDiaryEntryByDate = async (userId: string, date: Date) => {
   return data;
 };
 
-export const saveDiaryEntry = async ({ userId, date, content, intention }: SaveDiaryEntryParams) => {
-  const formattedDate = date.toISOString().split('T')[0];
+export const saveDiaryEntry = async ({
+  userId,
+  date,
+  content,
+  intention,
+}: SaveDiaryEntryParams) => {
+  const formattedDate = formatLocalDate(date);
 
   const { error } = await supabase.from('journal_entries').upsert({
     user_id: userId,
     entry_date: formattedDate,
     intention: intention,
     content,
-    
+
     updated_at: new Date(),
   });
 

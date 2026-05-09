@@ -11,6 +11,8 @@ import { DiaryButtons } from '../../components/Diary/DiaryButtons/DiaryButtons';
 import { Camera } from '../../components/Diary/Camera/Camera';
 import { HomeNavbar } from '../../components/NavBar/CommonNavBar/HomeNavbar';
 import { MobileNavBar } from '../../components/NavBar/MobileNavBar/MobileNavBar';
+import { useAuth } from '../../contexts/AuthContext';
+import { getDiaryEntryByDate } from '../../services/diaryService';
 
 export const Diary = () => {
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
@@ -19,6 +21,8 @@ export const Diary = () => {
   // Temporary, to check if image changes in local storage
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [entry, setEntry] = useState<string>("");
+  const { user } = useAuth();
 
   const getStartOfWeek = (date: Date) => {
     const start = new Date(date);
@@ -74,6 +78,26 @@ export const Diary = () => {
     setSelectedDate(prev);
   };
 
+  useEffect(() => {
+  const fetchEntry = async () => {
+    if (!user) return;
+
+    try {
+      const data =
+        await getDiaryEntryByDate(
+          user.id,
+          selectedDate
+        );
+
+      setEntry(data?.content ?? "");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  fetchEntry();
+}, [selectedDate, user]);
+
   return (
     <>
       {!isMobile && <HomeNavbar />}
@@ -126,6 +150,8 @@ export const Diary = () => {
                 id="entry1"
                 className="text-entry"
                 placeholder="Feel free to journal your current thoughts or follow the prompt based on your needs"
+                value={entry}
+                onChange={(e) => setEntry(e.target.value)}
               ></textarea>
             </div>
             <div className="page2">

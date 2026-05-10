@@ -29,6 +29,7 @@ export const Diary = () => {
   const [entry, setEntry] = useState<DiaryContent>({
     area1: '',
     area2: '',
+    imageUrl: '',
   });
   const { user } = useAuth();
 
@@ -56,6 +57,7 @@ export const Diary = () => {
     setEntry({
       area1: '',
       area2: '',
+      imageUrl: '',
     });
     setSelected(null);
 
@@ -84,6 +86,7 @@ export const Diary = () => {
     setEntry({
       area1: '',
       area2: '',
+      imageUrl: '',
     });
     setSelected(null);
     const next = new Date(selectedDate);
@@ -97,6 +100,7 @@ export const Diary = () => {
     setEntry({
       area1: '',
       area2: '',
+      imageUrl: '',
     });
     setSelected(null);
     const prev = new Date(selectedDate);

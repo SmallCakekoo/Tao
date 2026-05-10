@@ -30,3 +30,22 @@ export const signOutUser = async () => {
   const { error } = await supabase.auth.signOut();
   if (error) throw error;
 };
+
+export const changeUserPassword = async (
+  email: string,
+  currentPassword: string,
+  newPassword: string
+) => {
+  const { error: signInError } = await supabase.auth.signInWithPassword({
+    email,
+    password: currentPassword,
+  });
+
+  if (signInError) throw new Error('Current password is incorrect.');
+
+  const { error: updateError } = await supabase.auth.updateUser({
+    password: newPassword,
+  });
+
+  if (updateError) throw updateError;
+};

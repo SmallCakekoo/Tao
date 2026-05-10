@@ -141,6 +141,15 @@ export const Diary = () => {
     }
   };
 
+  useEffect(() => {
+  if (!user) return;
+
+  if (!entry.imageUrl) return;
+
+  handleSave();
+
+}, [entry.imageUrl]);
+
   return (
     <>
       {!isMobile && <HomeNavbar />}

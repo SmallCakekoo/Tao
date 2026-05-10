@@ -15,23 +15,18 @@ import { useAuth } from '../../contexts/AuthContext';
 import { getDiaryEntryByDate } from '../../services/diaryService';
 import { saveDiaryEntry } from '../../services/diaryService';
 import type { PromptKey } from '../../types/PromptKey';
-import type { DiaryContent } from '../../types/DiaryEntryParams';
+import { useDiary } from '../../contexts/DiaryContext';
 
 export const Diary = () => {
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
   const [showCamera, setShowCamera] = useState<boolean>(false);
-  const [savedImage, setSavedImage] = useState<string | null>(null);
   const [selected, setSelected] = useState<PromptKey | null>(null);
   // Temporary, to check if image changes in local storage
-  const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [loadingEntry, setLoadingEntry] = useState<boolean>(false);
-  const [entry, setEntry] = useState<DiaryContent>({
-    area1: '',
-    area2: '',
-    imageUrl: '',
-  });
+  const { entry, setEntry } = useDiary();
   const { user } = useAuth();
+
 
   const getStartOfWeek = (date: Date) => {
     const start = new Date(date);
@@ -62,6 +57,8 @@ export const Diary = () => {
     setSelected(null);
 
     setSelectedDate(date);
+      console.log(entry)
+
   };
 
   useEffect(() => {
@@ -70,13 +67,6 @@ export const Diary = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Check if there is an image inside local storage (Temporary)
-  useEffect(() => {
-    const image = localStorage.getItem('capturedPhoto');
-    if (image) {
-      setSavedImage(image);
-    }
-  }, []);
 
   const setCamera = (): void => {
     setShowCamera(true);
@@ -120,7 +110,7 @@ export const Diary = () => {
         const data = await getDiaryEntryByDate(user.id, selectedDate);
 
         if (data) {
-          setEntry(data.content ?? { area1: '', area2: '' });
+          setEntry(data.content ?? { area1: '', area2: '', imageUrl: ''});
           setSelected(data.intention ?? null);
         }
       } catch (error) {
@@ -157,7 +147,6 @@ export const Diary = () => {
         {showCamera && (
           <Camera
             onClose={() => setShowCamera(false)}
-            onCapture={(img) => setCapturedImage(img)}
           />
         )}
         <aside className="side">
@@ -224,7 +213,7 @@ export const Diary = () => {
                   }))
                 }
               ></textarea>
-              {capturedImage && <Polaroid src={capturedImage} />}
+              {entry.imageUrl && <Polaroid src={entry.imageUrl} />}
             </div>
           </div>
         </div>

@@ -9,13 +9,15 @@ import { IconX } from '@tabler/icons-react';
 import { base64ToBlob } from '../../../utils/base';
 import { uploadDiaryImage } from '../../../services/storageService';
 import { useAuth } from '../../../contexts/AuthContext';
+import { useDiary } from '../../../contexts/DiaryContext';
 
-export const Camera = ({ onClose, onCapture }: CameraProps) => {
+export const Camera = ({ onClose }: CameraProps) => {
   const webcamRef = useRef<Webcam | null>(null);
   const [image, setImage] = useState<string | null>(null);
   const [countdown, setCountdown] = useState<number | null>(null);
   const [flash, setFlash] = useState(false);
-  const {user} = useAuth();
+  const { user } = useAuth();
+  const { setEntry } = useDiary();
 
   const cameraWidth = 720;
   const cameraHeight = 720;
@@ -37,9 +39,8 @@ export const Camera = ({ onClose, onCapture }: CameraProps) => {
     setTimeout(async () => {
       setFlash(false);
 
-      if(!user) return;
+      if (!user) return;
       if (!webcamRef.current) return;
-      
 
       const imageSrc = webcamRef.current.getScreenshot();
 
@@ -50,7 +51,10 @@ export const Camera = ({ onClose, onCapture }: CameraProps) => {
           const imageUrl = await uploadDiaryImage(user.id, blob);
 
           setImage(imageUrl);
-          onCapture(imageUrl);
+          setEntry((prev) => ({
+            ...prev,
+            imageUrl,
+          }));
         } catch (error) {
           console.error(error);
         }

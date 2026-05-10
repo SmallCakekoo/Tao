@@ -19,7 +19,7 @@ export const uploadDiaryImage =
 
     const { data } =
       supabase.storage
-        .from("journal-images")
+        .from("polaroid")
         .getPublicUrl(fileName);
 
     return data.publicUrl;

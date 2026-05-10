@@ -1,12 +1,13 @@
 import './EditQuote.css';
 import { useState } from 'react';
-import type { EditQuoteProps } from '../../types/ProfileProps';
-import { supabase } from '../../lib/supabaseClient';
+import { useEditProfile } from '../../contexts/EditProfileContext';
 
 export const EditQuote = ({
   onSave,
-  userId,
-}: EditQuoteProps & { onSave: (message: string, type: 'success' | 'error') => void }) => {
+}: {
+  onSave: (message: string, type: 'success' | 'error') => void;
+}) => {
+  const { saveQuote } = useEditProfile();
   const [quoteInput, setQuoteInput] = useState('');
   const [authorInput, setAuthorInput] = useState('');
 
@@ -16,20 +17,11 @@ export const EditQuote = ({
       return;
     }
     if (quoteInput.trim() !== '' && authorInput.trim() !== '') {
-      const { data, error } = await supabase
-        .from('quotes')
-        .update({
-          quote: quoteInput,
-          author: authorInput,
-        })
-        .eq('user_id', userId)
-        .select();
-
-      if (error) {
-        return;
-      }
-      if (data) {
+      try {
+        await saveQuote(quoteInput, authorInput);
         onSave('Quote saved!', 'success');
+      } catch {
+        onSave('Error saving quote.', 'error');
       }
     }
   };

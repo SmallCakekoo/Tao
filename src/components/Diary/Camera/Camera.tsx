@@ -45,6 +45,8 @@ export const Camera = ({ onClose }: CameraProps) => {
       const imageSrc = webcamRef.current.getScreenshot();
 
       if (imageSrc) {
+        
+        setImage(imageSrc);
         try {
           const blob = await base64ToBlob(imageSrc);
 

@@ -21,12 +21,10 @@ export const Diary = () => {
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
   const [showCamera, setShowCamera] = useState<boolean>(false);
   const [selected, setSelected] = useState<PromptKey | null>(null);
-  // Temporary, to check if image changes in local storage
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [loadingEntry, setLoadingEntry] = useState<boolean>(false);
   const { entry, setEntry } = useDiary();
   const { user } = useAuth();
-
 
   const getStartOfWeek = (date: Date) => {
     const start = new Date(date);
@@ -57,8 +55,7 @@ export const Diary = () => {
     setSelected(null);
 
     setSelectedDate(date);
-      console.log(entry)
-
+    console.log(entry);
   };
 
   useEffect(() => {
@@ -67,17 +64,11 @@ export const Diary = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-
   const setCamera = (): void => {
     setShowCamera(true);
   };
 
   const nextWeek = () => {
-    setEntry({
-      area1: '',
-      area2: '',
-      imageUrl: '',
-    });
     setSelected(null);
     const next = new Date(selectedDate);
 
@@ -87,11 +78,7 @@ export const Diary = () => {
   };
 
   const previousWeek = () => {
-    setEntry({
-      area1: '',
-      area2: '',
-      imageUrl: '',
-    });
+
     setSelected(null);
     const prev = new Date(selectedDate);
 
@@ -110,8 +97,23 @@ export const Diary = () => {
         const data = await getDiaryEntryByDate(user.id, selectedDate);
 
         if (data) {
-          setEntry(data.content ?? { area1: '', area2: '', imageUrl: ''});
+          setEntry(
+            data.content ?? {
+              area1: '',
+              area2: '',
+              imageUrl: '',
+            }
+          );
+
           setSelected(data.intention ?? null);
+        } else {
+          setEntry({
+            area1: '',
+            area2: '',
+            imageUrl: '',
+          });
+
+          setSelected(null);
         }
       } catch (error) {
         console.error(error);
@@ -144,11 +146,7 @@ export const Diary = () => {
       {!isMobile && <HomeNavbar />}
 
       <div className="diary">
-        {showCamera && (
-          <Camera
-            onClose={() => setShowCamera(false)}
-          />
-        )}
+        {showCamera && <Camera onClose={() => setShowCamera(false)} />}
         <aside className="side">
           <IconChevronUp className="arrow up" onClick={previousWeek} />
           <div className="dates">

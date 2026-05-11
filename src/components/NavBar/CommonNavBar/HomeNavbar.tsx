@@ -1,14 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import logoFull from '../../../assets/logo-full.svg';
+import { navItems } from '../../../data/navigation';
 import './HomeNavbar.css';
-
-const navItems = [
-  { path: '/home', label: 'Home' },
-  { path: '/diary', label: 'Diary' },
-  { path: '/agenda', label: 'Agenda' },
-  { path: '/profile', label: 'Profile' },
-] as const;
 
 const resolveDesktopActivePath = (pathname: string) => {
   const isProfileRelatedRoute =

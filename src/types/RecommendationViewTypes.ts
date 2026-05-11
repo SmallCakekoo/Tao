@@ -1,3 +1,4 @@
+import type { CalculatedCheckin } from './CheckinTypes';
 import type { PresetFeeling } from './RecommendationTypes';
 
 export type LoadingState = {
@@ -6,9 +7,12 @@ export type LoadingState = {
 
 export type ResultsState = {
   feeling?: PresetFeeling;
+  source?: 'form' | 'preset';
+  results?: CalculatedCheckin;
 };
 
 export type RecommendationCard = {
+  id: string;
   title: string;
   subtitle: string;
   body: string[];
@@ -18,6 +22,11 @@ export type RecommendationCard = {
   ctaRoute?: string;
   titleMuted?: string;
   bodySpacing?: 'normal' | 'spacious';
+};
+
+export type SavedRecommendationsProps = {
+  recommendations: RecommendationCard[];
+  closeOverlay: () => void;
 };
 
 export type PersonalizedRedirectOverlayProps = {

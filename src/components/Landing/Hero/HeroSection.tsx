@@ -4,51 +4,21 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useNavigate } from 'react-router-dom';
 import { DraggableSticker } from '../DraggableSticker/DraggableSticker';
 import { Button } from '../../Button/Button';
-import { supabase } from '../../../lib/supabaseClient';
+import { useAuth } from '../../../contexts/AuthContext';
+import { fieldProfile, heroStickers } from '../../../data/landingContent';
 import fieldImg from '../../../assets/field-landing.svg';
 import './HeroSection.css';
 
-import badIcon from '../../../assets/stickers/bad.svg';
-import goodIcon from '../../../assets/stickers/good.svg';
-import neutralIcon from '../../../assets/stickers/neutral.svg';
-import awfulIcon from '../../../assets/stickers/awful.svg';
-import greatIcon from '../../../assets/stickers/great.svg';
-
 gsap.registerPlugin(ScrollTrigger);
 
-const stickers = [
-  { emotionSrc: badIcon, size: 74, left: '12%', top: '18%' },
-  { emotionSrc: goodIcon, size: 74, left: '78%', top: '22%' },
-  { emotionSrc: neutralIcon, size: 74, left: '8%', top: '65%' },
-  { emotionSrc: awfulIcon, size: 74, left: '82%', top: '58%' },
-  { emotionSrc: greatIcon, size: 74, left: '45%', top: '12%' },
-];
-
-// Nota: El fieldViewbox es una recreación del viewbox original de la web de Tao.
+// Note: fieldViewbox is a recreation of the original viewbox from the Tao website.
 const fieldViewbox = { width: 1920, height: 238 };
-
-// Mapa de coordenadas que representa el "suelo" o la silueta de la colina SVG.
-// Se usa para que los stickers con gravedad sepan dónde detenerse al caer.
-const fieldProfile = [
-  { x: 0, y: 62 },
-  { x: 120, y: 92 },
-  { x: 260, y: 116 },
-  { x: 380, y: 98 },
-  { x: 540, y: 68 },
-  { x: 760, y: 80 },
-  { x: 960, y: 140 },
-  { x: 1140, y: 84 },
-  { x: 1320, y: 66 },
-  { x: 1490, y: 108 },
-  { x: 1650, y: 72 },
-  { x: 1810, y: 60 },
-  { x: 1920, y: 70 },
-];
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
 export const HeroSection = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const badgeRef = useRef<HTMLParagraphElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const ctaRef = useRef<HTMLButtonElement>(null);
@@ -56,9 +26,8 @@ export const HeroSection = () => {
   const hillRef = useRef<HTMLDivElement>(null);
 
   // Handle CTA click based on authentication status
-  const handleGetStartedClick = async () => {
-    const { data } = await supabase.auth.getSession();
-    navigate(data.session ? '/home' : '/signup');
+  const handleGetStartedClick = () => {
+    navigate(user ? '/home' : '/signup');
   };
 
   useEffect(() => {
@@ -86,9 +55,9 @@ export const HeroSection = () => {
   }, []);
 
   /**
-   * Esta función calcula dinámicamente la altura del suelo en un punto X específico.
-   * Interpola entre los puntos del 'fieldProfile' teniendo en cuenta el redimensionado
-   * del contenedor (object-fit: cover).
+   * This function dynamically calculates the ground height at a specific X point.
+   * It interpolates between the 'fieldProfile' points taking into account the container
+   * resizing (object-fit: cover).
    */
   const getGroundY = useCallback((centerX: number) => {
     const section = sectionRef.current;
@@ -103,7 +72,7 @@ export const HeroSection = () => {
     const svgW = fieldViewbox.width;
     const svgH = fieldViewbox.height;
 
-    // Cálculo para coincidir con object-fit: cover + object-position: bottom center
+    // Calculation to match object-fit: cover + object-position: bottom center
     const scale = Math.max(sectionWidth / svgW, hillHeight / svgH);
     const renderedW = svgW * scale;
     const renderedH = svgH * scale;
@@ -123,7 +92,7 @@ export const HeroSection = () => {
       const b = fieldProfile[i + 1];
 
       if (clampedX >= a.x && clampedX <= b.x) {
-        // Interpolación lineal entre dos puntos del perfil del suelo
+        // Linear interpolation between two ground profile points
         const t = (clampedX - a.x) / (b.x - a.x);
         svgY = lerp(a.y, b.y, t);
         break;
@@ -136,7 +105,7 @@ export const HeroSection = () => {
   return (
     <section className="landing-hero" ref={sectionRef}>
       <div className="landing-hero-stickers">
-        {stickers.map((sticker, index) => (
+        {heroStickers.map((sticker, index) => (
           <DraggableSticker
             key={index}
             emotionSrc={sticker.emotionSrc}
@@ -170,7 +139,11 @@ export const HeroSection = () => {
       </Button>
 
       <div className="landing-hero-hill" ref={hillRef} aria-hidden>
-        <img src={fieldImg} alt="" className="landing-hero-hill-img" />
+        <img
+          src={fieldImg}
+          alt="Green fields and hills background"
+          className="landing-hero-hill-img"
+        />
       </div>
     </section>
   );

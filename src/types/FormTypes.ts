@@ -12,11 +12,11 @@ export interface FormQuestion {
 }
 
 export interface DailyFormAnswers {
-  1?: string;
-  2?: string;
-  3?: string;
-  4?: string;
-  5?: string;
+  1?: number;
+  2?: number;
+  3?: number;
+  4?: number;
+  5?: number;
 }
 
 export interface DailyCheckInSnapshot {

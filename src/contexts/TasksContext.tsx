@@ -1,0 +1,101 @@
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+  type PropsWithChildren,
+} from 'react';
+
+import { useAuth } from './AuthContext';
+import { useError } from './ErrorContext';
+import {
+  getUserTasks,
+  getUserQuote,
+  insertTask,
+  updateTask,
+  deleteTask,
+} from '../services/agendaServices';
+import type { Quote, TaskInterface, TasksContextType } from '../types/TaskTypes';
+
+const TasksContext = createContext<TasksContextType | undefined>(undefined);
+
+export const TasksProvider = ({ children }: PropsWithChildren) => {
+  const { user } = useAuth();
+  const { showError } = useError();
+
+  const [tasks, setTasks] = useState<TaskInterface[]>([]);
+  const [quote, setQuote] = useState<Quote>({ quote: '', author: '' });
+  const [loadingTasks, setLoadingTasks] = useState(true);
+
+  const fetchData = useCallback(async () => {
+    if (!user) {
+      setTasks([]);
+      setQuote({ quote: '', author: '' });
+      setLoadingTasks(false);
+      return;
+    }
+
+    try {
+      const [tasksData, quoteData] = await Promise.all([
+        getUserTasks(user.id),
+        getUserQuote(user.id),
+      ]);
+
+      setTasks(tasksData);
+      setQuote({ quote: quoteData.quote, author: quoteData.author });
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : 'Failed to load tasks data';
+      showError(message);
+    } finally {
+      setLoadingTasks(false);
+    }
+  }, [user, showError]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  const addTask = async (task: TaskInterface) => {
+    const data = await insertTask(task);
+    if (data) setTasks((prev) => [...prev, ...data]);
+  };
+
+  const toggleTask = async (task: TaskInterface) => {
+    const updated = { ...task, complete: !task.complete };
+    await updateTask(updated);
+    setTasks((prev) => prev.map((t) => (t.id === task.id ? updated : t)));
+  };
+
+  const removeTask = async (task: TaskInterface) => {
+    await deleteTask(task);
+    setTasks((prev) => prev.filter((t) => t.id !== task.id));
+  };
+
+  return (
+    <TasksContext.Provider
+      value={{
+        tasks,
+        setTasks,
+        quote,
+        loadingTasks,
+        addTask,
+        toggleTask,
+        removeTask,
+      }}
+    >
+      {children}
+    </TasksContext.Provider>
+  );
+};
+
+export const useTasks = () => {
+  const context = useContext(TasksContext);
+
+  if (!context) {
+    throw new Error('useTasks must be used within TasksProvider');
+  }
+
+  return context;
+};

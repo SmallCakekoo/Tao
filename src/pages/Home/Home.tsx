@@ -1,7 +1,5 @@
 import './Home.css';
 import { useEffect, useState } from 'react';
-import { supabase } from '../../lib/supabaseClient';
-import { useNavigate } from 'react-router-dom';
 import { AnimatedLine } from '../../components/Home/AnimatedLine/AnimatedLine';
 import { Feeling } from '../../components/Home/Feeling/Feeling';
 import { Recs } from '../../components/Home/Recs/Recs';
@@ -10,12 +8,13 @@ import { HomeNavbar } from '../../components/NavBar/CommonNavBar/HomeNavbar';
 import { MobileNavBar } from '../../components/NavBar/MobileNavBar/MobileNavBar';
 import { DiaryWidget } from '../../components/DiaryWidget/DiaryWidget';
 import { ToDoWidget } from '../../components/ToDoWidget/ToDoWidget';
+import { useCheckin } from '../../contexts/CheckinContext';
+import { useProfile } from '../../contexts/ProfileContext';
 
 export const Home = () => {
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
-  const [name, setName] = useState('');
+  const { profile } = useProfile();
+  const { todaysCheckin } = useCheckin();
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -23,44 +22,7 @@ export const Home = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  useEffect(() => {
-    const checkUser = async () => {
-      const { data } = await supabase.auth.getSession();
-
-      if (!data.session) {
-        navigate('/login');
-      } else {
-        setLoading(false);
-      }
-    };
-
-    checkUser();
-  }, [navigate]);
-
-  useEffect(() => {
-    const getProfile = async () => {
-      const { data: userData } = await supabase.auth.getUser();
-
-      if (!userData.user) return;
-
-      const { data: profile, error } = await supabase
-        .from('profiles')
-        .select('name')
-        .eq('id', userData.user.id)
-        .single();
-
-      if (error) {
-        console.error(error.message);
-        return;
-      }
-
-      setName(profile.name);
-    };
-
-    getProfile();
-  }, []);
-
-  if (loading) return null;
+  const name = profile?.name ?? '';
 
   return (
     <div className="home">
@@ -77,7 +39,7 @@ export const Home = () => {
 
         <div className="home-division">
           <div className="left">
-            <Feeling />
+            <Feeling checkin={todaysCheckin} />
             <Recs />
           </div>
 

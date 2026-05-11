@@ -1,16 +1,11 @@
 import './EditProfileForm.css';
 import { useState } from 'react';
-import type { EditProfileFormProps } from '../../types/ProfileProps';
 import { ChangePassword } from '../ChangePasswordOverlay/ChangePassword';
-import { supabase } from '../../lib/supabaseClient';
+import { useEditProfile } from '../../contexts/EditProfileContext';
+import type { FeedbackHandlerProps } from '../../types/FeedbackProps';
 
-export const EditProfileForm = ({
-  name,
-  userId,
-  onSave,
-}: EditProfileFormProps & {
-  onSave: (message: string, type: 'success' | 'error') => void;
-}) => {
+export const EditProfileForm = ({ onSave }: FeedbackHandlerProps) => {
+  const { name, updateName } = useEditProfile();
   const [nameInput, setNameInput] = useState('');
   const [showChangePassword, setShowChangePassword] = useState(false);
 
@@ -19,16 +14,12 @@ export const EditProfileForm = ({
       onSave('Name cannot be empty.', 'error');
       return;
     }
-    const { data, error } = await supabase
-      .from('profiles')
-      .update({ name: nameInput })
-      .eq('id', userId)
-      .select();
-    if (error) {
-      return;
-    }
-    if (data) {
+
+    try {
+      await updateName(nameInput);
       onSave('Profile updated!', 'success');
+    } catch {
+      onSave('Error updating profile.', 'error');
     }
   };
 

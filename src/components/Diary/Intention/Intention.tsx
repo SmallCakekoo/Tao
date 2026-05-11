@@ -1,8 +1,6 @@
-// React
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
-// Icons
 import {
   IconArrowsDiagonalMinimize2,
   IconArrowsDiagonal2,
@@ -10,50 +8,59 @@ import {
   IconChevronRight,
 } from '@tabler/icons-react';
 
-// Internal components
 import { IntentionOverlay } from '../IntentionOverlay/IntentionOverlay';
-
-// Supabase
-import { supabase } from '../../../lib/supabaseClient';
-
-// Types
 import type { PromptKey } from '../../../types/PromptKey';
+import { fetchPrompts } from '../../../services/diaryService';
+import { useError } from '../../../contexts/ErrorContext';
 
-// Styles
 import './Intention.css';
+import type { IntentionProps } from '../../../types/ComponentProps';
 
-export const Intention = () => {
+export const Intention = ({ selected, setSelected }: IntentionProps) => {
+  const { showError } = useError();
   const [maximized, setMaximized] = useState(false);
   const [promptList, setPromptList] = useState<string[]>([]);
+  // Track which intention the current prompts belong to so we do not show stale data.
+  const [loadedFor, setLoadedFor] = useState<PromptKey | null>(null);
   const [showOverlay, setShowOverlay] = useState(false);
-  const [selected, setSelected] = useState<PromptKey | null>(null);
   const [index, setIndex] = useState(0);
 
-  const hasPrompts = promptList.length > 0;
+  // Only consider prompts valid when they match the currently selected intention.
+  const hasPrompts = selected !== null && loadedFor === selected && promptList.length > 0;
   const listLength = promptList.length - 1;
-
-  const fetchPrompts = async (prompt: PromptKey) => {
-    const { data, error } = await supabase.from('prompts').select('*').eq('mood', prompt);
-
-    if (error) {
-      return [];
-    }
-
-    return data?.[0]?.prompts ?? [];
-  };
 
   const selectPrompt = (prompt: PromptKey) => {
     setSelected(prompt);
   };
 
   const getPrompt = async (prompt: PromptKey) => {
-    console.log(prompt);
+    try {
+      const prompts = await fetchPrompts(prompt);
 
-    const prompts = await fetchPrompts(prompt);
-
-    setPromptList(prompts);
-    setIndex(0);
+      setPromptList(prompts);
+      setLoadedFor(prompt);
+      setIndex(0);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Failed to load prompts';
+      showError(message);
+    }
   };
+
+  useEffect(() => {
+    if (!selected) return;
+
+    // Load prompts asynchronously so the effect does not set state synchronously.
+    void fetchPrompts(selected)
+      .then((prompts) => {
+        setPromptList(prompts);
+        setLoadedFor(selected);
+        setIndex(0);
+      })
+      .catch((error) => {
+        const message = error instanceof Error ? error.message : 'Failed to load prompts';
+        showError(message);
+      });
+  }, [selected, showError]);
 
   return (
     <>
@@ -115,10 +122,10 @@ export const Intention = () => {
                   />
                   <IconChevronRight
                     onClick={() => {
-                      if (index === listLength - 1) return;
+                      if (index === listLength) return;
                       setIndex((prev) => prev + 1);
                     }}
-                    className={`icon ${index === listLength - 1 ? 'disabled' : ''}`}
+                    className={`icon ${index === listLength ? 'disabled' : ''}`}
                   />
                 </div>
               )}

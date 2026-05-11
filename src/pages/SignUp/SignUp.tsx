@@ -4,7 +4,8 @@ import { BackButton } from '../../components/BackButton/BackButton';
 import { GradientBox } from '../../components/Login/GradientBox/GradientBox';
 import airplane from '../../assets/airplane.png';
 import { useState } from 'react';
-import { supabase } from '../../lib/supabaseClient';
+import { signUpUser } from '../../services/authService';
+import { createAccount } from '../../services/profileService';
 
 export const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -13,62 +14,57 @@ export const SignUp = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
-  const handleSignUp = async (e: React.SyntheticEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    setError(null);
-
-    if (!email) {
-      return setError('Email is required');
+  const validateSignUp = () => {
+    if (!email.trim()) {
+      return 'Email is required';
     }
 
     if (!email.includes('@')) {
-      return setError('Enter a valid email');
+      return 'Enter a valid email';
     }
 
-    if (!password) {
-      return setError('Password is required');
+    if (!password.trim()) {
+      return 'Password is required';
     }
 
     if (password.length < 6) {
-      return setError('Password must be at least 6 characters');
+      return 'Password must be at least 6 characters';
     }
 
-    if (!name) {
-      return setError('Name is required');
+    if (!name.trim()) {
+      return 'Name is required';
     }
 
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          name,
-        },
-      },
-    });
+    return null;
+  };
 
-    if (error) {
-      setError(error.message);
-    } else {
-      if (data.user) {
-        const { error: profileError } = await supabase.from('profiles').insert({
-          id: data.user.id,
+  const handleSignUp = async (e: React.SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError(null);
+    const validationError = validateSignUp();
+
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    try {
+      const user = await signUpUser({
+        email,
+        password,
+        name,
+      });
+
+      if (user) {
+        await createAccount({
+          id: user.id,
           name,
         });
-
-        if (profileError) {
-          setError('Your account was created, try logging in');
-        }
-        await supabase.from('quotes').insert({
-          quote:
-            "The key is not to prioritize what's on your schedule, but to schedule your priorities",
-          author: 'Stephen Covey',
-          user_id: data.user.id,
-        });
-
-        setSuccess(true);
       }
+
+      setSuccess(true);
+    } catch (error: unknown) {
+      setError(error instanceof Error ? error.message : 'Something went wrong');
     }
   };
 

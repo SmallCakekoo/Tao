@@ -6,12 +6,20 @@ import { Polaroid } from '../Polaroid/Polaroid';
 import './Camera.css';
 import camera from '../../../assets/camera.png';
 import { IconX } from '@tabler/icons-react';
+import { base64ToBlob } from '../../../utils/base';
+import { uploadDiaryImage } from '../../../services/storageService';
+import { useAuth } from '../../../contexts/AuthContext';
+import { useDiary } from '../../../contexts/DiaryContext';
+import { useError } from '../../../contexts/ErrorContext';
 
-export const Camera = ({ onClose, onCapture }: CameraProps) => {
+export const Camera = ({ onClose }: CameraProps) => {
   const webcamRef = useRef<Webcam | null>(null);
   const [image, setImage] = useState<string | null>(null);
   const [countdown, setCountdown] = useState<number | null>(null);
   const [flash, setFlash] = useState(false);
+  const { user } = useAuth();
+  const { setEntry } = useDiary();
+  const { showError } = useError();
 
   const cameraWidth = 720;
   const cameraHeight = 720;
@@ -30,17 +38,31 @@ export const Camera = ({ onClose, onCapture }: CameraProps) => {
   const triggerFlashAndCapture = () => {
     setFlash(true);
 
-    setTimeout(() => {
+    setTimeout(async () => {
       setFlash(false);
 
+      if (!user) return;
       if (!webcamRef.current) return;
 
       const imageSrc = webcamRef.current.getScreenshot();
 
       if (imageSrc) {
         setImage(imageSrc);
-        localStorage.setItem('capturedPhoto', imageSrc);
-        onCapture(imageSrc);
+        try {
+          const blob = await base64ToBlob(imageSrc);
+
+          const imageUrl = await uploadDiaryImage(user.id, blob);
+
+          setImage(imageUrl);
+          setEntry((prev) => ({
+            ...prev,
+            imageUrl,
+          }));
+        } catch (error) {
+          const message =
+            error instanceof Error ? error.message : 'Failed to upload diary image';
+          showError(message);
+        }
       }
 
       setTimeout(() => {

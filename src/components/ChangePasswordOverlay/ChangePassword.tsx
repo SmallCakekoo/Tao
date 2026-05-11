@@ -1,17 +1,17 @@
 import { createPortal } from 'react-dom';
 import { useState } from 'react';
 import './ChangePassword.css';
+import { useAuth } from '../../contexts/AuthContext';
+import { changeUserPassword } from '../../services/editProfileServices';
+import type { ChangePasswordProps } from '../../types/FeedbackProps';
 
-type Props = {
-  onClose: () => void;
-  onSave: (message: string, type: 'success' | 'error') => void;
-};
-
-export const ChangePassword = ({ onClose, onSave }: Props) => {
+export const ChangePassword = ({ onClose, onSave }: ChangePasswordProps) => {
+  const { user } = useAuth();
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleUpdate = () => {
+  const handleUpdate = async () => {
     if (currentPassword.trim() === '' || newPassword.trim() === '') {
       onSave('Please fill in all fields.', 'error');
       return;
@@ -20,8 +20,24 @@ export const ChangePassword = ({ onClose, onSave }: Props) => {
       onSave('Password must have at least 6 characters.', 'error');
       return;
     }
-    onSave('Password updated!', 'success');
-    onClose();
+    if (currentPassword === newPassword) {
+      onSave('New password must be different from current.', 'error');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await changeUserPassword(user?.email ?? '', currentPassword, newPassword);
+      onSave('Password updated!', 'success');
+      onClose();
+    } catch (error: unknown) {
+      onSave(
+        error instanceof Error ? error.message : 'Error updating password.',
+        'error'
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return createPortal(
@@ -45,8 +61,12 @@ export const ChangePassword = ({ onClose, onSave }: Props) => {
         />
 
         <div className="change-password-buttons">
-          <button className="password-update-button" onClick={handleUpdate}>
-            Update
+          <button
+            className="password-update-button"
+            onClick={handleUpdate}
+            disabled={loading}
+          >
+            {loading ? 'Updating...' : 'Update'}
           </button>
           <button className="password-cancel-button" onClick={onClose}>
             Cancel

@@ -24,6 +24,14 @@ export interface PresetOption {
   icon: string;
 }
 
+export interface PersonalizedRecommendation {
+  id: string;
+  title: string;
+  description: string;
+  macrostate: string;
+  image_name?: string;
+}
+
 export interface RecommendationRouteState {
   source?: 'home' | 'form' | 'direct';
 }

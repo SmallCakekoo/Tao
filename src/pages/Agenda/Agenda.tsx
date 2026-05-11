@@ -4,42 +4,16 @@ import { HomeNavbar } from '../../components/NavBar/CommonNavBar/HomeNavbar';
 import { MobileNavBar } from '../../components/NavBar/MobileNavBar/MobileNavBar';
 import { AgendaContent } from '../../components/AgendaContent/AgendaContent';
 import { useEffect, useState } from 'react';
-import { supabase } from '../../lib/supabaseClient';
+import { useTasks } from '../../contexts/TasksContext';
 
-export const Agenda = ({}) => {
+export const Agenda = () => {
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
-  const [quote, setQuote] = useState({ quote: '', author: '' });
+  const { quote } = useTasks();
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  useEffect(() => {
-    const getQuote = async () => {
-      const { data: userData } = await supabase.auth.getUser();
-
-      if (!userData.user) return;
-
-      const { data, error } = await supabase
-        .from('quotes')
-        .select('*')
-        .eq('user_id', userData.user.id)
-        .single();
-
-      if (error) {
-        console.error(error.message);
-        return;
-      }
-
-      setQuote({
-        quote: data.quote,
-        author: data.author,
-      });
-    };
-
-    getQuote();
   }, []);
 
   return (

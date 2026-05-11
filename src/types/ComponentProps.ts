@@ -1,5 +1,6 @@
 import type { ButtonHTMLAttributes, CSSProperties } from 'react';
 import type { PresetFeeling } from './RecommendationTypes';
+import type { PromptKey } from './PromptKey';
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: 'primary' | 'nav';
@@ -13,6 +14,13 @@ export type GradientBoxProps = {
 
 export type DiaryButtonsProps = {
   setCamera: () => void;
+  handleSave: () => void;
+  setShowRecommendations: (show: boolean) => void;
+};
+
+export type IntentionProps = {
+  selected: PromptKey;
+  setSelected: (intention: PromptKey) => void;
 };
 
 export type DraggableStickerProps = {

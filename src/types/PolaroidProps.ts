@@ -1,4 +1,4 @@
 export type PolaroidProps = {
-  src: string;
+  src?: string;
   isPrinting?: boolean;
 };

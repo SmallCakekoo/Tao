@@ -1,69 +1,100 @@
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { IconArrowLeft } from '@tabler/icons-react';
 import { HomeNavbar } from '../../../components/NavBar/CommonNavBar/HomeNavbar';
 import logoFace from '../../../assets/logo-face.svg';
-import type { FormOutletContext, FormResultItem } from '../../../types/FormTypes';
+import { useFormContext } from '../../../contexts/FormContext';
+import { calculateDailyCheckin } from '../../../lib/checkinEngine';
+import { saveDailyCheckin } from '../../../services/checkinService';
+import { FACE_OPTIONS, FORM_RESULT_ITEMS } from '../../../data/formResultsOptions';
+import { useEffect, useMemo, useState } from 'react';
+import { useError } from '../../../contexts/ErrorContext';
 import '../Form.css';
 import './FormResults.css';
-
-// Se usa import.meta.url para resolver correctamente las rutas de estos assets dentro del módulo.
-
-// Nota para luego: Actualmente FORM_RESULT_ITEMS es una lista estática (hardcoded).
-// En el futuro, estos valores deberían generarse dinámicamente segun lo
-// recogido durante el flujo del formulario.
-const FORM_RESULT_ITEMS = [
-  {
-    icon: new URL('../../../assets/energy.png', import.meta.url).href,
-    alt: 'Energy',
-    label: 'Energy level',
-    value: 'Lower energy level than usual',
-  },
-  {
-    icon: new URL('../../../assets/moon.png', import.meta.url).href,
-    alt: 'Sleep',
-    label: 'Sleep time',
-    value: 'Lower sleep hours than usual',
-  },
-  {
-    icon: new URL('../../../assets/face.png', import.meta.url).href,
-    alt: 'Mood',
-    label: 'Mood',
-    value: 'Lower mood than usual',
-  },
-  {
-    icon: new URL('../../../assets/mess.png', import.meta.url).href,
-    alt: 'Stress',
-    label: 'Stress level',
-    value: 'Higher stress level than usual',
-  },
-  {
-    icon: new URL('../../../assets/box.png', import.meta.url).href,
-    alt: 'Daily load',
-    label: 'Daily load',
-    value: 'Lower load than usual',
-  },
-] satisfies FormResultItem[];
+import type { FaceResult } from '../../../types/CheckinTypes';
 
 export const FormResults = () => {
   const navigate = useNavigate();
-  // 'answers' contiene todas las respuestas acumuladas desde todas las preguntas del formulario.
-  const { answers } = useOutletContext<FormOutletContext>();
+  const { answers } = useFormContext();
+  const { showError } = useError();
+  const [isSaving, setIsSaving] = useState(false);
+
+  const scores = useMemo(
+    () => ({
+      energy_score: answers[1] ?? 0,
+      sleep_score: answers[2] ?? 0,
+      mood_score: answers[3] ?? 2,
+      stress_score: answers[4] ?? 0,
+      daily_load_score: answers[5] ?? 0,
+    }),
+    [answers]
+  );
+
+  const engineResults = useMemo(() => calculateDailyCheckin(scores), [scores]);
+
+  const face_result: FaceResult = FACE_OPTIONS[answers[3] ?? 2];
+
+  const results = useMemo(
+    () => ({ ...engineResults, face_result }),
+    [engineResults, face_result]
+  );
+
+  useEffect(() => {
+    const persistResult = async () => {
+      try {
+        setIsSaving(true);
+        await saveDailyCheckin(scores, results);
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'Failed to save check-in';
+        showError(message);
+      } finally {
+        setIsSaving(false);
+      }
+    };
+    persistResult();
+  }, [results, scores, showError]);
+
+  const getMacrostateMessage = (state: string) => {
+    switch (state) {
+      case 'Recuperación Necesaria':
+        return 'Your body needs some deep rest';
+      case 'Regulación Emocional':
+        return 'Prioritize your emotional well-being today';
+      case 'Sobrecarga Académica':
+        return 'Take things one step at a time';
+      case 'Activación / Optimización':
+        return 'You are in a great state to achieve your goals!';
+      default:
+        return 'You are having a balanced day';
+    }
+  };
+
+  const formResultItems = FORM_RESULT_ITEMS.map((item) => ({
+    icon: item.icon,
+    alt: item.alt,
+    label: item.label,
+    value: item.values[scores[item.scoreKey]] ?? item.values[0],
+  }));
 
   const handleRecommendationsClick = () => {
-    // Nota temporal: Aunque estamos guardando las respuestas en el 'localStorage',
-    // todavía no estamos leyendo estos datos desde otras partes de la app (como las recomendaciones)
-    // ni enviándolos a una base de datos real. Es una persistencia temporal ya que pretendemos
-    // montar directamente la base de datos.
-    localStorage.setItem(
-      'tao:daily-check-in',
-      JSON.stringify({
-        answers,
-        savedAt: new Date().toISOString(),
-      })
-    );
+    // Keep the latest check-in in local storage so recommendations can be restored after reloads.
+    try {
+      localStorage.setItem(
+        'tao:daily-check-in',
+        JSON.stringify({
+          answers,
+          results,
+          savedAt: new Date().toISOString(),
+        })
+      );
+    } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : 'Failed to persist daily check-in in local storage';
+      showError(message);
+    }
 
-    // Aquí guardamos las respuestas finalizadas para que puedan ser usadas por las recomendaciones.
-    navigate('/recommendations', { state: { source: 'form' } });
+    navigate('/recommendations', { state: { source: 'form', results } });
   };
 
   return (
@@ -85,9 +116,9 @@ export const FormResults = () => {
             </div>
 
             <div className="results-card">
-              <h3>Today your body needs some rest</h3>
+              <h3>{getMacrostateMessage(results.macrostate)}</h3>
               <ul className="results-list">
-                {FORM_RESULT_ITEMS.map((item) => (
+                {formResultItems.map((item) => (
                   <li key={item.label} className="result-item">
                     <div className="icon-wrapper">
                       <img src={item.icon} alt={item.alt} />
@@ -99,8 +130,12 @@ export const FormResults = () => {
               </ul>
 
               <div className="results-actions">
-                <button className="btn-primary" onClick={handleRecommendationsClick}>
-                  Get recommendations
+                <button
+                  className="btn-primary"
+                  onClick={handleRecommendationsClick}
+                  disabled={isSaving}
+                >
+                  {isSaving ? 'Saving...' : 'Get recommendations'}
                 </button>
                 <button className="btn-secondary" onClick={() => navigate('/home')}>
                   Leave

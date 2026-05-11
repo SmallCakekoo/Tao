@@ -7,6 +7,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { TasksProvider } from './contexts/TasksContext';
 import { CheckinProvider } from './contexts/CheckinContext';
 import { ProfileProvider } from './contexts/ProfileContext';
+import { DiaryProvider } from './contexts/DiaryContext';
 
 import { Landing } from './pages/Landing/Landing';
 import { LogIn } from './pages/LogIn/LogIn';
@@ -44,6 +45,7 @@ function App() {
       <ProfileProvider>
       <TasksProvider>
         <CheckinProvider>
+          <DiaryProvider>
           <ScrollToTop />
           <Routes>
             <Route path="/" element={<Landing />} />
@@ -72,6 +74,7 @@ function App() {
             <Route path="/recommendations/results" element={<ProtectedRoute><RecommendationsResults /></ProtectedRoute>} />
             <Route path="/recommendations/breathing" element={<ProtectedRoute><BreathingExercise /></ProtectedRoute>} />
           </Routes>
+          </DiaryProvider>
         </CheckinProvider>
       </TasksProvider>
       </ProfileProvider>

@@ -1,4 +1,5 @@
 export type PromptKey =
+  | null
   | 'calm'
   | 'motivated'
   | 'organize'

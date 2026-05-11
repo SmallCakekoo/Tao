@@ -2,7 +2,7 @@ import './Diary.css';
 import { IconChevronUp } from '@tabler/icons-react';
 import { IconChevronDown } from '@tabler/icons-react';
 
-import { Date } from '../../components/Diary/Date/Date';
+import { DiaryDate } from '../../components/Diary/DiaryDate/DiaryDate';
 import { Intention } from '../../components/Diary/Intention/Intention';
 import { Polaroid } from '../../components/Diary/Polaroid/Polaroid';
 
@@ -11,13 +11,56 @@ import { DiaryButtons } from '../../components/Diary/DiaryButtons/DiaryButtons';
 import { Camera } from '../../components/Diary/Camera/Camera';
 import { HomeNavbar } from '../../components/NavBar/CommonNavBar/HomeNavbar';
 import { MobileNavBar } from '../../components/NavBar/MobileNavBar/MobileNavBar';
+import { useAuth } from '../../contexts/AuthContext';
+import { getDiaryEntryByDate } from '../../services/diaryService';
+import { saveDiaryEntry } from '../../services/diaryService';
+import type { PromptKey } from '../../types/PromptKey';
+import { useDiary } from '../../contexts/DiaryContext';
 
 export const Diary = () => {
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
   const [showCamera, setShowCamera] = useState<boolean>(false);
-  const [savedImage, setSavedImage] = useState<string | null>(null);
-  // Temporary, to check if image changes in local storage
-  const [capturedImage, setCapturedImage] = useState<string | null>(null);
+  const [selected, setSelected] = useState<PromptKey | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [loadingEntry, setLoadingEntry] = useState<boolean>(false);
+  const [showRecommendations,
+setShowRecommendations]
+= useState(false);
+
+  const { entry, setEntry } = useDiary();
+  const { user } = useAuth();
+
+  const getStartOfWeek = (date: Date) => {
+    const start = new Date(date);
+
+    const day = start.getDay();
+
+    start.setDate(start.getDate() - day);
+
+    return start;
+  };
+
+  const startOfWeek = getStartOfWeek(selectedDate);
+
+  const weekDates = Array.from({ length: 7 }, (_, index) => {
+    const date = new Date(startOfWeek);
+
+    date.setDate(startOfWeek.getDate() + index);
+
+    return date;
+  });
+
+  const changeDate = (date: Date) => {
+    setEntry({
+      area1: '',
+      area2: '',
+      imageUrl: '',
+    });
+    setSelected(null);
+
+    setSelectedDate(date);
+    console.log(entry);
+  };
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -25,56 +68,145 @@ export const Diary = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Check if there is an image inside local storage (Temporary)
-  useEffect(() => {
-    const image = localStorage.getItem('capturedPhoto');
-    if (image) {
-      setSavedImage(image);
-    }
-  }, []);
-
   const setCamera = (): void => {
     setShowCamera(true);
   };
 
+  const nextWeek = () => {
+    setSelected(null);
+    const next = new Date(selectedDate);
+
+    next.setDate(next.getDate() + 7);
+
+    setSelectedDate(next);
+  };
+
+  const previousWeek = () => {
+    setSelected(null);
+    const prev = new Date(selectedDate);
+
+    prev.setDate(prev.getDate() - 7);
+
+    setSelectedDate(prev);
+  };
+
+  useEffect(() => {
+    const fetchEntry = async () => {
+      if (!user) return;
+
+      setLoadingEntry(true);
+
+      try {
+        const data = await getDiaryEntryByDate(user.id, selectedDate);
+
+        if (data) {
+          setEntry(
+            data.content ?? {
+              area1: '',
+              area2: '',
+              imageUrl: '',
+            }
+          );
+
+          setSelected(data.intention ?? null);
+        } else {
+          setEntry({
+            area1: '',
+            area2: '',
+            imageUrl: '',
+          });
+
+          setSelected(null);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoadingEntry(false);
+      }
+    };
+
+    fetchEntry();
+  }, [selectedDate, user]);
+
+  const handleSave = async () => {
+    if (!user) return;
+    if (loadingEntry) return;
+
+    try {
+      await saveDiaryEntry({
+        userId: user.id,
+        date: selectedDate,
+        content: entry,
+        intention: selected || '',
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (!user) return;
+
+    if (!entry.imageUrl) return;
+
+    handleSave();
+  }, [entry.imageUrl]);
+
   return (
     <>
+    
       {!isMobile && <HomeNavbar />}
 
       <div className="diary">
-        {showCamera && (
-          <Camera
-            onClose={() => setShowCamera(false)}
-            onCapture={(img) => setCapturedImage(img)}
-          />
-        )}
+        {showCamera && <Camera onClose={() => setShowCamera(false)} />}
         <aside className="side">
-          <IconChevronUp className="arrow up" />
+          <IconChevronUp className="arrow up" onClick={previousWeek} />
           <div className="dates">
-            <Date></Date>
-            <Date></Date>
-            <Date></Date>
-            <Date></Date>
-            <Date></Date>
-            <Date></Date>
+            {weekDates.map((date) => (
+              <DiaryDate
+                key={date.toISOString()}
+                date={date}
+                isSelected={date.toDateString() === selectedDate.toDateString()}
+                onClick={() => changeDate(date)}
+              />
+            ))}
           </div>
-          <IconChevronDown className="arrow down" />
+          <IconChevronDown className="arrow down" onClick={nextWeek} />
         </aside>
 
         <div className="notebook-wrapper">
           <div className="notebook">
             <div className="page1">
               <div className="date-day">
-                <h5>Saturday</h5>
-                <p>Mar 15, 2026</p>
+                <h5>
+                  {' '}
+                  {selectedDate.toLocaleDateString('en-US', {
+                    weekday: 'long',
+                  })}
+                </h5>
+                <p>
+                  {' '}
+                  {selectedDate.toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric',
+                  })}
+                </p>
               </div>
-              <Intention></Intention>
-              {isMobile && <DiaryButtons setCamera={setCamera} />}
+              <Intention selected={selected} setSelected={setSelected}></Intention>
+              {isMobile && <DiaryButtons setCamera={setCamera} handleSave={handleSave} setShowRecommendations={setShowRecommendations}/>}
               <textarea
                 name="entry1"
                 id="entry1"
                 className="text-entry"
                 placeholder="Feel free to journal your current thoughts or follow the prompt based on your needs"
+                value={entry.area1}
+                onChange={(e) =>
+                  setEntry((prev) => ({
+                    ...prev,
+                    area1: e.target.value,
+                  }))
+                }
               ></textarea>
             </div>
             <div className="page2">
@@ -83,13 +215,20 @@ export const Diary = () => {
                 id="entry2"
                 className="text-entry"
                 placeholder="Feel free to journal your current thoughts or follow the prompt based on your needs"
+                value={entry.area2}
+                onChange={(e) =>
+                  setEntry((prev) => ({
+                    ...prev,
+                    area2: e.target.value,
+                  }))
+                }
               ></textarea>
-              {capturedImage && <Polaroid src={capturedImage} />}
+              {entry.imageUrl && <Polaroid src={entry.imageUrl} />}
             </div>
           </div>
         </div>
         <aside className="options">
-          {!isMobile && <DiaryButtons setCamera={setCamera} />}
+          {!isMobile && <DiaryButtons setCamera={setCamera} handleSave={handleSave} setShowRecommendations={setShowRecommendations}/>}
         </aside>
       </div>
       <MobileNavBar />

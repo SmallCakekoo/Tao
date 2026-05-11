@@ -23,3 +23,17 @@ export const getPersonalizedRecommendations = async (
 
   return data || [];
 };
+
+export const getRecommendationsByIds =
+  async (ids: string[]) => {
+
+  const { data, error } =
+    await supabase
+      .from("personalized_recommendations")
+      .select("*")
+      .in("id", ids);
+
+  if (error) throw error;
+
+  return data;
+};

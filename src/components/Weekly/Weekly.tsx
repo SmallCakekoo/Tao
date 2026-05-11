@@ -14,11 +14,8 @@ const buildWeekDateMap = () => {
     Sun: 0,
   };
 
-  // current date in local timezone
   const today = new Date();
-  // JS: Sunday=0, Monday=1, ... Saturday=6
   const currentDay = today.getDay();
-  // clone today so we can move this date back to Monday
   const monday = new Date(today);
   // if today is Sunday, go back 6 days; otherwise go back until Monday
   const diffToMonday = currentDay === 0 ? -6 : 1 - currentDay;

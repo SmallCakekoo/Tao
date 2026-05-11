@@ -1,11 +1,36 @@
 import './Polaroid.css';
-import type { PolaroidProps } from '../../../types/PolaroidProps';
+import type {
+  PolaroidProps
+} from '../../../types/PolaroidProps';
 
-export const Polaroid = ({ src, isPrinting }: PolaroidProps) => {
+import { useDiary }
+from '../../../contexts/DiaryContext';
+
+export const Polaroid = ({
+  src,
+  isPrinting,
+}: PolaroidProps) => {
+
+  const { entry } = useDiary();
+
+  const image =
+    src || entry.imageUrl;
+
   return (
-    <div className={`polaroid ${isPrinting ? 'printing' : ''}`}>
+    <div
+      className={`polaroid ${
+        isPrinting
+          ? 'printing'
+          : ''
+      }`}
+    >
       <div className="photo">
-        <img src={src} alt="captured" />
+        {image && (
+          <img
+            src={image}
+            alt="captured"
+          />
+        )}
       </div>
     </div>
   );

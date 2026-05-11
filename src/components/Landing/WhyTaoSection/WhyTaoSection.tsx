@@ -95,7 +95,6 @@ export const WhyTaoSection = () => {
             }
           },
           onRelease: function () {
-            // Al soltar, devolvemos la fila a su escala original.
             gsap.to(this.target, {
               scale: 1,
               backgroundColor: '#ffffff',

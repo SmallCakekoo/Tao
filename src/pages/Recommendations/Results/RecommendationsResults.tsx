@@ -18,10 +18,13 @@ import type {
 import { getPersonalizedRecommendations } from '../../../services/recommendationService';
 import '../RecommendationsShared.css';
 import './RecommendationsResults.css';
+import { useAuth } from '../../../contexts/AuthContext';
+import { saveRecommendationToDiary } from '../../../services/diaryService';
 
 const CARDS_BY_VARIANT: Record<'A' | 'B', RecommendationCard[]> = {
   A: [
     {
+      id: '',
       title: 'It is time to rest!',
       titleMuted: 'Tired',
       subtitle: '',
@@ -33,6 +36,7 @@ const CARDS_BY_VARIANT: Record<'A' | 'B', RecommendationCard[]> = {
       bodySpacing: 'spacious',
     },
     {
+      id: '',
       title: 'Reconnect with your body',
       subtitle:
         'Rebuilding your energy starts with reconnecting to your body in a conscious way.',
@@ -45,6 +49,7 @@ const CARDS_BY_VARIANT: Record<'A' | 'B', RecommendationCard[]> = {
       sideImage: yogaImg,
     },
     {
+      id: '',
       title: 'Intentional rest break',
       subtitle: 'Sometimes the simplest solutions are the most effective.',
       body: [
@@ -57,6 +62,7 @@ const CARDS_BY_VARIANT: Record<'A' | 'B', RecommendationCard[]> = {
   ],
   B: [
     {
+      id: '',
       title: 'You don’t always have to be productive',
       subtitle: '',
       body: [
@@ -67,6 +73,7 @@ const CARDS_BY_VARIANT: Record<'A' | 'B', RecommendationCard[]> = {
       sideTone: 'blue',
     },
     {
+      id: '',
       title: 'Breathing exercises',
       subtitle:
         'Rebuilding your energy starts with reconnecting to your body in a conscious way.',
@@ -84,6 +91,7 @@ const CARDS_BY_VARIANT: Record<'A' | 'B', RecommendationCard[]> = {
 };
 
 export const RecommendationsResults = () => {
+  const {user} = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const state = (location.state ?? {}) as ResultsState;
@@ -100,8 +108,9 @@ export const RecommendationsResults = () => {
       setLoading(true);
       if (state.source === 'form' && state.results) {
         const fetched = await getPersonalizedRecommendations(state.results.macrostate);
-        
+
         const mapped: RecommendationCard[] = fetched.map((rec, index) => ({
+          id: rec.id,
           title: rec.title,
           subtitle: '',
           body: [rec.description],
@@ -142,8 +151,15 @@ export const RecommendationsResults = () => {
     }
   };
 
-  const handleAddCardToDiary = () => {
-    // TODO: Add logic to save to diary
+  const handleAddCardToDiary = async () => {
+    if (!user) return;
+
+    try {
+      await saveRecommendationToDiary(user.id, new Date(), content.id);
+
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const onPointerDown: PointerEventHandler<HTMLElement> = (event) => {
@@ -178,7 +194,9 @@ export const RecommendationsResults = () => {
         <HomeNavbar />
         <section className="results-empty">
           <h1>No recommendations found</h1>
-          <button type="button" onClick={() => navigate('/form')}>Back to check-in</button>
+          <button type="button" onClick={() => navigate('/form')}>
+            Back to check-in
+          </button>
         </section>
       </div>
     );
@@ -203,15 +221,17 @@ export const RecommendationsResults = () => {
 
           <div className="focus-card-layout">
             <article
-              className={`focus-card draggable-card ${isDragging ? "is-dragging" : ""}`}
+              className={`focus-card draggable-card ${isDragging ? 'is-dragging' : ''}`}
               onPointerDown={onPointerDown}
               onPointerMove={onPointerMove}
               onPointerUp={onPointerEnd}
               onPointerCancel={onPointerEnd}
               style={{ transform: `translateY(${dragOffset}px)` }}
             >
-              <div className={`focus-card-text ${content.bodySpacing === "spacious" ? "spacious-body" : ""}`}>
-                <h3 className={content.titleMuted ? "focus-title-with-muted" : ""}>
+              <div
+                className={`focus-card-text ${content.bodySpacing === 'spacious' ? 'spacious-body' : ''}`}
+              >
+                <h3 className={content.titleMuted ? 'focus-title-with-muted' : ''}>
                   {content.title}
                   {content.titleMuted && (
                     <span className="focus-title-muted">{content.titleMuted}</span>
@@ -223,7 +243,7 @@ export const RecommendationsResults = () => {
                 )}
 
                 {content.body.map((paragraph, idx) => (
-                  <p key={idx} className={idx === 0 ? "focus-body-first" : ""}>
+                  <p key={idx} className={idx === 0 ? 'focus-body-first' : ''}>
                     {paragraph}
                   </p>
                 ))}
@@ -241,7 +261,7 @@ export const RecommendationsResults = () => {
                 <div className="focus-arrows">
                   <button
                     type="button"
-                    className={`arrow-button ${canGoNext ? "active" : ""}`}
+                    className={`arrow-button ${canGoNext ? 'active' : ''}`}
                     onClick={goNext}
                     disabled={!canGoNext}
                   >
@@ -249,7 +269,7 @@ export const RecommendationsResults = () => {
                   </button>
                   <button
                     type="button"
-                    className={`arrow-button ${canGoPrev ? "active" : ""}`}
+                    className={`arrow-button ${canGoPrev ? 'active' : ''}`}
                     onClick={goPrev}
                     disabled={!canGoPrev}
                   >
@@ -258,11 +278,21 @@ export const RecommendationsResults = () => {
                 </div>
               </div>
 
-              <div className={`focus-card-side ${content.sideTone} ${content.sideImage ? "image-only-bg" : ""}`}>
+              <div
+                className={`focus-card-side ${content.sideTone} ${content.sideImage ? 'image-only-bg' : ''}`}
+              >
                 {content.sideImage && (
-                  <img src={content.sideImage} alt="Visual" className="focus-side-image" />
+                  <img
+                    src={content.sideImage}
+                    alt="Visual"
+                    className="focus-side-image"
+                  />
                 )}
-                <button type="button" className="add-diary-btn" onClick={handleAddCardToDiary}>
+                <button
+                  type="button"
+                  className="add-diary-btn"
+                  onClick={handleAddCardToDiary}
+                >
                   <span>Add card to diary</span>
                   <span className="add-diary-icon">
                     <IconPlus size={24} />
@@ -274,12 +304,14 @@ export const RecommendationsResults = () => {
             <div className="drag-hint">
               <p>Drag down to see more</p>
               <IconChevronDown size={28} />
-              <small>{effectiveIndex + 1} / {cards.length}</small>
+              <small>
+                {effectiveIndex + 1} / {cards.length}
+              </small>
             </div>
           </div>
 
           <div className="leave-actions">
-            <button className="ready-leave" onClick={() => navigate("/home")}>
+            <button className="ready-leave" onClick={() => navigate('/home')}>
               I’m ready to leave
             </button>
           </div>

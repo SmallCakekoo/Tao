@@ -20,8 +20,6 @@ import { useDiary } from '../../contexts/DiaryContext';
 import type { RecommendationCard } from '../../types/RecommendationViewTypes';
 import { getRecommendationsByIds } from '../../services/recommendationService';
 import { SavedRecommendations } from '../Recommendations/Saved/SavedRecommendations';
-import { useLocation } from 'react-router-dom';
-import type { ResultsState } from '../../types/RecommendationViewTypes';
 
 export const Diary = () => {
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
@@ -33,8 +31,6 @@ export const Diary = () => {
   const [savedRecs, setSavedRecs] = useState<RecommendationCard[]>(
     []
   );
-  const location = useLocation();
-  const state = (location.state ?? {}) as ResultsState;
 
   const { entry, setEntry } = useDiary();
   const { user } = useAuth();

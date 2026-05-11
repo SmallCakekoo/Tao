@@ -6,10 +6,9 @@ import type { FormOutletContext } from '../../../types/FormTypes';
 import type { FaceResult } from '../../../types/CheckinTypes';
 import { calculateDailyCheckin } from '../../../lib/checkinEngine';
 import { saveDailyCheckin } from '../../../services/checkinService';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import '../Form.css';
 import './FormResults.css';
-
 
 const FACE_OPTIONS: FaceResult[] = ['awful', 'bad', 'neutral', 'good', 'great'];
 
@@ -18,19 +17,25 @@ export const FormResults = () => {
   const { answers } = useOutletContext<FormOutletContext>();
   const [isSaving, setIsSaving] = useState(false);
 
-  const scores = {
-    energy_score: answers[1] ?? 0,
-    sleep_score: answers[2] ?? 0,
-    mood_score: answers[3] ?? 2,
-    stress_score: answers[4] ?? 0,
-    daily_load_score: answers[5] ?? 0,
-  };
+  const scores = useMemo(
+    () => ({
+      energy_score: answers[1] ?? 0,
+      sleep_score: answers[2] ?? 0,
+      mood_score: answers[3] ?? 2,
+      stress_score: answers[4] ?? 0,
+      daily_load_score: answers[5] ?? 0,
+    }),
+    [answers]
+  );
 
-  const engineResults = calculateDailyCheckin(scores);
+  const engineResults = useMemo(() => calculateDailyCheckin(scores), [scores]);
 
   const face_result: FaceResult = FACE_OPTIONS[answers[3] ?? 2];
 
-  const results = { ...engineResults, face_result };
+  const results = useMemo(
+    () => ({ ...engineResults, face_result }),
+    [engineResults, face_result]
+  );
 
   useEffect(() => {
     const persistResult = async () => {
@@ -44,15 +49,20 @@ export const FormResults = () => {
       }
     };
     persistResult();
-  }, []);
+  }, [results, scores]);
 
   const getMacrostateMessage = (state: string) => {
     switch (state) {
-      case 'Recuperación Necesaria': return 'Your body needs some deep rest';
-      case 'Regulación Emocional': return 'Prioritize your emotional well-being today';
-      case 'Sobrecarga Académica': return 'Take things one step at a time';
-      case 'Activación / Optimización': return 'You are in a great state to achieve your goals!';
-      default: return 'You are having a balanced day';
+      case 'Recuperación Necesaria':
+        return 'Your body needs some deep rest';
+      case 'Regulación Emocional':
+        return 'Prioritize your emotional well-being today';
+      case 'Sobrecarga Académica':
+        return 'Take things one step at a time';
+      case 'Activación / Optimización':
+        return 'You are in a great state to achieve your goals!';
+      default:
+        return 'You are having a balanced day';
     }
   };
 
@@ -65,7 +75,7 @@ export const FormResults = () => {
         'Very low energy today',
         'Energy is a bit low',
         'Energy level is balanced',
-        "You're full of energy!"
+        "You're full of energy!",
       ][scores.energy_score],
     },
     {
@@ -76,7 +86,7 @@ export const FormResults = () => {
         'Hardly any sleep (0-3h)',
         'A bit short on sleep (4-6h)',
         'Decent amount of sleep (7-9h)',
-        'Lots of rest today (10h+)'
+        'Lots of rest today (10h+)',
       ][scores.sleep_score],
     },
     {
@@ -88,7 +98,7 @@ export const FormResults = () => {
         'A bit of a bad mood',
         'Mood is neutral',
         "You're in a good mood",
-        'Feeling absolutely great!'
+        'Feeling absolutely great!',
       ][scores.mood_score],
     },
     {
@@ -99,7 +109,7 @@ export const FormResults = () => {
         'Very calm and relaxed',
         'Feeling some stress',
         'Stress levels are high',
-        'Heavily overwhelmed by stress'
+        'Heavily overwhelmed by stress',
       ][scores.stress_score],
     },
     {
@@ -110,7 +120,7 @@ export const FormResults = () => {
         'A light and easy day',
         'Your load is manageable',
         'Carrying a heavy load',
-        'Completely overwhelmed'
+        'Completely overwhelmed',
       ][scores.daily_load_score],
     },
   ];
@@ -161,8 +171,8 @@ export const FormResults = () => {
               </ul>
 
               <div className="results-actions">
-                <button 
-                  className="btn-primary" 
+                <button
+                  className="btn-primary"
                   onClick={handleRecommendationsClick}
                   disabled={isSaving}
                 >

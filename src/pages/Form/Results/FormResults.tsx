@@ -5,7 +5,7 @@ import logoFace from '../../../assets/logo-face.svg';
 import { useFormContext } from '../../../contexts/FormContext';
 import { calculateDailyCheckin } from '../../../lib/checkinEngine';
 import { saveDailyCheckin } from '../../../services/checkinService';
-import { FACE_OPTIONS } from '../../../data/formResultsOptions';
+import { FACE_OPTIONS, FORM_RESULT_ITEMS } from '../../../data/formResultsOptions';
 import { useEffect, useMemo, useState } from 'react';
 import '../Form.css';
 import './FormResults.css';
@@ -65,64 +65,12 @@ export const FormResults = () => {
     }
   };
 
-  const formResultItems = [
-    {
-      icon: new URL('../../../assets/energy.png', import.meta.url).href,
-      alt: 'Energy',
-      label: 'Energy level',
-      value: [
-        'Very low energy today',
-        'Energy is a bit low',
-        'Energy level is balanced',
-        "You're full of energy!",
-      ][scores.energy_score],
-    },
-    {
-      icon: new URL('../../../assets/moon.png', import.meta.url).href,
-      alt: 'Sleep',
-      label: 'Sleep time',
-      value: [
-        'Hardly any sleep (0-3h)',
-        'A bit short on sleep (4-6h)',
-        'Decent amount of sleep (7-9h)',
-        'Lots of rest today (10h+)',
-      ][scores.sleep_score],
-    },
-    {
-      icon: new URL('../../../assets/face.png', import.meta.url).href,
-      alt: 'Mood',
-      label: 'Mood',
-      value: [
-        'Feeling quite awful',
-        'A bit of a bad mood',
-        'Mood is neutral',
-        "You're in a good mood",
-        'Feeling absolutely great!',
-      ][scores.mood_score],
-    },
-    {
-      icon: new URL('../../../assets/mess.png', import.meta.url).href,
-      alt: 'Stress',
-      label: 'Stress level',
-      value: [
-        'Very calm and relaxed',
-        'Feeling some stress',
-        'Stress levels are high',
-        'Heavily overwhelmed by stress',
-      ][scores.stress_score],
-    },
-    {
-      icon: new URL('../../../assets/box.png', import.meta.url).href,
-      alt: 'Daily load',
-      label: 'Daily load',
-      value: [
-        'A light and easy day',
-        'Your load is manageable',
-        'Carrying a heavy load',
-        'Completely overwhelmed',
-      ][scores.daily_load_score],
-    },
-  ];
+  const formResultItems = FORM_RESULT_ITEMS.map((item) => ({
+    icon: item.icon,
+    alt: item.alt,
+    label: item.label,
+    value: item.values[scores[item.scoreKey]] ?? item.values[0],
+  }));
 
   const handleRecommendationsClick = () => {
     localStorage.setItem(

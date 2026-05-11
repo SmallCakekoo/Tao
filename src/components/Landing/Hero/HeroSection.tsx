@@ -5,44 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import { DraggableSticker } from '../DraggableSticker/DraggableSticker';
 import { Button } from '../../Button/Button';
 import { useAuth } from '../../../contexts/AuthContext';
+import { fieldProfile, heroStickers } from '../../../data/landingContent';
 import fieldImg from '../../../assets/field-landing.svg';
 import './HeroSection.css';
 
-import badIcon from '../../../assets/stickers/bad.svg';
-import goodIcon from '../../../assets/stickers/good.svg';
-import neutralIcon from '../../../assets/stickers/neutral.svg';
-import awfulIcon from '../../../assets/stickers/awful.svg';
-import greatIcon from '../../../assets/stickers/great.svg';
-
 gsap.registerPlugin(ScrollTrigger);
-
-const stickers = [
-  { emotionSrc: badIcon, size: 74, left: '12%', top: '18%' },
-  { emotionSrc: goodIcon, size: 74, left: '78%', top: '22%' },
-  { emotionSrc: neutralIcon, size: 74, left: '8%', top: '65%' },
-  { emotionSrc: awfulIcon, size: 74, left: '82%', top: '58%' },
-  { emotionSrc: greatIcon, size: 74, left: '45%', top: '12%' },
-];
 
 // Note: fieldViewbox is a recreation of the original viewbox from the Tao website.
 const fieldViewbox = { width: 1920, height: 238 };
-
-// Used so gravity stickers know where to stop when falling.
-const fieldProfile = [
-  { x: 0, y: 62 },
-  { x: 120, y: 92 },
-  { x: 260, y: 116 },
-  { x: 380, y: 98 },
-  { x: 540, y: 68 },
-  { x: 760, y: 80 },
-  { x: 960, y: 140 },
-  { x: 1140, y: 84 },
-  { x: 1320, y: 66 },
-  { x: 1490, y: 108 },
-  { x: 1650, y: 72 },
-  { x: 1810, y: 60 },
-  { x: 1920, y: 70 },
-];
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
@@ -135,7 +105,7 @@ export const HeroSection = () => {
   return (
     <section className="landing-hero" ref={sectionRef}>
       <div className="landing-hero-stickers">
-        {stickers.map((sticker, index) => (
+        {heroStickers.map((sticker, index) => (
           <DraggableSticker
             key={index}
             emotionSrc={sticker.emotionSrc}
@@ -169,7 +139,11 @@ export const HeroSection = () => {
       </Button>
 
       <div className="landing-hero-hill" ref={hillRef} aria-hidden>
-        <img src={fieldImg} alt="Green fields and hills background" className="landing-hero-hill-img" />
+        <img
+          src={fieldImg}
+          alt="Green fields and hills background"
+          className="landing-hero-hill-img"
+        />
       </div>
     </section>
   );

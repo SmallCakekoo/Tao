@@ -5,35 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '../../Button/Button';
 import { useAuth } from '../../../contexts/AuthContext';
 import type { Body } from '../../../types/LandingTypes';
+import { academicStickers } from '../../../data/landingContent';
 import meditationImg from '../../../assets/meditation.png';
-import awfulIcon from '../../../assets/stickers/awful.svg';
-import badIcon from '../../../assets/stickers/bad.svg';
-import goodIcon from '../../../assets/stickers/good.svg';
-import greatIcon from '../../../assets/stickers/great.svg';
-import neutralIcon from '../../../assets/stickers/neutral.svg';
 import './FindAcademicSection.css';
 
 gsap.registerPlugin(ScrollTrigger);
-
-const stickerIcons = [
-  awfulIcon,
-  badIcon,
-  goodIcon,
-  greatIcon,
-  neutralIcon,
-  greatIcon,
-  goodIcon,
-  neutralIcon,
-  badIcon,
-  awfulIcon,
-];
-const stickerSizes = Array(35).fill(74);
-
-const stickers = stickerSizes.map((size, i) => ({
-  id: i,
-  src: stickerIcons[i % stickerIcons.length],
-  size,
-}));
 
 // Simple physics engine parameters for chaotic stickers.
 const gravity = 1600;
@@ -42,7 +18,7 @@ const friction = 0.8; // Friction when touching the ground
 
 export const FindAcademicSection = () => {
   const navigate = useNavigate();
-  const [renderedStickers, setRenderedStickers] = useState(stickers);
+  const [renderedStickers, setRenderedStickers] = useState(academicStickers);
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const ctaRef = useRef<HTMLButtonElement>(null);
@@ -212,10 +188,10 @@ export const FindAcademicSection = () => {
     if (!arena) return;
 
     let isMobile = window.innerWidth <= 768;
-    let activeStickers = isMobile ? stickers.slice(0, 7) : stickers;
+    let activeStickers = isMobile ? academicStickers.slice(0, 7) : academicStickers;
     setRenderedStickers(activeStickers);
 
-    const initPhysics = (currentStickers: typeof stickers) => {
+    const initPhysics = (currentStickers: typeof academicStickers) => {
       const W = arena.clientWidth || window.innerWidth;
       const bodies: Body[] = currentStickers.map((sticker) => {
         const r = sticker.size / 2;

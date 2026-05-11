@@ -7,6 +7,7 @@ import { Intention } from '../../components/Diary/Intention/Intention';
 import { Polaroid } from '../../components/Diary/Polaroid/Polaroid';
 
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { DiaryButtons } from '../../components/Diary/DiaryButtons/DiaryButtons';
 import { Camera } from '../../components/Diary/Camera/Camera';
 import { HomeNavbar } from '../../components/NavBar/CommonNavBar/HomeNavbar';
@@ -16,6 +17,7 @@ import { getDiaryEntryByDate } from '../../services/diaryService';
 import { saveDiaryEntry } from '../../services/diaryService';
 import type { PromptKey } from '../../types/PromptKey';
 import { useDiary } from '../../contexts/DiaryContext';
+import { SavedRecommendations } from '../Recommendations/Saved/RecommendationsSaved';
 
 export const Diary = () => {
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
@@ -23,9 +25,8 @@ export const Diary = () => {
   const [selected, setSelected] = useState<PromptKey | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [loadingEntry, setLoadingEntry] = useState<boolean>(false);
-  const [showRecommendations,
-setShowRecommendations]
-= useState(false);
+  const [showRecommendations, setShowRecommendations] = useState(false);
+  const [recommendationIds, setRecommendationsIds] = useState<string[]>([]);
 
   const { entry, setEntry } = useDiary();
   const { user } = useAuth();
@@ -109,6 +110,12 @@ setShowRecommendations]
           );
 
           setSelected(data.intention ?? null);
+
+          if (data.saved_recommendations && data.saved_recommendations.length > 0) {
+            setRecommendationsIds(data.saved_recommendations);
+          } else {
+            setRecommendationsIds([]);
+          }
         } else {
           setEntry({
             area1: '',
@@ -154,7 +161,16 @@ setShowRecommendations]
 
   return (
     <>
-    
+      {showRecommendations &&
+        createPortal(
+          <div className="overlay-bg">
+            <SavedRecommendations
+              recommendationIds={recommendationIds}
+              closeOverlay={() => setShowRecommendations(false)}
+            />
+          </div>,
+          document.body
+        )}
       {!isMobile && <HomeNavbar />}
 
       <div className="diary">
@@ -194,7 +210,13 @@ setShowRecommendations]
                 </p>
               </div>
               <Intention selected={selected} setSelected={setSelected}></Intention>
-              {isMobile && <DiaryButtons setCamera={setCamera} handleSave={handleSave} setShowRecommendations={setShowRecommendations}/>}
+              {isMobile && (
+                <DiaryButtons
+                  setCamera={setCamera}
+                  handleSave={handleSave}
+                  setShowRecommendations={setShowRecommendations}
+                />
+              )}
               <textarea
                 name="entry1"
                 id="entry1"
@@ -228,7 +250,13 @@ setShowRecommendations]
           </div>
         </div>
         <aside className="options">
-          {!isMobile && <DiaryButtons setCamera={setCamera} handleSave={handleSave} setShowRecommendations={setShowRecommendations}/>}
+          {!isMobile && (
+            <DiaryButtons
+              setCamera={setCamera}
+              handleSave={handleSave}
+              setShowRecommendations={setShowRecommendations}
+            />
+          )}
         </aside>
       </div>
       <MobileNavBar />

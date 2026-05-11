@@ -9,6 +9,7 @@ import { FACE_OPTIONS } from '../../../data/formResultsOptions';
 import { useEffect, useMemo, useState } from 'react';
 import '../Form.css';
 import './FormResults.css';
+import type { FaceResult } from '../../../types/CheckinTypes';
 
 export const FormResults = () => {
   const navigate = useNavigate();

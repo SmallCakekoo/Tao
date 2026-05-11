@@ -1,41 +1,26 @@
-import { useEffect, useState, useRef } from 'react';
+import { useState, useRef } from 'react';
+import './SavedRecommendations.css'
 import type { PointerEventHandler } from 'react';
 import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
 
-import { getRecommendationsByIds } from '../../../services/recommendationService';
 import type { RecommendationCard } from '../../../types/RecommendationViewTypes';
 import { useNavigate } from 'react-router-dom';
 
 type Props = {
-  recommendationIds: string[];
+  recommendations: RecommendationCard[];
   closeOverlay: () => void;
 };
 
-export const SavedRecommendations = ({ recommendationIds, closeOverlay }: Props) => {
+export const SavedRecommendations = ({ recommendations, closeOverlay }: Props) => {
   const navigate = useNavigate();
-  const [cards, setCards] = useState<RecommendationCard[]>([]);
-  const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [dragOffset, setDragOffset] = useState<number>(0);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const dragStartY = useRef<number | null>(null);
 
-  useEffect(() => {
-    const fetchCards = async () => {
-      try {
-        const data = await getRecommendationsByIds(recommendationIds);
-
-        setCards(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchCards();
-  }, [recommendationIds]);
-
-  const effectiveIndex = Math.min(currentIndex, cards.length > 0 ? cards.length - 1 : 0);
-  const canGoNext = effectiveIndex < cards.length - 1;
+    
+  const effectiveIndex = Math.min(currentIndex, recommendations.length > 0 ? recommendations.length - 1 : 0);
+  const canGoNext = effectiveIndex < recommendations.length - 1;
   const canGoPrev = effectiveIndex > 0;
 
   const goNext = () => {
@@ -50,7 +35,7 @@ export const SavedRecommendations = ({ recommendationIds, closeOverlay }: Props)
     }
   };
 
-  const content = cards[effectiveIndex];
+  const content = recommendations[effectiveIndex];
 
   const onPointerDown: PointerEventHandler<HTMLElement> = (event) => {
     const target = event.target as HTMLElement;
@@ -74,6 +59,17 @@ export const SavedRecommendations = ({ recommendationIds, closeOverlay }: Props)
     setIsDragging(false);
   };
 
+if (!content) {
+  return (
+    <div className="overlay-bg">
+      <div className="saved-overlay">
+        <button onClick={closeOverlay}>Close</button>
+        <p>No saved recommendations found.</p>
+      </div>
+    </div>
+  );
+}  
+
   return (
     <div className="overlay-bg">
       <div className="saved-overlay">
@@ -89,9 +85,9 @@ export const SavedRecommendations = ({ recommendationIds, closeOverlay }: Props)
             style={{ transform: `translateY(${dragOffset}px)` }}
           >
             <div
-              className={`focus-card-text`}
+              className={`focus-card-text ${content.bodySpacing === 'spacious' ? 'spacious-body' : ''}`}
             >
-              <h3 className={content.titleMuted}>
+              <h3 className={content.titleMuted ? 'focus-title-with-muted' : ''}>
                 {content.title}
                 {content.titleMuted && (
                   <span className="focus-title-muted">{content.titleMuted}</span>
@@ -147,11 +143,11 @@ export const SavedRecommendations = ({ recommendationIds, closeOverlay }: Props)
             </div>
           </article>
 
-          <div className="drag-hint">
+          <div className="drag-hint" style={{ color: 'white' }}>
             <p>Drag down to see more</p>
             <IconChevronDown size={28} />
-            <small>
-              {effectiveIndex + 1} / {cards.length}
+            <small style={{ color: 'white' }}>
+              {effectiveIndex + 1} / {recommendations.length}
             </small>
           </div>
         </div>

@@ -17,7 +17,11 @@ import { getDiaryEntryByDate } from '../../services/diaryService';
 import { saveDiaryEntry } from '../../services/diaryService';
 import type { PromptKey } from '../../types/PromptKey';
 import { useDiary } from '../../contexts/DiaryContext';
+import type { RecommendationCard } from '../../types/RecommendationViewTypes';
+import { getRecommendationsByIds } from '../../services/recommendationService';
 import { SavedRecommendations } from '../Recommendations/Saved/SavedRecommendations';
+import { useLocation } from 'react-router-dom';
+import type { ResultsState } from '../../types/RecommendationViewTypes';
 
 export const Diary = () => {
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
@@ -26,7 +30,11 @@ export const Diary = () => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [loadingEntry, setLoadingEntry] = useState<boolean>(false);
   const [showRecommendations, setShowRecommendations] = useState(false);
-  const [recommendationIds, setRecommendationsIds] = useState<string[]>([]);
+  const [savedRecs, setSavedRecs] = useState<RecommendationCard[]>(
+    []
+  );
+  const location = useLocation();
+  const state = (location.state ?? {}) as ResultsState;
 
   const { entry, setEntry } = useDiary();
   const { user } = useAuth();
@@ -91,49 +99,66 @@ export const Diary = () => {
     setSelectedDate(prev);
   };
 
-  useEffect(() => {
-    const fetchEntry = async () => {
-      if (!user) return;
+useEffect(() => {
+  const fetchEntry = async () => {
+    if (!user) return;
 
-      setLoadingEntry(true);
+    setLoadingEntry(true);
 
-      try {
-        const data = await getDiaryEntryByDate(user.id, selectedDate);
+    try {
+      const data = await getDiaryEntryByDate(user.id, selectedDate);
 
-        if (data) {
-          setEntry(
-            data.content ?? {
-              area1: '',
-              area2: '',
-              imageUrl: '',
-            }
-          );
+      if (!data) {
+        setEntry({
+          area1: '',
+          area2: '',
+          imageUrl: '',
+        });
 
-          setSelected(data.intention ?? null);
+        setSelected(null);
+        setSavedRecs([]);
 
-          if (data.saved_recommendations && data.saved_recommendations.length > 0) {
-            setRecommendationsIds(data.saved_recommendations);
-          } else {
-            setRecommendationsIds([]);
-          }
-        } else {
-          setEntry({
-            area1: '',
-            area2: '',
-            imageUrl: '',
-          });
-
-          setSelected(null);
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoadingEntry(false);
+        return;
       }
-    };
 
-    fetchEntry();
-  }, [selectedDate, user]);
+      setEntry(
+        data.content ?? {
+          area1: '',
+          area2: '',
+          imageUrl: '',
+        }
+      );
+
+      setSelected(data.intention ?? null);
+
+      if (data.saved_recommendations?.length) {
+        const fetched = await getRecommendationsByIds(
+          data.saved_recommendations
+        );
+
+        setSavedRecs(
+          fetched.map((rec, index) => ({
+            id: rec.id,
+            title: rec.title,
+            subtitle: '',
+            body: [rec.description],
+            sideTone: index % 2 === 0 ? 'peach' : 'blue',
+            titleMuted: '',
+            bodySpacing: 'normal',
+          }))
+        );
+      } else {
+        setSavedRecs([]);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoadingEntry(false);
+    }
+  };
+
+  fetchEntry();
+}, [selectedDate, user]);
 
   const handleSave = async () => {
     if (!user) return;
@@ -165,7 +190,7 @@ export const Diary = () => {
         createPortal(
           <div className="overlay-bg">
             <SavedRecommendations
-              recommendationIds={recommendationIds}
+              recommendations={savedRecs}
               closeOverlay={() => setShowRecommendations(false)}
             />
           </div>,

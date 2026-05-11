@@ -1,12 +1,6 @@
 import { supabase } from '../lib/supabaseClient';
 import type { Macrostate } from '../types/CheckinTypes';
-
-export interface PersonalizedRecommendation {
-  id: string;
-  title: string;
-  description: string;
-  macrostate: string;
-}
+import type { PersonalizedRecommendation } from '../types/RecommendationTypes';
 
 export const getPersonalizedRecommendations = async (
   macrostate: Macrostate

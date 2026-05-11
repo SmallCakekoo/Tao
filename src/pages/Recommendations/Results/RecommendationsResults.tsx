@@ -4,7 +4,6 @@ import {
   IconChevronDown,
   IconChevronUp,
   IconPlus,
-  IconArrowLeft,
 } from '@tabler/icons-react';
 import { HomeNavbar } from '../../../components/NavBar/CommonNavBar/HomeNavbar';
 import { MobileNavBar } from '../../../components/NavBar/MobileNavBar/MobileNavBar';
@@ -50,15 +49,23 @@ export const RecommendationsResults = () => {
       if (macrostate) {
         const fetched = await getPersonalizedRecommendations(macrostate);
 
-        const mapped: RecommendationCard[] = fetched.map((rec, index) => ({
-          id: rec.id,
-          title: rec.title,
-          subtitle: '',
-          body: [rec.description],
-          sideTone: index % 2 === 0 ? 'peach' : 'blue',
-          titleMuted: index === 0 ? macrostate : '',
-          bodySpacing: 'normal',
-        }));
+        const mapped: RecommendationCard[] = fetched.map((rec, index) => {
+          let imageUrl = undefined;
+          if (rec.image_name) {
+            imageUrl = new URL(`../../../assets/recs-images/${rec.image_name}`, import.meta.url).href;
+          }
+
+          return {
+            id: rec.id,
+            title: rec.title,
+            subtitle: '',
+            body: [rec.description],
+            sideTone: index % 2 === 0 ? 'peach' : 'blue',
+            titleMuted: index === 0 ? macrostate : '',
+            bodySpacing: 'normal',
+            sideImage: imageUrl,
+          };
+        });
 
         setCards(mapped);
       } else {
@@ -143,10 +150,6 @@ export const RecommendationsResults = () => {
   return (
     <div className="recommendations-page results-page">
       <HomeNavbar />
-      <button className="results-back" onClick={() => navigate(-1)} aria-label="Go back">
-        <IconArrowLeft size={16} />
-        <span>Back</span>
-      </button>
       <main className="recommendations-main">
         <section className="results-content">
           <img src={logoFace} alt="Tao face" className="results-face" />

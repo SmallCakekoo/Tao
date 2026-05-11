@@ -12,6 +12,7 @@ export type ResultsState = {
 };
 
 export type RecommendationCard = {
+  id: string;
   title: string;
   subtitle: string;
   body: string[];

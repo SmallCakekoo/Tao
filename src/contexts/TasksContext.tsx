@@ -1,64 +1,102 @@
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type PropsWithChildren,
+} from "react";
 
-import { createContext, useContext, useState, useEffect, type PropsWithChildren } from "react";
-import { getUserTasks, toggleTaskInDB, deleteTaskInDB } from "../services/taskService";
 import { useAuth } from "./AuthContext";
-import type { TaskInterface, TasksContextType } from "../types/TaskTypes";
+import {
+  getUserTasks,
+  getUserQuote,
+  insertTask,
+  updateTask,
+  deleteTask,
+} from "../services/agendaServices";
+import type { TaskInterface } from "../types/TaskTypes";
 
-export const TasksContext = createContext<TasksContextType | undefined>(undefined);
+interface Quote {
+  quote: string;
+  author: string;
+}
+
+interface TasksContextType {
+  tasks: TaskInterface[];
+  setTasks: React.Dispatch<React.SetStateAction<TaskInterface[]>>;
+  quote: Quote;
+  loadingTasks: boolean;
+  addTask: (task: TaskInterface) => Promise<void>;
+  toggleTask: (task: TaskInterface) => Promise<void>;
+  removeTask: (task: TaskInterface) => Promise<void>;
+}
+
+const TasksContext = createContext<TasksContextType | undefined>(undefined);
 
 export const TasksProvider = ({ children }: PropsWithChildren) => {
-  const [tasks, setTasks] = useState<TaskInterface[]>([]);
-  const [loading, setLoading] = useState(true);
   const { user } = useAuth();
 
-  useEffect(() => {
+  const [tasks, setTasks] = useState<TaskInterface[]>([]);
+  const [quote, setQuote] = useState<Quote>({ quote: "", author: "" });
+  const [loadingTasks, setLoadingTasks] = useState(true);
+
+  const fetchData = async () => {
     if (!user) {
       setTasks([]);
-      setLoading(false);
+      setQuote({ quote: "", author: "" });
+      setLoadingTasks(false);
       return;
     }
 
-    const fetchTasks = async () => {
-      setLoading(true);
-      try {
-        const data = await getUserTasks(user.id);
-        setTasks(data || []);
-      } catch (error) {
-        console.error("Error fetching tasks:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    try {
+      const [tasksData, quoteData] = await Promise.all([
+        getUserTasks(user.id),
+        getUserQuote(user.id),
+      ]);
 
-    fetchTasks();
+      setTasks(tasksData);
+      setQuote({ quote: quoteData.quote, author: quoteData.author });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoadingTasks(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
   }, [user]);
 
+  const addTask = async (task: TaskInterface) => {
+    const data = await insertTask(task);
+    if (data) setTasks((prev) => [...prev, ...data]);
+  };
+
   const toggleTask = async (task: TaskInterface) => {
-    try {
-      setTasks(prev => prev.map(t => (t.id === task.id ? { ...t, complete: !t.complete } : t)));
-      
-      const updatedTask = await toggleTaskInDB(task);
-      if (updatedTask) {
-        setTasks(prev => prev.map(t => (t.id === updatedTask.id ? updatedTask : t)));
-      }
-    } catch (error) {
-      setTasks(prev => prev.map(t => (t.id === task.id ? { ...t, complete: task.complete } : t)));
-      console.error(error);
-    }
+    const updated = { ...task, complete: !task.complete };
+    await updateTask(updated);
+    setTasks((prev) =>
+      prev.map((t) => (t.id === task.id ? updated : t))
+    );
   };
 
   const removeTask = async (task: TaskInterface) => {
-    if (!task.id) return;
-    try {
-      setTasks(prev => prev.filter(t => t.id !== task.id));
-      await deleteTaskInDB(task.id);
-    } catch (error) {
-      console.error(error);
-    }
+    await deleteTask(task);
+    setTasks((prev) => prev.filter((t) => t.id !== task.id));
   };
 
   return (
-    <TasksContext.Provider value={{ tasks, setTasks, loading, toggleTask, removeTask }}>
+    <TasksContext.Provider
+      value={{
+        tasks,
+        setTasks,
+        quote,
+        loadingTasks,
+        addTask,
+        toggleTask,
+        removeTask,
+      }}
+    >
       {children}
     </TasksContext.Provider>
   );
@@ -66,8 +104,10 @@ export const TasksProvider = ({ children }: PropsWithChildren) => {
 
 export const useTasks = () => {
   const context = useContext(TasksContext);
-  if (context === undefined) {
-    throw new Error("useTasks must be used within a TasksProvider");
+
+  if (!context) {
+    throw new Error("useTasks must be used within TasksProvider");
   }
+
   return context;
 };

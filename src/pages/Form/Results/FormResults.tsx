@@ -51,7 +51,7 @@ export const FormResults = () => {
       }
     };
     persistResult();
-  }, [results, scores]);
+  }, [results, scores, showError]);
 
   const getMacrostateMessage = (state: string) => {
     switch (state) {

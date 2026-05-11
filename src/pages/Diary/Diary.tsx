@@ -64,7 +64,6 @@ export const Diary = () => {
     setSelected(null);
 
     setSelectedDate(date);
-    
   };
 
   useEffect(() => {
@@ -154,7 +153,7 @@ export const Diary = () => {
     };
 
     fetchEntry();
-  }, [selectedDate, user, setEntry]);
+  }, [selectedDate, user, setEntry, showError]);
 
   const handleSave = useCallback(async () => {
     if (!user) return;

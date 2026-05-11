@@ -4,14 +4,9 @@ import { HomeNavbar } from '../../../components/NavBar/CommonNavBar/HomeNavbar';
 import { MobileNavBar } from '../../../components/NavBar/MobileNavBar/MobileNavBar';
 import logoFace from '../../../assets/logo-face.svg';
 import { useEffect, useState } from 'react';
+import { INTRO_COPY } from '../../../data/formIntroContent';
 import '../Form.css';
 import './FormIntro.css';
-
-const INTRO_COPY = {
-  title: "Let's take a moment to check in.",
-  body: "Let's observe how things feel today so far by doing a quick check-in and answering a few quick questions.",
-  hint: 'You can edit your answers later.',
-};
 
 export const FormIntro = () => {
   const navigate = useNavigate();

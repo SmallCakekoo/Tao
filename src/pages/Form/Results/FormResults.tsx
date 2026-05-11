@@ -1,20 +1,18 @@
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { IconArrowLeft } from '@tabler/icons-react';
 import { HomeNavbar } from '../../../components/NavBar/CommonNavBar/HomeNavbar';
 import logoFace from '../../../assets/logo-face.svg';
-import type { FormOutletContext } from '../../../types/FormTypes';
-import type { FaceResult } from '../../../types/CheckinTypes';
+import { useFormContext } from '../../../contexts/FormContext';
 import { calculateDailyCheckin } from '../../../lib/checkinEngine';
 import { saveDailyCheckin } from '../../../services/checkinService';
+import { FACE_OPTIONS } from '../../../data/formResultsOptions';
 import { useEffect, useMemo, useState } from 'react';
 import '../Form.css';
 import './FormResults.css';
 
-const FACE_OPTIONS: FaceResult[] = ['awful', 'bad', 'neutral', 'good', 'great'];
-
 export const FormResults = () => {
   const navigate = useNavigate();
-  const { answers } = useOutletContext<FormOutletContext>();
+  const { answers } = useFormContext();
   const [isSaving, setIsSaving] = useState(false);
 
   const scores = useMemo(

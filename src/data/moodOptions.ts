@@ -5,7 +5,12 @@ import goodImg from '../assets/stickers/good.svg';
 import greatImg from '../assets/stickers/great.svg';
 import type { MoodOption } from '../types/EditFeelingsTypes';
 
-export const energyOptions = ['Low Energy', 'Medium Energy', 'High Energy', 'Very high Energy'];
+export const energyOptions = [
+  'Low Energy',
+  'Medium Energy',
+  'High Energy',
+  'Very high Energy',
+];
 export const sleepOptions = ['0-3 Hours', '4-6 Hours', '7-9 Hours', '10+ Hours'];
 export const stressOptions = [
   'Low stress or no stress',

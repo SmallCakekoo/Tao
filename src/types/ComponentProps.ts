@@ -21,7 +21,7 @@ export type DiaryButtonsProps = {
 export type IntentionProps = {
   selected: PromptKey;
   setSelected: (intention: PromptKey) => void;
-}
+};
 
 export type DraggableStickerProps = {
   emotionSrc: string;

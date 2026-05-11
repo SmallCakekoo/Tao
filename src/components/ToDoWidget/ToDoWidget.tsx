@@ -6,8 +6,6 @@ import './ToDoWidget.css';
 export const ToDoWidget = () => {
   const { tasks, toggleTask } = useTasks();
 
-
-
   const taskEl = tasks.slice(0, 3).map((t) => {
     return (
       <div className="task-el" key={t.id}>

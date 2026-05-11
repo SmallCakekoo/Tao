@@ -8,8 +8,6 @@ import { PRESET_OPTIONS } from '../../../data/recommendationData';
 import '../RecommendationsShared.css';
 import './RecommendationsPreset.css';
 
-
-
 export const RecommendationsPreset = () => {
   const navigate = useNavigate();
 

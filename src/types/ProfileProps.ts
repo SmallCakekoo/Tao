@@ -1,4 +1,3 @@
-
 export interface EditProfileProps {
   setUserName: (name: string) => void;
   setUserQuote: (quote: string) => void;

@@ -2,10 +2,7 @@ import { supabase } from '../lib/supabaseClient';
 import type { TaskInterface } from '../types/TaskTypes';
 
 export const getUserTasks = async (userId: string) => {
-  const { data, error } = await supabase
-    .from('tasks')
-    .select('*')
-    .eq('user_id', userId);
+  const { data, error } = await supabase.from('tasks').select('*').eq('user_id', userId);
   if (error) throw error;
   return data as TaskInterface[];
 };

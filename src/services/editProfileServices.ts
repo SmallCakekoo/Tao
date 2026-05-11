@@ -1,25 +1,21 @@
-import { supabase } from "../lib/supabaseClient";
+import { supabase } from '../lib/supabaseClient';
 
 export const updateProfileName = async (userId: string, name: string) => {
   const { data, error } = await supabase
-    .from("profiles")
+    .from('profiles')
     .update({ name })
-    .eq("id", userId)
+    .eq('id', userId)
     .select();
 
   if (error) throw error;
   return data;
 };
 
-export const updateQuote = async (
-  userId: string,
-  quote: string,
-  author: string
-) => {
+export const updateQuote = async (userId: string, quote: string, author: string) => {
   const { data, error } = await supabase
-    .from("quotes")
+    .from('quotes')
     .update({ quote, author })
-    .eq("user_id", userId)
+    .eq('user_id', userId)
     .select();
 
   if (error) throw error;

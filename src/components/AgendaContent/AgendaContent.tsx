@@ -16,8 +16,6 @@ export const AgendaContent = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-
-
   return (
     <div>
       {/* ── Empty state ── */}

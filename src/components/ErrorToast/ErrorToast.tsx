@@ -10,4 +10,3 @@ export const ErrorToast = ({ message }: FeedbackProps) => {
     </div>
   );
 };
- 

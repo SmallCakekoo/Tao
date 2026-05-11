@@ -69,7 +69,6 @@ export const BreathingExercise = () => {
           </p>
 
           <div className="breathing-circle-wrap">
-
             <div
               className={`breathing-circle breathing-circle-${phase}`}
               style={{ animationPlayState: isPaused ? 'paused' : 'running' }}

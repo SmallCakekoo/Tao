@@ -1,4 +1,4 @@
-import type { User, Session } from "@supabase/supabase-js";
+import type { User, Session } from '@supabase/supabase-js';
 
 export interface UserProfile {
   id: string;
@@ -25,4 +25,4 @@ export type SignUpParams = {
 export type SignInParams = {
   email: string;
   password: string;
-}
+};

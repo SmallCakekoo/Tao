@@ -97,8 +97,6 @@ export const NotFound: React.FC = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-
-
   return (
     <div className="not-found-container" ref={containerRef}>
       {NOT_FOUND_STICKERS.map((s, i) => (

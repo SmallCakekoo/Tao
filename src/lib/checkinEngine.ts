@@ -11,7 +11,10 @@ import type {
  * Calculates the Physiological category (F) based on energy and sleep.
  * Range: 0-6.
  */
-export const computeFCategory = (energy: number, sleep: number): { score: number; category: FCategory } => {
+export const computeFCategory = (
+  energy: number,
+  sleep: number
+): { score: number; category: FCategory } => {
   const score = energy + sleep;
   let category: FCategory = 'F1';
 
@@ -26,7 +29,10 @@ export const computeFCategory = (energy: number, sleep: number): { score: number
 /**
  * Calculates the Emotional category (E) based on mood and stress.
  */
-export const computeECategory = (mood: number, stress: number): { score: number; category: ECategory } => {
+export const computeECategory = (
+  mood: number,
+  stress: number
+): { score: number; category: ECategory } => {
   const score = mood + (3 - stress);
   let category: ECategory = 'E1';
 
@@ -50,7 +56,9 @@ export const computeECategory = (mood: number, stress: number): { score: number;
 /**
  * Calculates the Load category (C) based on daily load score.
  */
-export const computeCCategory = (load: number): { score: number; category: CCategory } => {
+export const computeCCategory = (
+  load: number
+): { score: number; category: CCategory } => {
   const score = load;
   const category: CCategory = load >= 2 ? 'C2' : 'C1';
   return { score, category };
@@ -83,12 +91,27 @@ export const computeMacrostate = (
  * Main function to calculate all daily check-in metrics.
  * face_result is NOT calculated here — it comes directly from the user's selection in the form.
  */
-export const calculateDailyCheckin = (scores: DailyCheckinScores): Omit<CalculatedCheckin, 'face_result'> => {
-  const { score: f_score, category: f_category } = computeFCategory(scores.energy_score, scores.sleep_score);
-  const { score: e_score, category: e_category } = computeECategory(scores.mood_score, scores.stress_score);
-  const { score: c_score, category: c_category } = computeCCategory(scores.daily_load_score);
+export const calculateDailyCheckin = (
+  scores: DailyCheckinScores
+): Omit<CalculatedCheckin, 'face_result'> => {
+  const { score: f_score, category: f_category } = computeFCategory(
+    scores.energy_score,
+    scores.sleep_score
+  );
+  const { score: e_score, category: e_category } = computeECategory(
+    scores.mood_score,
+    scores.stress_score
+  );
+  const { score: c_score, category: c_category } = computeCCategory(
+    scores.daily_load_score
+  );
 
-  const macrostate = computeMacrostate(f_category, e_category, c_category, scores.stress_score);
+  const macrostate = computeMacrostate(
+    f_category,
+    e_category,
+    c_category,
+    scores.stress_score
+  );
 
   return {
     f_score,

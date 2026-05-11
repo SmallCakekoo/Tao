@@ -1,26 +1,15 @@
-import { supabase } from "../lib/supabaseClient";
+import { supabase } from '../lib/supabaseClient';
 
-export const uploadDiaryImage =
-  async (
-    userId: string,
-    file: Blob
-  ) => {
-    const fileName =
-      `${userId}/${Date.now()}.jpg`;
+export const uploadDiaryImage = async (userId: string, file: Blob) => {
+  const fileName = `${userId}/${Date.now()}.jpg`;
 
-    const { error } =
-      await supabase.storage
-        .from("polaroid")
-        .upload(fileName, file);
+  const { error } = await supabase.storage.from('polaroid').upload(fileName, file);
 
-    if (error) {
-      throw error;
-    }
+  if (error) {
+    throw error;
+  }
 
-    const { data } =
-      supabase.storage
-        .from("polaroid")
-        .getPublicUrl(fileName);
+  const { data } = supabase.storage.from('polaroid').getPublicUrl(fileName);
 
-    return data.publicUrl;
-  };
+  return data.publicUrl;
+};

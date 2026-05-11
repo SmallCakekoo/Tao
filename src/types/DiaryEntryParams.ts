@@ -2,7 +2,7 @@ export type DiaryContent = {
   area1: string;
   area2: string;
   imageUrl: string;
-}
+};
 
 export type SaveDiaryEntryParams = {
   userId: string;

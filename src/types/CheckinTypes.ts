@@ -2,11 +2,11 @@ export type FCategory = 'F1' | 'F2' | 'F3' | 'F4';
 export type ECategory = 'E1' | 'E2' | 'E3' | 'E4';
 export type CCategory = 'C1' | 'C2';
 
-export type Macrostate = 
-  | 'Balanced' 
-  | 'Productive' 
-  | 'Overloaded' 
-  | 'Stressed' 
+export type Macrostate =
+  | 'Balanced'
+  | 'Productive'
+  | 'Overloaded'
+  | 'Stressed'
   | 'Exhausted';
 
 export type FaceResult = 'awful' | 'bad' | 'neutral' | 'good' | 'great';
@@ -39,6 +39,10 @@ export type WeeklyDataPoint = {
   day: string;
   value: number;
   checkin_date: string;
+};
+
+export type FeelingProps = {
+  checkin?: FullDailyCheckin | null;
 };
 
 export type CheckinContextType = {

@@ -1,16 +1,11 @@
 import { createContext, useContext, useState } from 'react';
-import type { ReactNode, Dispatch, SetStateAction } from 'react';
-import type { DailyFormAnswers } from '../types/FormTypes';
+import type { PropsWithChildren } from 'react';
+import type { FormOutletContext } from '../types/FormTypes';
 
-interface FormContextType {
-  answers: DailyFormAnswers;
-  setAnswers: Dispatch<SetStateAction<DailyFormAnswers>>;
-}
+const FormContext = createContext<FormOutletContext | undefined>(undefined);
 
-const FormContext = createContext<FormContextType | undefined>(undefined);
-
-export const FormProvider = ({ children }: { children: ReactNode }) => {
-  const [answers, setAnswers] = useState<DailyFormAnswers>({});
+export const FormProvider = ({ children }: PropsWithChildren) => {
+  const [answers, setAnswers] = useState<FormOutletContext['answers']>({});
 
   return (
     <FormContext.Provider value={{ answers, setAnswers }}>

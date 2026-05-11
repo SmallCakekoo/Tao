@@ -15,22 +15,7 @@ import {
   updateTask,
   deleteTask,
 } from '../services/agendaServices';
-import type { TaskInterface } from '../types/TaskTypes';
-
-interface Quote {
-  quote: string;
-  author: string;
-}
-
-interface TasksContextType {
-  tasks: TaskInterface[];
-  setTasks: React.Dispatch<React.SetStateAction<TaskInterface[]>>;
-  quote: Quote;
-  loadingTasks: boolean;
-  addTask: (task: TaskInterface) => Promise<void>;
-  toggleTask: (task: TaskInterface) => Promise<void>;
-  removeTask: (task: TaskInterface) => Promise<void>;
-}
+import type { Quote, TaskInterface, TasksContextType } from '../types/TaskTypes';
 
 const TasksContext = createContext<TasksContextType | undefined>(undefined);
 

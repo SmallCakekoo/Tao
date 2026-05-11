@@ -24,6 +24,11 @@ export type RecommendationCard = {
   bodySpacing?: 'normal' | 'spacious';
 };
 
+export type SavedRecommendationsProps = {
+  recommendations: RecommendationCard[];
+  closeOverlay: () => void;
+};
+
 export type PersonalizedRedirectOverlayProps = {
   isOpen: boolean;
   onClose: () => void;

@@ -17,7 +17,7 @@ export const FormProvider = ({ children }: PropsWithChildren) => {
 export const useFormContext = () => {
   const context = useContext(FormContext);
   if (!context) {
-    throw new Error('useFormContext debe usarse dentro de un FormProvider');
+    throw new Error('useFormContext must be used within a FormProvider');
   }
   return context;
 };

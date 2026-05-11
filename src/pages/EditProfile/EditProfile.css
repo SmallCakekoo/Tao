@@ -73,12 +73,12 @@
 
 /* responsive */
 @media (max-width: 768px) {
-  /* deja espacio para la mobile navbar fija */
+  
   .edit-profile {
     padding-bottom: 8rem;
   }
 
-  /* baja y alinea la flecha en mobile */
+  
   .edit-profile .back {
     margin-left: 5%;
     margin-right: 5%;

@@ -43,7 +43,7 @@ export const AnimatedLine = ({
       trigger,
       start: variant === 'first' ? 'top bottom' : 'top 75%',
       end: variant === 'first' ? 'bottom top' : 'center 30%',
-      scrub: variant === 'first' ? 1.2 : 0.6, // El valor de scrub suaviza el dibujado.
+      scrub: variant === 'first' ? 1.2 : 0.6, // The scrub value smooths the drawing.
       animation: tween,
     });
 

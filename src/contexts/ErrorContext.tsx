@@ -20,22 +20,22 @@ export const ErrorProvider = ({ children }: PropsWithChildren) => {
   }, []);
 
   useEffect(() => {
-    // Intercepta console.error
+    // Intercepts console.error
     const originalConsoleError = console.error;
     console.error = (...args: unknown[]) => {
-      originalConsoleError(...args); // sigue mostrando en devtools
+      originalConsoleError(...args); // keeps showing in devtools
       const message = args
         .map((a) => (a instanceof Error ? a.message : String(a)))
         .join(' ');
       showError(message);
     };
 
-    // Intercepta errores globales no capturados
+    // Intercepts uncaught global errors
     const handleGlobalError = (event: ErrorEvent) => {
       showError(event.message ?? 'Unexpected error');
     };
 
-    // Intercepta promesas rechazadas no capturadas
+    // Intercepts uncaught promise rejections
     const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
       const message =
         event.reason instanceof Error ? event.reason.message : String(event.reason);
@@ -46,7 +46,7 @@ export const ErrorProvider = ({ children }: PropsWithChildren) => {
     window.addEventListener('unhandledrejection', handleUnhandledRejection);
 
     return () => {
-      console.error = originalConsoleError; // restaura al desmontar
+      console.error = originalConsoleError; // restores on unmount
       window.removeEventListener('error', handleGlobalError);
       window.removeEventListener('unhandledrejection', handleUnhandledRejection);
     };

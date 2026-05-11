@@ -55,9 +55,9 @@ export const HeroSection = () => {
   }, []);
 
   /**
-   * Esta función calcula dinámicamente la altura del suelo en un punto X específico.
-   * Interpola entre los puntos del 'fieldProfile' teniendo en cuenta el redimensionado
-   * del contenedor (object-fit: cover).
+   * This function dynamically calculates the ground height at a specific X point.
+   * It interpolates between the 'fieldProfile' points taking into account the container
+   * resizing (object-fit: cover).
    */
   const getGroundY = useCallback((centerX: number) => {
     const section = sectionRef.current;

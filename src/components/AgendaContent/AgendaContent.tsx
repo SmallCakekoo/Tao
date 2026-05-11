@@ -33,14 +33,14 @@ export const AgendaContent = () => {
         </div>
       )}
 
-      {/* ── Form reemplaza empty state ── */}
+      {/* ── Form replace empty state ── */}
       {tasks.length === 0 && showForm && (
         <div className="form-wrapper">
           <AgendaForm />
         </div>
       )}
 
-      {/* ── Layout desktop con tasks ── */}
+      {/* ── Layout desktop with tasks ── */}
       {tasks.length > 0 && !isMobile && (
         <div className="agenda-layout">
           <div className="tasks-column">

@@ -8,7 +8,6 @@ import { EditQuote } from '../../components/EditQuote/EditQuote';
 import { FeedbackMessage } from '../../components/FeedbackMessage/FeedbackMessage';
 import { EditProfileProvider, useEditProfile } from '../../contexts/EditProfileContext';
 
-// Separamos el contenido para poder usar el hook dentro del Provider
 const EditProfileContent = () => {
   const { signOut } = useEditProfile();
   const [showToast, setShowToast] = useState(false);

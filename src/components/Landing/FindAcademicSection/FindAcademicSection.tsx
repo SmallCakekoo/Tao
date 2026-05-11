@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '../../Button/Button';
 import { useAuth } from '../../../contexts/AuthContext';
 import type { Body } from '../../../types/LandingTypes';
+
 import { academicStickers } from '../../../data/landingContent';
 import meditationImg from '../../../assets/meditation.png';
 import './FindAcademicSection.css';
@@ -219,7 +220,7 @@ export const FindAcademicSection = () => {
       const newIsMobile = window.innerWidth <= 768;
       if (newIsMobile !== isMobile) {
         isMobile = newIsMobile;
-        activeStickers = isMobile ? stickers.slice(0, 7) : stickers;
+        activeStickers = isMobile ? academicStickers.slice(0, 7) : academicStickers;
         setRenderedStickers(activeStickers);
         initPhysics(activeStickers);
       }

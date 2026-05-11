@@ -17,7 +17,7 @@ import { getDiaryEntryByDate } from '../../services/diaryService';
 import { saveDiaryEntry } from '../../services/diaryService';
 import type { PromptKey } from '../../types/PromptKey';
 import { useDiary } from '../../contexts/DiaryContext';
-import { SavedRecommendations } from '../Recommendations/Saved/RecommendationsSaved';
+import { SavedRecommendations } from '../Recommendations/Saved/SavedRecommendations';
 
 export const Diary = () => {
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);

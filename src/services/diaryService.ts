@@ -57,24 +57,43 @@ export const saveDiaryEntry = async ({
 };
 
 export const saveRecommendationToDiary = async (
-  entryId: string,
-  recommendationId: string,
-  currentRecommendations: string[]
+  userId: string,
+  date: Date,
+  recommendationId: string
 ) => {
+  const formattedDate =
+    formatLocalDate(date);
 
-  const updated = [
-    ...currentRecommendations,
-    recommendationId,
-  ];
+  const { data } = await supabase
+    .from('journal_entries')
+    .select('saved_recommendations')
+    .eq('user_id', userId)
+    .eq('entry_date', formattedDate)
+    .single();
 
-  const { error } =
-    await supabase
-      .from("journal_entries")
-      .update({
-        saved_recommendations:
-          updated,
-      })
-      .eq("id", entryId);
+  const current =
+    data?.saved_recommendations ?? [];
 
-  if (error) throw error;
+  const updated = current.includes(recommendationId)
+    ? current
+    : [...current, recommendationId];
+
+  const { error } = await supabase
+    .from('journal_entries')
+    .upsert(
+      {
+        user_id: userId,
+        entry_date: formattedDate,
+        saved_recommendations: updated,
+        updated_at: new Date(),
+      },
+      {
+        onConflict:
+          'user_id,entry_date',
+      }
+    );
+
+  if (error) {
+    throw error;
+  }
 };

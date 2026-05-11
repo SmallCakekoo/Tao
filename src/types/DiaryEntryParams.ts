@@ -10,6 +10,4 @@ export type SaveDiaryEntryParams = {
   intention: string;
   content: DiaryContent;
   imageUrl?: string;
-  saved_recommendations: string[];
-
 };

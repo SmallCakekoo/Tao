@@ -15,6 +15,7 @@ export type GradientBoxProps = {
 export type DiaryButtonsProps = {
   setCamera: () => void;
   handleSave: () => void;
+  setShowRecommendations: (show: boolean) => void;
 };
 
 export type IntentionProps = {

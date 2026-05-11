@@ -23,6 +23,10 @@ export const Diary = () => {
   const [selected, setSelected] = useState<PromptKey | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [loadingEntry, setLoadingEntry] = useState<boolean>(false);
+  const [showRecommendations,
+setShowRecommendations]
+= useState(false);
+
   const { entry, setEntry } = useDiary();
   const { user } = useAuth();
 
@@ -78,7 +82,6 @@ export const Diary = () => {
   };
 
   const previousWeek = () => {
-
     setSelected(null);
     const prev = new Date(selectedDate);
 
@@ -106,6 +109,7 @@ export const Diary = () => {
           );
 
           setSelected(data.intention ?? null);
+          setSavedRecommendations(data.saved_recommendations ?? []);
         } else {
           setEntry({
             area1: '',
@@ -142,16 +146,16 @@ export const Diary = () => {
   };
 
   useEffect(() => {
-  if (!user) return;
+    if (!user) return;
 
-  if (!entry.imageUrl) return;
+    if (!entry.imageUrl) return;
 
-  handleSave();
-
-}, [entry.imageUrl]);
+    handleSave();
+  }, [entry.imageUrl]);
 
   return (
     <>
+    
       {!isMobile && <HomeNavbar />}
 
       <div className="diary">
@@ -191,7 +195,7 @@ export const Diary = () => {
                 </p>
               </div>
               <Intention selected={selected} setSelected={setSelected}></Intention>
-              {isMobile && <DiaryButtons setCamera={setCamera} handleSave={handleSave} />}
+              {isMobile && <DiaryButtons setCamera={setCamera} handleSave={handleSave} setShowRecommendations={setShowRecommendations}/>}
               <textarea
                 name="entry1"
                 id="entry1"
@@ -225,7 +229,7 @@ export const Diary = () => {
           </div>
         </div>
         <aside className="options">
-          {!isMobile && <DiaryButtons setCamera={setCamera} handleSave={handleSave} />}
+          {!isMobile && <DiaryButtons setCamera={setCamera} handleSave={handleSave} setShowRecommendations={setShowRecommendations}/>}
         </aside>
       </div>
       <MobileNavBar />

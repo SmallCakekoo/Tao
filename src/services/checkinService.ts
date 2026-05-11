@@ -37,7 +37,6 @@ export const saveDailyCheckin = async (
   );
 
   if (error) {
-    console.error('Error saving check-in:', error);
     return { success: false, error };
   }
 
@@ -61,7 +60,6 @@ export const getTodaysCheckin = async (): Promise<FullDailyCheckin | null> => {
     .maybeSingle();
 
   if (error) {
-    console.error("Error fetching today's check-in:", error);
     return null;
   }
 
@@ -96,7 +94,6 @@ export const getWeeklyCheckins = async (): Promise<FullDailyCheckin[]> => {
     .order('checkin_date', { ascending: true });
 
   if (error) {
-    console.error('Error fetching weekly check-ins:', error);
     return [];
   }
 

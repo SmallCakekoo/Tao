@@ -1,5 +1,9 @@
 # Tao
 
+<p align="center">
+    <img src="./src/assets/logo-full.svg" alt="Tao logo" width="320" />
+</p>
+
 Tao is an academic energy and productivity management web application
 designed specifically for students.
 

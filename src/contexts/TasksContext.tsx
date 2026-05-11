@@ -1,49 +1,37 @@
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useState,
   type PropsWithChildren,
-} from "react";
+} from 'react';
 
-import { useAuth } from "./AuthContext";
+import { useAuth } from './AuthContext';
+import { useError } from './ErrorContext';
 import {
   getUserTasks,
   getUserQuote,
   insertTask,
   updateTask,
   deleteTask,
-} from "../services/agendaServices";
-import type { TaskInterface } from "../types/TaskTypes";
-
-interface Quote {
-  quote: string;
-  author: string;
-}
-
-interface TasksContextType {
-  tasks: TaskInterface[];
-  setTasks: React.Dispatch<React.SetStateAction<TaskInterface[]>>;
-  quote: Quote;
-  loadingTasks: boolean;
-  addTask: (task: TaskInterface) => Promise<void>;
-  toggleTask: (task: TaskInterface) => Promise<void>;
-  removeTask: (task: TaskInterface) => Promise<void>;
-}
+} from '../services/agendaServices';
+import type { Quote, TaskInterface, TasksContextType } from '../types/TaskTypes';
 
 const TasksContext = createContext<TasksContextType | undefined>(undefined);
 
 export const TasksProvider = ({ children }: PropsWithChildren) => {
   const { user } = useAuth();
+  const { showError } = useError();
 
   const [tasks, setTasks] = useState<TaskInterface[]>([]);
-  const [quote, setQuote] = useState<Quote>({ quote: "", author: "" });
+  const [quote, setQuote] = useState<Quote>({ quote: '', author: '' });
   const [loadingTasks, setLoadingTasks] = useState(true);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     if (!user) {
       setTasks([]);
-      setQuote({ quote: "", author: "" });
+      setQuote({ quote: '', author: '' });
       setLoadingTasks(false);
       return;
     }
@@ -57,15 +45,17 @@ export const TasksProvider = ({ children }: PropsWithChildren) => {
       setTasks(tasksData);
       setQuote({ quote: quoteData.quote, author: quoteData.author });
     } catch (error) {
-      console.error(error);
+      const message =
+        error instanceof Error ? error.message : 'Failed to load tasks data';
+      showError(message);
     } finally {
       setLoadingTasks(false);
     }
-  };
+  }, [user, showError]);
 
   useEffect(() => {
     fetchData();
-  }, [user]);
+  }, [fetchData]);
 
   const addTask = async (task: TaskInterface) => {
     const data = await insertTask(task);
@@ -75,9 +65,7 @@ export const TasksProvider = ({ children }: PropsWithChildren) => {
   const toggleTask = async (task: TaskInterface) => {
     const updated = { ...task, complete: !task.complete };
     await updateTask(updated);
-    setTasks((prev) =>
-      prev.map((t) => (t.id === task.id ? updated : t))
-    );
+    setTasks((prev) => prev.map((t) => (t.id === task.id ? updated : t)));
   };
 
   const removeTask = async (task: TaskInterface) => {
@@ -106,7 +94,7 @@ export const useTasks = () => {
   const context = useContext(TasksContext);
 
   if (!context) {
-    throw new Error("useTasks must be used within TasksProvider");
+    throw new Error('useTasks must be used within TasksProvider');
   }
 
   return context;

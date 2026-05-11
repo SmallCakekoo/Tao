@@ -1,10 +1,6 @@
 import { Link } from 'react-router-dom';
-import type { FullDailyCheckin } from '../../../types/CheckinTypes';
+import type { FeelingProps } from '../../../types/CheckinTypes';
 import './Feeling.css';
-
-interface FeelingProps {
-  checkin?: FullDailyCheckin | null;
-}
 
 export const Feeling = ({ checkin }: FeelingProps) => {
   const hasCheckin = !!checkin;

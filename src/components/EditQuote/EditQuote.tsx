@@ -1,12 +1,9 @@
 import './EditQuote.css';
 import { useState } from 'react';
 import { useEditProfile } from '../../contexts/EditProfileContext';
+import type { FeedbackHandlerProps } from '../../types/FeedbackProps';
 
-export const EditQuote = ({
-  onSave,
-}: {
-  onSave: (message: string, type: 'success' | 'error') => void;
-}) => {
+export const EditQuote = ({ onSave }: FeedbackHandlerProps) => {
   const { saveQuote } = useEditProfile();
   const [quoteInput, setQuoteInput] = useState('');
   const [authorInput, setAuthorInput] = useState('');

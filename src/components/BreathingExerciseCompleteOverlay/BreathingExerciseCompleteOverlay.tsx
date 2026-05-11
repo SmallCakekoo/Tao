@@ -1,9 +1,5 @@
 import './BreathingExerciseCompleteOverlay.css';
-
-type BreathingExerciseCompleteOverlayProps = {
-  onRestart: () => void;
-  onExit: () => void;
-};
+import type { BreathingExerciseCompleteOverlayProps } from '../../types/BreathingExerciseTypes';
 
 export const BreathingExerciseCompleteOverlay = ({
   onRestart,

@@ -1,25 +1,25 @@
 import { useState, useRef } from 'react';
-import './SavedRecommendations.css'
+import './SavedRecommendations.css';
 import type { PointerEventHandler } from 'react';
 import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
 
-import type { RecommendationCard } from '../../../types/RecommendationViewTypes';
+import type { SavedRecommendationsProps } from '../../../types/RecommendationViewTypes';
 import { useNavigate } from 'react-router-dom';
 
-type Props = {
-  recommendations: RecommendationCard[];
-  closeOverlay: () => void;
-};
-
-export const SavedRecommendations = ({ recommendations, closeOverlay }: Props) => {
+export const SavedRecommendations = ({
+  recommendations,
+  closeOverlay,
+}: SavedRecommendationsProps) => {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [dragOffset, setDragOffset] = useState<number>(0);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const dragStartY = useRef<number | null>(null);
 
-    
-  const effectiveIndex = Math.min(currentIndex, recommendations.length > 0 ? recommendations.length - 1 : 0);
+  const effectiveIndex = Math.min(
+    currentIndex,
+    recommendations.length > 0 ? recommendations.length - 1 : 0
+  );
   const canGoNext = effectiveIndex < recommendations.length - 1;
   const canGoPrev = effectiveIndex > 0;
 
@@ -59,16 +59,16 @@ export const SavedRecommendations = ({ recommendations, closeOverlay }: Props) =
     setIsDragging(false);
   };
 
-if (!content) {
-  return (
-    <div className="overlay-bg">
-      <div className="saved-overlay">
-        <button onClick={closeOverlay}>Close</button>
-        <p>No saved recommendations found.</p>
+  if (!content) {
+    return (
+      <div className="overlay-bg">
+        <div className="saved-overlay">
+          <button onClick={closeOverlay}>Close</button>
+          <p>No saved recommendations found.</p>
+        </div>
       </div>
-    </div>
-  );
-}  
+    );
+  }
 
   return (
     <div className="overlay-bg">

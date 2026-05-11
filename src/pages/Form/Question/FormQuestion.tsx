@@ -1,28 +1,18 @@
 import { useEffect } from 'react';
-import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { IconArrowLeft } from '@tabler/icons-react';
-import type {
-  FormOutletContext,
-  DailyQuestionId,
-} from '../../../types/FormTypes';
+import type { DailyQuestionId } from '../../../types/FormTypes';
+import { useFormContext } from '../../../contexts/FormContext';
+import { FORM_QUESTIONS } from '../../../data/formQuestions';
+import { FORM_FACE_MAP } from '../../../data/formFaceMap';
 import '../Form.css';
 import './FormQuestion.css';
-
-import { FORM_QUESTIONS } from '../../../data/formQuestions';
-
-const FORM_FACE_MAP = {
-  awful: new URL('../../../assets/stickers/awful.svg', import.meta.url).href,
-  bad: new URL('../../../assets/stickers/bad.svg', import.meta.url).href,
-  neutral: new URL('../../../assets/stickers/neutral.svg', import.meta.url).href,
-  good: new URL('../../../assets/stickers/good.svg', import.meta.url).href,
-  great: new URL('../../../assets/stickers/great.svg', import.meta.url).href,
-} as const;
 
 export const FormQuestion = () => {
   const navigate = useNavigate();
   const { questionId } = useParams();
 
-  const { answers, setAnswers } = useOutletContext<FormOutletContext>();
+  const { answers, setAnswers } = useFormContext();
 
   const parsedQuestionId = Number(questionId) as DailyQuestionId;
   const question = FORM_QUESTIONS.find((entry) => entry.id === parsedQuestionId);

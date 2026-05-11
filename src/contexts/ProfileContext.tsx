@@ -1,32 +1,29 @@
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useState,
   type PropsWithChildren,
-} from "react";
+} from 'react';
 
-import { useAuth } from "./AuthContext";
-import { getUserProfile } from "../services/profileService";
-import type { ProfileContextType } from "../types/ProfileTypes";
-import type { UserProfile } from "../types/AuthTypes";
+import { useAuth } from './AuthContext';
+import { useError } from './ErrorContext';
+import { getUserProfile } from '../services/profileService';
+import type { ProfileContextType } from '../types/ProfileTypes';
+import type { UserProfile } from '../types/AuthTypes';
 
-const ProfileContext = createContext<
-  ProfileContextType | undefined
->(undefined);
+const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
 
-export const ProfileProvider = ({
-  children,
-}: PropsWithChildren) => {
+export const ProfileProvider = ({ children }: PropsWithChildren) => {
   const { user } = useAuth();
+  const { showError } = useError();
 
-  const [profile, setProfile] =
-    useState<UserProfile | null>(null);
+  const [profile, setProfile] = useState<UserProfile | null>(null);
 
-  const [loadingProfile, setLoadingProfile] =
-    useState(true);
+  const [loadingProfile, setLoadingProfile] = useState(true);
 
-  const fetchProfile = async () => {
+  const fetchProfile = useCallback(async () => {
     if (!user) {
       setProfile(null);
       setLoadingProfile(false);
@@ -37,16 +34,17 @@ export const ProfileProvider = ({
       const data = await getUserProfile(user.id);
       setProfile(data);
     } catch (error) {
-      console.error(error);
+      const message = error instanceof Error ? error.message : 'Failed to load profile';
+      showError(message);
       setProfile(null);
     } finally {
       setLoadingProfile(false);
     }
-  };
+  }, [user, showError]);
 
   useEffect(() => {
     fetchProfile();
-  }, [user]);
+  }, [fetchProfile]);
 
   return (
     <ProfileContext.Provider
@@ -65,9 +63,7 @@ export const useProfile = () => {
   const context = useContext(ProfileContext);
 
   if (!context) {
-    throw new Error(
-      "useProfile must be used within ProfileProvider"
-    );
+    throw new Error('useProfile must be used within ProfileProvider');
   }
 
   return context;

@@ -7,10 +7,17 @@ export interface TaskInterface {
   user_id: string;
 }
 
+export type Quote = {
+  quote: string;
+  author: string;
+};
+
 export type TasksContextType = {
   tasks: TaskInterface[];
   setTasks: React.Dispatch<React.SetStateAction<TaskInterface[]>>;
-  loading: boolean;
+  quote: Quote;
+  loadingTasks: boolean;
+  addTask: (task: TaskInterface) => Promise<void>;
   toggleTask: (task: TaskInterface) => Promise<void>;
   removeTask: (task: TaskInterface) => Promise<void>;
 };

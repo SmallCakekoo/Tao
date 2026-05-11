@@ -1,10 +1,6 @@
 import { useRef, useState, useEffect, type PointerEventHandler } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import {
-  IconChevronDown,
-  IconChevronUp,
-  IconPlus,
-} from '@tabler/icons-react';
+import { IconChevronDown, IconChevronUp, IconPlus } from '@tabler/icons-react';
 import { HomeNavbar } from '../../../components/NavBar/CommonNavBar/HomeNavbar';
 import { MobileNavBar } from '../../../components/NavBar/MobileNavBar/MobileNavBar';
 import logoFace from '../../../assets/logo-face.svg';
@@ -18,13 +14,14 @@ import '../RecommendationsShared.css';
 import './RecommendationsResults.css';
 import { useAuth } from '../../../contexts/AuthContext';
 import { saveRecommendationToDiary } from '../../../services/diaryService';
-
+import { useError } from '../../../contexts/ErrorContext';
 
 export const RecommendationsResults = () => {
   const { user } = useAuth();
+  const { showError } = useError();
   const navigate = useNavigate();
   const location = useLocation();
-  const state = (location.state ?? {}) as ResultsState;
+  const state = location.state as ResultsState | undefined;
 
   const [cards, setCards] = useState<RecommendationCard[]>([]);
   const [loading, setLoading] = useState(true);
@@ -36,10 +33,10 @@ export const RecommendationsResults = () => {
   useEffect(() => {
     const fetchRecommendations = async () => {
       setLoading(true);
-      
-      let macrostate = state.results?.macrostate;
 
-      if (!macrostate && state.feeling) {
+      let macrostate = state?.results?.macrostate;
+
+      if (!macrostate && state?.feeling) {
         const option = PRESET_OPTIONS.find((o) => o.feeling === state.feeling);
         if (option) {
           macrostate = option.macrostate;
@@ -52,7 +49,10 @@ export const RecommendationsResults = () => {
         const mapped: RecommendationCard[] = fetched.map((rec, index) => {
           let imageUrl = undefined;
           if (rec.image_name) {
-            imageUrl = new URL(`../../../assets/recs-images/${rec.image_name}`, import.meta.url).href;
+            imageUrl = new URL(
+              `../../../assets/recs-images/${rec.image_name}`,
+              import.meta.url
+            ).href;
           }
 
           return {
@@ -71,7 +71,7 @@ export const RecommendationsResults = () => {
       } else {
         setCards([]);
       }
-      
+
       setLoading(false);
     };
 
@@ -99,9 +99,10 @@ export const RecommendationsResults = () => {
 
     try {
       await saveRecommendationToDiary(user.id, new Date(), content.id);
-
     } catch (error) {
-      console.error(error);
+      const message =
+        error instanceof Error ? error.message : 'Failed to save recommendation';
+      showError(message);
     }
   };
 

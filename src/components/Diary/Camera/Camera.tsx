@@ -10,6 +10,7 @@ import { base64ToBlob } from '../../../utils/base';
 import { uploadDiaryImage } from '../../../services/storageService';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useDiary } from '../../../contexts/DiaryContext';
+import { useError } from '../../../contexts/ErrorContext';
 
 export const Camera = ({ onClose }: CameraProps) => {
   const webcamRef = useRef<Webcam | null>(null);
@@ -18,6 +19,7 @@ export const Camera = ({ onClose }: CameraProps) => {
   const [flash, setFlash] = useState(false);
   const { user } = useAuth();
   const { setEntry } = useDiary();
+  const { showError } = useError();
 
   const cameraWidth = 720;
   const cameraHeight = 720;
@@ -45,7 +47,6 @@ export const Camera = ({ onClose }: CameraProps) => {
       const imageSrc = webcamRef.current.getScreenshot();
 
       if (imageSrc) {
-        
         setImage(imageSrc);
         try {
           const blob = await base64ToBlob(imageSrc);
@@ -58,7 +59,9 @@ export const Camera = ({ onClose }: CameraProps) => {
             imageUrl,
           }));
         } catch (error) {
-          console.error(error);
+          const message =
+            error instanceof Error ? error.message : 'Failed to upload diary image';
+          showError(message);
         }
       }
 

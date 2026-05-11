@@ -1,14 +1,25 @@
-
-import { createContext, useContext, useState, useEffect, useCallback, type PropsWithChildren } from "react";
-import { getTodaysCheckin, getWeeklyCheckins } from "../services/checkinService";
-import { useAuth } from "./AuthContext";
-import type { FullDailyCheckin, WeeklyDataPoint, CheckinContextType } from "../types/CheckinTypes";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+  type PropsWithChildren,
+} from 'react';
+import { getTodaysCheckin, getWeeklyCheckins } from '../services/checkinService';
+import { useAuth } from './AuthContext';
+import { useError } from './ErrorContext';
+import type {
+  FullDailyCheckin,
+  WeeklyDataPoint,
+  CheckinContextType,
+} from '../types/CheckinTypes';
 
 export const CheckinContext = createContext<CheckinContextType | undefined>(undefined);
 
 const buildWeeklyData = (checkins: FullDailyCheckin[]): WeeklyDataPoint[] => {
   const checkinMap = new Map<string, FullDailyCheckin>();
-  checkins.forEach(c => checkinMap.set(c.checkin_date, c));
+  checkins.forEach((c) => checkinMap.set(c.checkin_date, c));
 
   const today = new Date();
   const currentDay = today.getDay();
@@ -23,7 +34,7 @@ const buildWeeklyData = (checkins: FullDailyCheckin[]): WeeklyDataPoint[] => {
     const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
     const checkin = checkinMap.get(dateStr);
 
-    const value = checkin ? (checkin.mood_score + 1) : 0;
+    const value = checkin ? checkin.mood_score + 1 : 0;
     return { day: label, value, checkin_date: dateStr };
   });
 };
@@ -33,6 +44,7 @@ export const CheckinProvider = ({ children }: PropsWithChildren) => {
   const [weeklyData, setWeeklyData] = useState<WeeklyDataPoint[]>([]);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
+  const { showError } = useError();
 
   const refreshCheckin = useCallback(async () => {
     if (!user) {
@@ -51,20 +63,23 @@ export const CheckinProvider = ({ children }: PropsWithChildren) => {
       setTodaysCheckin(checkin);
       setWeeklyData(buildWeeklyData(weeklyCheckins));
     } catch (error) {
-      console.error("Error fetching check-in:", error);
+      const message = error instanceof Error ? error.message : 'Error fetching check-in';
+      showError(message);
       setTodaysCheckin(null);
       setWeeklyData([]);
     } finally {
       setLoading(false);
     }
-  }, [user]);
+  }, [user, showError]);
 
   useEffect(() => {
     refreshCheckin();
   }, [refreshCheckin]);
 
   return (
-    <CheckinContext.Provider value={{ todaysCheckin, weeklyData, loading, refreshCheckin }}>
+    <CheckinContext.Provider
+      value={{ todaysCheckin, weeklyData, loading, refreshCheckin }}
+    >
       {children}
     </CheckinContext.Provider>
   );
@@ -73,7 +88,7 @@ export const CheckinProvider = ({ children }: PropsWithChildren) => {
 export const useCheckin = () => {
   const context = useContext(CheckinContext);
   if (context === undefined) {
-    throw new Error;
+    throw new Error();
   }
   return context;
 };

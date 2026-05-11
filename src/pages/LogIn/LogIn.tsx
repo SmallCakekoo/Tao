@@ -32,8 +32,8 @@ export const LogIn = () => {
         setLoading(false);
         navigate('/home');
       }
-    } catch (error: any) {
-      setError(error.message);
+    } catch (error: unknown) {
+      setError(error instanceof Error ? error.message : 'Something went wrong');
     }
   };
   return (

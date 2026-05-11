@@ -1,11 +1,8 @@
+import type { Session } from '@supabase/supabase-js';
 import { supabase } from '../lib/supabaseClient';
 import type { SignInParams, SignUpParams } from '../types/AuthTypes';
 
-export const signUpUser = async ({
-  email,
-  password,
-  name,
-}: SignUpParams) => {
+export const signUpUser = async ({ email, password, name }: SignUpParams) => {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
@@ -17,35 +14,35 @@ export const signUpUser = async ({
   });
 
   if (error) {
-    if (error.message.includes("User already registered")) {
-      throw new Error("This email is already registered");
+    if (error.message.includes('User already registered')) {
+      throw new Error('This email is already registered');
     }
 
-    throw new Error("Could not create account");
+    throw new Error('Could not create account');
   }
 
   if (!data.user) {
-    throw new Error("User was not created");
+    throw new Error('User was not created');
   }
 
   return data.user;
 };
 
-export const signInUser = async ({email, password}: SignInParams) => {
+export const signInUser = async ({ email, password }: SignInParams) => {
   const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    email,
+    password,
+  });
 
-    if (error) {
-      if (error.message === 'Invalid login credentials') {
-        throw new Error('Hmm, that email or password doesn’t look right...');
-      } else {
-        throw new Error('Something went wrong, try again');
-      }
+  if (error) {
+    if (error.message === 'Invalid login credentials') {
+      throw new Error('Hmm, that email or password doesn’t look right...');
+    } else {
+      throw new Error('Something went wrong, try again');
     }
-    return data.user;
-}
+  }
+  return data.user;
+};
 
 export const getCurrentUser = async () => {
   const {
@@ -69,16 +66,12 @@ export const getCurrentSession = async () => {
   return session;
 };
 
-export const onAuthChange = (
-  callback: (session: any) => void
-) => {
+export const onAuthChange = (callback: (session: Session | null) => void) => {
   const {
     data: { subscription },
-  } = supabase.auth.onAuthStateChange(
-    (_event, session) => {
-      callback(session);
-    }
-  );
+  } = supabase.auth.onAuthStateChange((_event, session) => {
+    callback(session);
+  });
 
   return subscription;
 };

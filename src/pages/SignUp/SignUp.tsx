@@ -63,8 +63,8 @@ export const SignUp = () => {
       }
 
       setSuccess(true);
-    } catch (error: any) {
-      setError(error.message);
+    } catch (error: unknown) {
+      setError(error instanceof Error ? error.message : 'Something went wrong');
     }
   };
 

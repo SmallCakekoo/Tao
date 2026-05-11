@@ -1,36 +1,42 @@
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { IconArrowLeft } from '@tabler/icons-react';
 import { HomeNavbar } from '../../../components/NavBar/CommonNavBar/HomeNavbar';
 import logoFace from '../../../assets/logo-face.svg';
-import type { FormOutletContext } from '../../../types/FormTypes';
-import type { FaceResult } from '../../../types/CheckinTypes';
+import { useFormContext } from '../../../contexts/FormContext';
 import { calculateDailyCheckin } from '../../../lib/checkinEngine';
 import { saveDailyCheckin } from '../../../services/checkinService';
-import { useEffect, useState } from 'react';
+import { FACE_OPTIONS, FORM_RESULT_ITEMS } from '../../../data/formResultsOptions';
+import { useEffect, useMemo, useState } from 'react';
+import { useError } from '../../../contexts/ErrorContext';
 import '../Form.css';
 import './FormResults.css';
-
-
-const FACE_OPTIONS: FaceResult[] = ['awful', 'bad', 'neutral', 'good', 'great'];
+import type { FaceResult } from '../../../types/CheckinTypes';
 
 export const FormResults = () => {
   const navigate = useNavigate();
-  const { answers } = useOutletContext<FormOutletContext>();
+  const { answers } = useFormContext();
+  const { showError } = useError();
   const [isSaving, setIsSaving] = useState(false);
 
-  const scores = {
-    energy_score: answers[1] ?? 0,
-    sleep_score: answers[2] ?? 0,
-    mood_score: answers[3] ?? 2,
-    stress_score: answers[4] ?? 0,
-    daily_load_score: answers[5] ?? 0,
-  };
+  const scores = useMemo(
+    () => ({
+      energy_score: answers[1] ?? 0,
+      sleep_score: answers[2] ?? 0,
+      mood_score: answers[3] ?? 2,
+      stress_score: answers[4] ?? 0,
+      daily_load_score: answers[5] ?? 0,
+    }),
+    [answers]
+  );
 
-  const engineResults = calculateDailyCheckin(scores);
+  const engineResults = useMemo(() => calculateDailyCheckin(scores), [scores]);
 
   const face_result: FaceResult = FACE_OPTIONS[answers[3] ?? 2];
 
-  const results = { ...engineResults, face_result };
+  const results = useMemo(
+    () => ({ ...engineResults, face_result }),
+    [engineResults, face_result]
+  );
 
   useEffect(() => {
     const persistResult = async () => {
@@ -38,92 +44,55 @@ export const FormResults = () => {
         setIsSaving(true);
         await saveDailyCheckin(scores, results);
       } catch (err) {
-        console.error('Failed to save check-in', err);
+        const message = err instanceof Error ? err.message : 'Failed to save check-in';
+        showError(message);
       } finally {
         setIsSaving(false);
       }
     };
     persistResult();
-  }, []);
+  }, [results, scores, showError]);
 
   const getMacrostateMessage = (state: string) => {
     switch (state) {
-      case 'Recuperación Necesaria': return 'Your body needs some deep rest';
-      case 'Regulación Emocional': return 'Prioritize your emotional well-being today';
-      case 'Sobrecarga Académica': return 'Take things one step at a time';
-      case 'Activación / Optimización': return 'You are in a great state to achieve your goals!';
-      default: return 'You are having a balanced day';
+      case 'Recuperación Necesaria':
+        return 'Your body needs some deep rest';
+      case 'Regulación Emocional':
+        return 'Prioritize your emotional well-being today';
+      case 'Sobrecarga Académica':
+        return 'Take things one step at a time';
+      case 'Activación / Optimización':
+        return 'You are in a great state to achieve your goals!';
+      default:
+        return 'You are having a balanced day';
     }
   };
 
-  const formResultItems = [
-    {
-      icon: new URL('../../../assets/energy.png', import.meta.url).href,
-      alt: 'Energy',
-      label: 'Energy level',
-      value: [
-        'Very low energy today',
-        'Energy is a bit low',
-        'Energy level is balanced',
-        "You're full of energy!"
-      ][scores.energy_score],
-    },
-    {
-      icon: new URL('../../../assets/moon.png', import.meta.url).href,
-      alt: 'Sleep',
-      label: 'Sleep time',
-      value: [
-        'Hardly any sleep (0-3h)',
-        'A bit short on sleep (4-6h)',
-        'Decent amount of sleep (7-9h)',
-        'Lots of rest today (10h+)'
-      ][scores.sleep_score],
-    },
-    {
-      icon: new URL('../../../assets/face.png', import.meta.url).href,
-      alt: 'Mood',
-      label: 'Mood',
-      value: [
-        'Feeling quite awful',
-        'A bit of a bad mood',
-        'Mood is neutral',
-        "You're in a good mood",
-        'Feeling absolutely great!'
-      ][scores.mood_score],
-    },
-    {
-      icon: new URL('../../../assets/mess.png', import.meta.url).href,
-      alt: 'Stress',
-      label: 'Stress level',
-      value: [
-        'Very calm and relaxed',
-        'Feeling some stress',
-        'Stress levels are high',
-        'Heavily overwhelmed by stress'
-      ][scores.stress_score],
-    },
-    {
-      icon: new URL('../../../assets/box.png', import.meta.url).href,
-      alt: 'Daily load',
-      label: 'Daily load',
-      value: [
-        'A light and easy day',
-        'Your load is manageable',
-        'Carrying a heavy load',
-        'Completely overwhelmed'
-      ][scores.daily_load_score],
-    },
-  ];
+  const formResultItems = FORM_RESULT_ITEMS.map((item) => ({
+    icon: item.icon,
+    alt: item.alt,
+    label: item.label,
+    value: item.values[scores[item.scoreKey]] ?? item.values[0],
+  }));
 
   const handleRecommendationsClick = () => {
-    localStorage.setItem(
-      'tao:daily-check-in',
-      JSON.stringify({
-        answers,
-        results,
-        savedAt: new Date().toISOString(),
-      })
-    );
+    // Keep the latest check-in in local storage so recommendations can be restored after reloads.
+    try {
+      localStorage.setItem(
+        'tao:daily-check-in',
+        JSON.stringify({
+          answers,
+          results,
+          savedAt: new Date().toISOString(),
+        })
+      );
+    } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : 'Failed to persist daily check-in in local storage';
+      showError(message);
+    }
 
     navigate('/recommendations', { state: { source: 'form', results } });
   };
@@ -161,8 +130,8 @@ export const FormResults = () => {
               </ul>
 
               <div className="results-actions">
-                <button 
-                  className="btn-primary" 
+                <button
+                  className="btn-primary"
                   onClick={handleRecommendationsClick}
                   disabled={isSaving}
                 >

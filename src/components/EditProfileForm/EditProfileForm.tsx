@@ -2,12 +2,9 @@ import './EditProfileForm.css';
 import { useState } from 'react';
 import { ChangePassword } from '../ChangePasswordOverlay/ChangePassword';
 import { useEditProfile } from '../../contexts/EditProfileContext';
+import type { FeedbackHandlerProps } from '../../types/FeedbackProps';
 
-export const EditProfileForm = ({
-  onSave,
-}: {
-  onSave: (message: string, type: 'success' | 'error') => void;
-}) => {
+export const EditProfileForm = ({ onSave }: FeedbackHandlerProps) => {
   const { name, updateName } = useEditProfile();
   const [nameInput, setNameInput] = useState('');
   const [showChangePassword, setShowChangePassword] = useState(false);

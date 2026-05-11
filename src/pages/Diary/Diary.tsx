@@ -6,7 +6,7 @@ import { DiaryDate } from '../../components/Diary/DiaryDate/DiaryDate';
 import { Intention } from '../../components/Diary/Intention/Intention';
 import { Polaroid } from '../../components/Diary/Polaroid/Polaroid';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { DiaryButtons } from '../../components/Diary/DiaryButtons/DiaryButtons';
 import { Camera } from '../../components/Diary/Camera/Camera';
@@ -20,6 +20,7 @@ import { useDiary } from '../../contexts/DiaryContext';
 import type { RecommendationCard } from '../../types/RecommendationViewTypes';
 import { getRecommendationsByIds } from '../../services/recommendationService';
 import { SavedRecommendations } from '../Recommendations/Saved/SavedRecommendations';
+import { useError } from '../../contexts/ErrorContext';
 
 export const Diary = () => {
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
@@ -28,12 +29,11 @@ export const Diary = () => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [loadingEntry, setLoadingEntry] = useState<boolean>(false);
   const [showRecommendations, setShowRecommendations] = useState(false);
-  const [savedRecs, setSavedRecs] = useState<RecommendationCard[]>(
-    []
-  );
+  const [savedRecs, setSavedRecs] = useState<RecommendationCard[]>([]);
 
   const { entry, setEntry } = useDiary();
   const { user } = useAuth();
+  const { showError } = useError();
 
   const getStartOfWeek = (date: Date) => {
     const start = new Date(date);
@@ -64,7 +64,6 @@ export const Diary = () => {
     setSelected(null);
 
     setSelectedDate(date);
-    console.log(entry);
   };
 
   useEffect(() => {
@@ -95,68 +94,68 @@ export const Diary = () => {
     setSelectedDate(prev);
   };
 
-useEffect(() => {
-  const fetchEntry = async () => {
-    if (!user) return;
+  useEffect(() => {
+    const fetchEntry = async () => {
+      if (!user) return;
 
-    setLoadingEntry(true);
+      setLoadingEntry(true);
 
-    try {
-      const data = await getDiaryEntryByDate(user.id, selectedDate);
+      try {
+        const data = await getDiaryEntryByDate(user.id, selectedDate);
 
-      if (!data) {
-        setEntry({
-          area1: '',
-          area2: '',
-          imageUrl: '',
-        });
+        if (!data) {
+          setEntry({
+            area1: '',
+            area2: '',
+            imageUrl: '',
+          });
 
-        setSelected(null);
-        setSavedRecs([]);
+          setSelected(null);
+          setSavedRecs([]);
 
-        return;
-      }
-
-      setEntry(
-        data.content ?? {
-          area1: '',
-          area2: '',
-          imageUrl: '',
+          return;
         }
-      );
 
-      setSelected(data.intention ?? null);
-
-      if (data.saved_recommendations?.length) {
-        const fetched = await getRecommendationsByIds(
-          data.saved_recommendations
+        setEntry(
+          data.content ?? {
+            area1: '',
+            area2: '',
+            imageUrl: '',
+          }
         );
 
-        setSavedRecs(
-          fetched.map((rec, index) => ({
-            id: rec.id,
-            title: rec.title,
-            subtitle: '',
-            body: [rec.description],
-            sideTone: index % 2 === 0 ? 'peach' : 'blue',
-            titleMuted: '',
-            bodySpacing: 'normal',
-          }))
-        );
-      } else {
-        setSavedRecs([]);
+        setSelected(data.intention ?? null);
+
+        if (data.saved_recommendations?.length) {
+          const fetched = await getRecommendationsByIds(data.saved_recommendations);
+
+          setSavedRecs(
+            fetched.map((rec, index) => ({
+              id: rec.id,
+              title: rec.title,
+              subtitle: '',
+              body: [rec.description],
+              sideTone: index % 2 === 0 ? 'peach' : 'blue',
+              titleMuted: '',
+              bodySpacing: 'normal',
+            }))
+          );
+        } else {
+          setSavedRecs([]);
+        }
+      } catch (error) {
+        const message =
+          error instanceof Error ? error.message : 'Failed to load diary entry';
+        showError(message);
+      } finally {
+        setLoadingEntry(false);
       }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoadingEntry(false);
-    }
-  };
+    };
 
-  fetchEntry();
-}, [selectedDate, user]);
+    fetchEntry();
+  }, [selectedDate, user, setEntry, showError]);
 
-  const handleSave = async () => {
+  const handleSave = useCallback(async () => {
     if (!user) return;
     if (loadingEntry) return;
 
@@ -168,9 +167,11 @@ useEffect(() => {
         intention: selected || '',
       });
     } catch (error) {
-      console.error(error);
+      const message =
+        error instanceof Error ? error.message : 'Failed to save diary entry';
+      showError(message);
     }
-  };
+  }, [user, loadingEntry, selectedDate, entry, selected, showError]);
 
   useEffect(() => {
     if (!user) return;
@@ -178,7 +179,7 @@ useEffect(() => {
     if (!entry.imageUrl) return;
 
     handleSave();
-  }, [entry.imageUrl]);
+  }, [entry.imageUrl, handleSave, user]);
 
   return (
     <>

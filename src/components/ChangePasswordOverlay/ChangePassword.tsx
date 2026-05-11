@@ -3,13 +3,9 @@ import { useState } from 'react';
 import './ChangePassword.css';
 import { useAuth } from '../../contexts/AuthContext';
 import { changeUserPassword } from '../../services/editProfileServices';
+import type { ChangePasswordProps } from '../../types/FeedbackProps';
 
-type Props = {
-  onClose: () => void;
-  onSave: (message: string, type: 'success' | 'error') => void;
-};
-
-export const ChangePassword = ({ onClose, onSave }: Props) => {
+export const ChangePassword = ({ onClose, onSave }: ChangePasswordProps) => {
   const { user } = useAuth();
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -34,8 +30,11 @@ export const ChangePassword = ({ onClose, onSave }: Props) => {
       await changeUserPassword(user?.email ?? '', currentPassword, newPassword);
       onSave('Password updated!', 'success');
       onClose();
-    } catch (error: any) {
-      onSave(error.message ?? 'Error updating password.', 'error');
+    } catch (error: unknown) {
+      onSave(
+        error instanceof Error ? error.message : 'Error updating password.',
+        'error'
+      );
     } finally {
       setLoading(false);
     }

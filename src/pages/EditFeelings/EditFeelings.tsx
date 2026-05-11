@@ -4,23 +4,23 @@ import { IconArrowLeft, IconChevronDown } from '@tabler/icons-react';
 import { HomeNavbar } from '../../components/NavBar/CommonNavBar/HomeNavbar';
 import { MobileNavBar } from '../../components/NavBar/MobileNavBar/MobileNavBar';
 import bgResponsiveLine from '../../assets/bg-responsive-line.svg';
-import { 
-  energyOptions, 
-  sleepOptions, 
-  stressOptions, 
-  loadOptions, 
-  moodOptions 
+import {
+  energyOptions,
+  sleepOptions,
+  stressOptions,
+  loadOptions,
+  moodOptions,
 } from '../../data/moodOptions';
 import type { MoodValue, SelectKey } from '../../types/EditFeelingsTypes';
 import './EditFeelings.css';
 
-
-
 import { calculateDailyCheckin } from '../../lib/checkinEngine';
 import { getTodaysCheckin, saveDailyCheckin } from '../../services/checkinService';
+import { useError } from '../../contexts/ErrorContext';
 
 export const EditFeelings = () => {
   const navigate = useNavigate();
+  const { showError } = useError();
   const [loading, setLoading] = useState(true);
   const [energy, setEnergy] = useState<string>('Low Energy');
   const [sleep, setSleep] = useState<string>('4-6 Hours');
@@ -32,24 +32,34 @@ export const EditFeelings = () => {
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
-      const data = await getTodaysCheckin();
-      if (data) {
-        if (data.energy_score !== undefined) setEnergy(energyOptions[data.energy_score]);
-        if (data.sleep_score !== undefined) setSleep(sleepOptions[data.sleep_score]);
-        if (data.stress_score !== undefined) setStress(stressOptions[data.stress_score]);
-        if (data.daily_load_score !== undefined) setDailyLoad(loadOptions[data.daily_load_score]);
-        
-        if (data.face_result) {
-          setMood(data.face_result as MoodValue);
-        } else if (data.mood_score !== undefined) {
-          const moodOption = moodOptions[data.mood_score];
-          if (moodOption) setMood(moodOption.value);
+      try {
+        const data = await getTodaysCheckin();
+        if (data) {
+          if (data.energy_score !== undefined)
+            setEnergy(energyOptions[data.energy_score]);
+          if (data.sleep_score !== undefined) setSleep(sleepOptions[data.sleep_score]);
+          if (data.stress_score !== undefined)
+            setStress(stressOptions[data.stress_score]);
+          if (data.daily_load_score !== undefined)
+            setDailyLoad(loadOptions[data.daily_load_score]);
+
+          if (data.face_result) {
+            setMood(data.face_result as MoodValue);
+          } else if (data.mood_score !== undefined) {
+            const moodOption = moodOptions[data.mood_score];
+            if (moodOption) setMood(moodOption.value);
+          }
         }
+      } catch (error) {
+        const message =
+          error instanceof Error ? error.message : 'Failed to load feelings';
+        showError(message);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
     loadData();
-  }, []);
+  }, [showError]);
 
   useEffect(() => {
     const closeOnOutsideClick = (event: MouseEvent) => {
@@ -67,7 +77,7 @@ export const EditFeelings = () => {
     const scores = {
       energy_score: energyOptions.indexOf(energy),
       sleep_score: sleepOptions.indexOf(sleep),
-      mood_score: moodOptions.findIndex(o => o.value === mood),
+      mood_score: moodOptions.findIndex((o) => o.value === mood),
       stress_score: stressOptions.indexOf(stress),
       daily_load_score: loadOptions.indexOf(dailyLoad),
     };
@@ -80,7 +90,7 @@ export const EditFeelings = () => {
     if (success) {
       navigate('/home');
     } else {
-      console.error('Failed to save changes. Please try again.');
+      showError('Failed to save changes. Please try again.');
     }
   };
 
@@ -108,7 +118,11 @@ export const EditFeelings = () => {
   return (
     <div className="edit-feelings-page">
       <HomeNavbar />
-      <img src={bgResponsiveLine} alt="Decorative background wave line" className="edit-feelings-line" />
+      <img
+        src={bgResponsiveLine}
+        alt="Decorative background wave line"
+        className="edit-feelings-line"
+      />
 
       <div className="edit-feelings-container">
         <button className="edit-feelings-back" onClick={() => navigate('/form')}>

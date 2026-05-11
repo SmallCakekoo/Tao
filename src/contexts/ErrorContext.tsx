@@ -7,10 +7,7 @@ import {
   type PropsWithChildren,
 } from 'react';
 import { ErrorToast } from '../components/ErrorToast/ErrorToast';
-
-interface ErrorContextType {
-  showError: (message: string) => void;
-}
+import type { ErrorContextType } from '../types/FeedbackProps';
 
 const ErrorContext = createContext<ErrorContextType | undefined>(undefined);
 
@@ -25,7 +22,7 @@ export const ErrorProvider = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     // Intercepta console.error
     const originalConsoleError = console.error;
-    console.error = (...args: any[]) => {
+    console.error = (...args: unknown[]) => {
       originalConsoleError(...args); // sigue mostrando en devtools
       const message = args
         .map((a) => (a instanceof Error ? a.message : String(a)))
@@ -41,9 +38,7 @@ export const ErrorProvider = ({ children }: PropsWithChildren) => {
     // Intercepta promesas rechazadas no capturadas
     const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
       const message =
-        event.reason instanceof Error
-          ? event.reason.message
-          : String(event.reason);
+        event.reason instanceof Error ? event.reason.message : String(event.reason);
       showError(message);
     };
 

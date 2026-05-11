@@ -1,10 +1,11 @@
-import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import './Form.css';
-import type { DailyFormAnswers } from '../../types/FormTypes';
+import { FormProvider } from '../../contexts/FormContext';
 
 export const Form = () => {
-  const [answers, setAnswers] = useState<DailyFormAnswers>({});
-
-  return <Outlet context={{ answers, setAnswers }} />;
+  return (
+    <FormProvider>
+      <Outlet />
+    </FormProvider>
+  );
 };

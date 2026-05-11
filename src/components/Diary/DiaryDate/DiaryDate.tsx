@@ -1,9 +1,5 @@
 import './DiaryDate.css';
-type DiaryDateProps = {
-  date: Date;
-  isSelected: boolean;
-  onClick: () => void;
-};
+import type { DiaryDateProps } from '../../../types/DiaryProps';
 
 export const DiaryDate = ({ date, isSelected, onClick }: DiaryDateProps) => {
   return (

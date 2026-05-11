@@ -6,7 +6,7 @@ import agendaEmpty from '../../assets/tasks-empty.png';
 import { useTasks } from '../../contexts/TasksContext';
 
 export const AgendaContent = () => {
-  const { tasks, setTasks, toggleTask, removeTask } = useTasks();
+  const { tasks, toggleTask, removeTask } = useTasks();
   const [showForm, setShowForm] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
@@ -36,7 +36,7 @@ export const AgendaContent = () => {
       {/* ── Form reemplaza empty state ── */}
       {tasks.length === 0 && showForm && (
         <div className="form-wrapper">
-          <AgendaForm setTasks={setTasks} />
+          <AgendaForm />
         </div>
       )}
 
@@ -54,7 +54,7 @@ export const AgendaContent = () => {
             />
           </div>
           <div className="form-column">
-            <AgendaForm setTasks={setTasks} />
+            <AgendaForm />
           </div>
         </div>
       )}

@@ -24,6 +24,7 @@ import { saveRecommendationToDiary } from '../../../services/diaryService';
 const CARDS_BY_VARIANT: Record<'A' | 'B', RecommendationCard[]> = {
   A: [
     {
+      id: '',
       title: 'It is time to rest!',
       titleMuted: 'Tired',
       subtitle: '',
@@ -35,6 +36,7 @@ const CARDS_BY_VARIANT: Record<'A' | 'B', RecommendationCard[]> = {
       bodySpacing: 'spacious',
     },
     {
+      id: '',
       title: 'Reconnect with your body',
       subtitle:
         'Rebuilding your energy starts with reconnecting to your body in a conscious way.',
@@ -47,6 +49,7 @@ const CARDS_BY_VARIANT: Record<'A' | 'B', RecommendationCard[]> = {
       sideImage: yogaImg,
     },
     {
+      id: '',
       title: 'Intentional rest break',
       subtitle: 'Sometimes the simplest solutions are the most effective.',
       body: [
@@ -59,6 +62,7 @@ const CARDS_BY_VARIANT: Record<'A' | 'B', RecommendationCard[]> = {
   ],
   B: [
     {
+      id: '',
       title: 'You don’t always have to be productive',
       subtitle: '',
       body: [
@@ -69,6 +73,7 @@ const CARDS_BY_VARIANT: Record<'A' | 'B', RecommendationCard[]> = {
       sideTone: 'blue',
     },
     {
+      id: '',
       title: 'Breathing exercises',
       subtitle:
         'Rebuilding your energy starts with reconnecting to your body in a conscious way.',

@@ -109,7 +109,6 @@ setShowRecommendations]
           );
 
           setSelected(data.intention ?? null);
-          setSavedRecommendations(data.saved_recommendations ?? []);
         } else {
           setEntry({
             area1: '',

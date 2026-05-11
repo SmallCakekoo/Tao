@@ -39,17 +39,17 @@ export const saveDiaryEntry = async ({
   const formattedDate = formatLocalDate(date);
 
   const { error } = await supabase.from('journal_entries').upsert(
-  {
-    user_id: userId,
-    entry_date: formattedDate,
-    content,
-    intention,
-    updated_at: new Date(),
-  },
-  {
-    onConflict: "user_id,entry_date",
-  }
-)
+    {
+      user_id: userId,
+      entry_date: formattedDate,
+      content,
+      intention,
+      updated_at: new Date(),
+    },
+    {
+      onConflict: 'user_id,entry_date',
+    }
+  );
 
   if (error) {
     throw new Error('Could not save diary entry');
@@ -61,37 +61,40 @@ export const saveRecommendationToDiary = async (
   date: Date,
   recommendationId: string
 ) => {
-  const formattedDate =
-    formatLocalDate(date);
+  const formattedDate = formatLocalDate(date);
 
   const { data } = await supabase
     .from('journal_entries')
     .select('saved_recommendations')
     .eq('user_id', userId)
     .eq('entry_date', formattedDate)
-    .single();
+    .maybeSingle();
 
-  const current =
-    data?.saved_recommendations ?? [];
+  const current = data?.saved_recommendations ?? [];
 
   const updated = current.includes(recommendationId)
     ? current
     : [...current, recommendationId];
 
-  const { error } = await supabase
-    .from('journal_entries')
-    .upsert(
-      {
-        user_id: userId,
-        entry_date: formattedDate,
-        saved_recommendations: updated,
-        updated_at: new Date(),
+  const { error } = await supabase.from('journal_entries').upsert(
+    {
+      user_id: userId,
+      entry_date: formattedDate,
+
+      content: {
+        area1: '',
+        area2: '',
+        imageUrl: '',
       },
-      {
-        onConflict:
-          'user_id,entry_date',
-      }
-    );
+
+      saved_recommendations: updated,
+
+      updated_at: new Date(),
+    },
+    {
+      onConflict: 'user_id,entry_date',
+    }
+  );
 
   if (error) {
     throw error;

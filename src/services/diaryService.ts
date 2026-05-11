@@ -55,3 +55,26 @@ export const saveDiaryEntry = async ({
     throw new Error('Could not save diary entry');
   }
 };
+
+export const saveRecommendationToDiary = async (
+  entryId: string,
+  recommendationId: string,
+  currentRecommendations: string[]
+) => {
+
+  const updated = [
+    ...currentRecommendations,
+    recommendationId,
+  ];
+
+  const { error } =
+    await supabase
+      .from("journal_entries")
+      .update({
+        saved_recommendations:
+          updated,
+      })
+      .eq("id", entryId);
+
+  if (error) throw error;
+};

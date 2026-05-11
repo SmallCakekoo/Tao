@@ -102,6 +102,7 @@ export const RecommendationsResults = () => {
         const fetched = await getPersonalizedRecommendations(state.results.macrostate);
         
         const mapped: RecommendationCard[] = fetched.map((rec, index) => ({
+          id: rec.id,
           title: rec.title,
           subtitle: '',
           body: [rec.description],
@@ -143,6 +144,7 @@ export const RecommendationsResults = () => {
   };
 
   const handleAddCardToDiary = () => {
+
     // TODO: Add logic to save to diary
   };
 

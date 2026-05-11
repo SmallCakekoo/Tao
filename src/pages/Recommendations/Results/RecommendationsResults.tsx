@@ -14,9 +14,11 @@ import '../RecommendationsShared.css';
 import './RecommendationsResults.css';
 import { useAuth } from '../../../contexts/AuthContext';
 import { saveRecommendationToDiary } from '../../../services/diaryService';
+import { useError } from '../../../contexts/ErrorContext';
 
 export const RecommendationsResults = () => {
   const { user } = useAuth();
+  const { showError } = useError();
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as ResultsState | undefined;
@@ -98,7 +100,9 @@ export const RecommendationsResults = () => {
     try {
       await saveRecommendationToDiary(user.id, new Date(), content.id);
     } catch (error) {
-      console.error(error);
+      const message =
+        error instanceof Error ? error.message : 'Failed to save recommendation';
+      showError(message);
     }
   };
 

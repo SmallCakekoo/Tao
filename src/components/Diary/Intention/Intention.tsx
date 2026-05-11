@@ -11,11 +11,13 @@ import {
 import { IntentionOverlay } from '../IntentionOverlay/IntentionOverlay';
 import type { PromptKey } from '../../../types/PromptKey';
 import { fetchPrompts } from '../../../services/diaryService';
+import { useError } from '../../../contexts/ErrorContext';
 
 import './Intention.css';
 import type { IntentionProps } from '../../../types/ComponentProps';
 
 export const Intention = ({ selected, setSelected }: IntentionProps) => {
+  const { showError } = useError();
   const [maximized, setMaximized] = useState(false);
   const [promptList, setPromptList] = useState<string[]>([]);
   // Track which intention the current prompts belong to so we do not show stale data.
@@ -39,7 +41,8 @@ export const Intention = ({ selected, setSelected }: IntentionProps) => {
       setLoadedFor(prompt);
       setIndex(0);
     } catch (error) {
-      console.error(error);
+      const message = error instanceof Error ? error.message : 'Failed to load prompts';
+      showError(message);
     }
   };
 
@@ -54,9 +57,10 @@ export const Intention = ({ selected, setSelected }: IntentionProps) => {
         setIndex(0);
       })
       .catch((error) => {
-        console.error(error);
+        const message = error instanceof Error ? error.message : 'Failed to load prompts';
+        showError(message);
       });
-  }, [selected]);
+  }, [selected, showError]);
 
   return (
     <>

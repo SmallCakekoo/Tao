@@ -8,6 +8,7 @@ import { TasksProvider } from './contexts/TasksContext';
 import { CheckinProvider } from './contexts/CheckinContext';
 import { ProfileProvider } from './contexts/ProfileContext';
 import { DiaryProvider } from './contexts/DiaryContext';
+import { ErrorProvider } from './contexts/ErrorContext';
 
 import { Landing } from './pages/Landing/Landing';
 import { LogIn } from './pages/LogIn/LogIn';
@@ -41,44 +42,158 @@ import { NotFound } from './pages/NotFound/NotFound';
 
 function App() {
   return (
-    <AuthProvider>
-      <ProfileProvider>
-      <TasksProvider>
-        <CheckinProvider>
-          <DiaryProvider>
-          <ScrollToTop />
-          <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route path="/login" element={<LogIn />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/privacy" element={<PrivacyPolicy />} />
-            <Route path="/legal" element={<Legal />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route path="*" element={<NotFound />} />
+    <ErrorProvider>
+      <AuthProvider>
+        <ProfileProvider>
+          <TasksProvider>
+            <CheckinProvider>
+              <DiaryProvider>
+                <ScrollToTop />
+                <Routes>
+                  <Route path="/" element={<Landing />} />
+                  <Route path="/login" element={<LogIn />} />
+                  <Route path="/signup" element={<SignUp />} />
+                  <Route path="/privacy" element={<PrivacyPolicy />} />
+                  <Route path="/legal" element={<Legal />} />
+                  <Route path="/terms" element={<Terms />} />
+                  <Route path="*" element={<NotFound />} />
 
-            <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-            <Route path="/diary" element={<ProtectedRoute><Diary /></ProtectedRoute>} />
-            <Route path="/agenda" element={<ProtectedRoute><Agenda /></ProtectedRoute>} />
-            <Route path="/form" element={<ProtectedRoute><Form /></ProtectedRoute>}>
-              <Route index element={<ProtectedRoute><FormIntro /></ProtectedRoute>} />
-              <Route path="question/:questionId" element={<ProtectedRoute><FormQuestion /></ProtectedRoute>} />
-              <Route path="results" element={<ProtectedRoute><FormResults /></ProtectedRoute>} />
-            </Route>
-            <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-            <Route path="/editprofile" element={<ProtectedRoute><EditProfile /></ProtectedRoute>} />
-            <Route path="/form/edit-feelings" element={<ProtectedRoute><EditFeelings /></ProtectedRoute>} />
-            <Route path="/edit-feelings" element={<ProtectedRoute><EditFeelings /></ProtectedRoute>} />
-            <Route path="/recommendations" element={<ProtectedRoute><Recommendations /></ProtectedRoute>} />
-            <Route path="/recommendations/preset" element={<ProtectedRoute><RecommendationsPreset /></ProtectedRoute>} />
-            <Route path="/recommendations/loading" element={<ProtectedRoute><RecommendationsLoading /></ProtectedRoute>} />
-            <Route path="/recommendations/results" element={<ProtectedRoute><RecommendationsResults /></ProtectedRoute>} />
-            <Route path="/recommendations/breathing" element={<ProtectedRoute><BreathingExercise /></ProtectedRoute>} />
-          </Routes>
-          </DiaryProvider>
-        </CheckinProvider>
-      </TasksProvider>
-      </ProfileProvider>
-    </AuthProvider>
+                  <Route
+                    path="/home"
+                    element={
+                      <ProtectedRoute>
+                        <Home />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/diary"
+                    element={
+                      <ProtectedRoute>
+                        <Diary />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/agenda"
+                    element={
+                      <ProtectedRoute>
+                        <Agenda />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/form"
+                    element={
+                      <ProtectedRoute>
+                        <Form />
+                      </ProtectedRoute>
+                    }
+                  >
+                    <Route
+                      index
+                      element={
+                        <ProtectedRoute>
+                          <FormIntro />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="question/:questionId"
+                      element={
+                        <ProtectedRoute>
+                          <FormQuestion />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="results"
+                      element={
+                        <ProtectedRoute>
+                          <FormResults />
+                        </ProtectedRoute>
+                      }
+                    />
+                  </Route>
+                  <Route
+                    path="/profile"
+                    element={
+                      <ProtectedRoute>
+                        <Profile />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/editprofile"
+                    element={
+                      <ProtectedRoute>
+                        <EditProfile />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/form/edit-feelings"
+                    element={
+                      <ProtectedRoute>
+                        <EditFeelings />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/edit-feelings"
+                    element={
+                      <ProtectedRoute>
+                        <EditFeelings />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/recommendations"
+                    element={
+                      <ProtectedRoute>
+                        <Recommendations />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/recommendations/preset"
+                    element={
+                      <ProtectedRoute>
+                        <RecommendationsPreset />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/recommendations/loading"
+                    element={
+                      <ProtectedRoute>
+                        <RecommendationsLoading />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/recommendations/results"
+                    element={
+                      <ProtectedRoute>
+                        <RecommendationsResults />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/recommendations/breathing"
+                    element={
+                      <ProtectedRoute>
+                        <BreathingExercise />
+                      </ProtectedRoute>
+                    }
+                  />
+                </Routes>
+              </DiaryProvider>
+            </CheckinProvider>
+          </TasksProvider>
+        </ProfileProvider>
+      </AuthProvider>
+    </ErrorProvider>
   );
 }
 

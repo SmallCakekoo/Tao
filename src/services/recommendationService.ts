@@ -11,21 +11,17 @@ export const getPersonalizedRecommendations = async (
     .eq('macrostate', macrostate);
 
   if (error) {
-    console.error('Error fetching personalized recommendations:', error);
     return [];
   }
 
   return data || [];
 };
 
-export const getRecommendationsByIds =
-  async (ids: string[]) => {
-
-  const { data, error } =
-    await supabase
-      .from("personalized_recommendations")
-      .select("*")
-      .in("id", ids);
+export const getRecommendationsByIds = async (ids: string[]) => {
+  const { data, error } = await supabase
+    .from('personalized_recommendations')
+    .select('*')
+    .in('id', ids);
 
   if (error) throw error;
 

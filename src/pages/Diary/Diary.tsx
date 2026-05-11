@@ -20,6 +20,7 @@ import { useDiary } from '../../contexts/DiaryContext';
 import type { RecommendationCard } from '../../types/RecommendationViewTypes';
 import { getRecommendationsByIds } from '../../services/recommendationService';
 import { SavedRecommendations } from '../Recommendations/Saved/SavedRecommendations';
+import { useError } from '../../contexts/ErrorContext';
 
 export const Diary = () => {
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
@@ -32,6 +33,7 @@ export const Diary = () => {
 
   const { entry, setEntry } = useDiary();
   const { user } = useAuth();
+  const { showError } = useError();
 
   const getStartOfWeek = (date: Date) => {
     const start = new Date(date);
@@ -62,7 +64,7 @@ export const Diary = () => {
     setSelected(null);
 
     setSelectedDate(date);
-    console.log(entry);
+    
   };
 
   useEffect(() => {
@@ -143,7 +145,9 @@ export const Diary = () => {
           setSavedRecs([]);
         }
       } catch (error) {
-        console.error(error);
+        const message =
+          error instanceof Error ? error.message : 'Failed to load diary entry';
+        showError(message);
       } finally {
         setLoadingEntry(false);
       }
@@ -164,9 +168,11 @@ export const Diary = () => {
         intention: selected || '',
       });
     } catch (error) {
-      console.error(error);
+      const message =
+        error instanceof Error ? error.message : 'Failed to save diary entry';
+      showError(message);
     }
-  }, [user, loadingEntry, selectedDate, entry, selected]);
+  }, [user, loadingEntry, selectedDate, entry, selected, showError]);
 
   useEffect(() => {
     if (!user) return;

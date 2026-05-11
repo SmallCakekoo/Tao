@@ -8,6 +8,7 @@ import {
 } from 'react';
 
 import { useAuth } from './AuthContext';
+import { useError } from './ErrorContext';
 import { getUserProfile } from '../services/profileService';
 import type { ProfileContextType } from '../types/ProfileTypes';
 import type { UserProfile } from '../types/AuthTypes';
@@ -16,6 +17,7 @@ const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
 
 export const ProfileProvider = ({ children }: PropsWithChildren) => {
   const { user } = useAuth();
+  const { showError } = useError();
 
   const [profile, setProfile] = useState<UserProfile | null>(null);
 
@@ -32,12 +34,13 @@ export const ProfileProvider = ({ children }: PropsWithChildren) => {
       const data = await getUserProfile(user.id);
       setProfile(data);
     } catch (error) {
-      console.error(error);
+      const message = error instanceof Error ? error.message : 'Failed to load profile';
+      showError(message);
       setProfile(null);
     } finally {
       setLoadingProfile(false);
     }
-  }, [user]);
+  }, [user, showError]);
 
   useEffect(() => {
     fetchProfile();

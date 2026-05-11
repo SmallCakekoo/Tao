@@ -7,6 +7,7 @@ import { calculateDailyCheckin } from '../../../lib/checkinEngine';
 import { saveDailyCheckin } from '../../../services/checkinService';
 import { FACE_OPTIONS, FORM_RESULT_ITEMS } from '../../../data/formResultsOptions';
 import { useEffect, useMemo, useState } from 'react';
+import { useError } from '../../../contexts/ErrorContext';
 import '../Form.css';
 import './FormResults.css';
 import type { FaceResult } from '../../../types/CheckinTypes';
@@ -14,6 +15,7 @@ import type { FaceResult } from '../../../types/CheckinTypes';
 export const FormResults = () => {
   const navigate = useNavigate();
   const { answers } = useFormContext();
+  const { showError } = useError();
   const [isSaving, setIsSaving] = useState(false);
 
   const scores = useMemo(
@@ -42,7 +44,8 @@ export const FormResults = () => {
         setIsSaving(true);
         await saveDailyCheckin(scores, results);
       } catch (err) {
-        console.error('Failed to save check-in', err);
+        const message = err instanceof Error ? err.message : 'Failed to save check-in';
+        showError(message);
       } finally {
         setIsSaving(false);
       }
@@ -84,7 +87,11 @@ export const FormResults = () => {
         })
       );
     } catch (error) {
-      console.error('Failed to persist daily check-in in localStorage', error);
+      const message =
+        error instanceof Error
+          ? error.message
+          : 'Failed to persist daily check-in in local storage';
+      showError(message);
     }
 
     navigate('/recommendations', { state: { source: 'form', results } });

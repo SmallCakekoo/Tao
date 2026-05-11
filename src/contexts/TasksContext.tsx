@@ -8,6 +8,7 @@ import {
 } from 'react';
 
 import { useAuth } from './AuthContext';
+import { useError } from './ErrorContext';
 import {
   getUserTasks,
   getUserQuote,
@@ -21,6 +22,7 @@ const TasksContext = createContext<TasksContextType | undefined>(undefined);
 
 export const TasksProvider = ({ children }: PropsWithChildren) => {
   const { user } = useAuth();
+  const { showError } = useError();
 
   const [tasks, setTasks] = useState<TaskInterface[]>([]);
   const [quote, setQuote] = useState<Quote>({ quote: '', author: '' });
@@ -43,11 +45,13 @@ export const TasksProvider = ({ children }: PropsWithChildren) => {
       setTasks(tasksData);
       setQuote({ quote: quoteData.quote, author: quoteData.author });
     } catch (error) {
-      console.error(error);
+      const message =
+        error instanceof Error ? error.message : 'Failed to load tasks data';
+      showError(message);
     } finally {
       setLoadingTasks(false);
     }
-  }, [user]);
+  }, [user, showError]);
 
   useEffect(() => {
     fetchData();

@@ -73,14 +73,19 @@ export const FormResults = () => {
   }));
 
   const handleRecommendationsClick = () => {
-    localStorage.setItem(
-      'tao:daily-check-in',
-      JSON.stringify({
-        answers,
-        results,
-        savedAt: new Date().toISOString(),
-      })
-    );
+    // Keep the latest check-in in local storage so recommendations can be restored after reloads.
+    try {
+      localStorage.setItem(
+        'tao:daily-check-in',
+        JSON.stringify({
+          answers,
+          results,
+          savedAt: new Date().toISOString(),
+        })
+      );
+    } catch (error) {
+      console.error('Failed to persist daily check-in in localStorage', error);
+    }
 
     navigate('/recommendations', { state: { source: 'form', results } });
   };

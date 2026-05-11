@@ -18,10 +18,13 @@ import type { IntentionProps } from '../../../types/ComponentProps';
 export const Intention = ({ selected, setSelected }: IntentionProps) => {
   const [maximized, setMaximized] = useState(false);
   const [promptList, setPromptList] = useState<string[]>([]);
+  // Track which intention the current prompts belong to so we do not show stale data.
+  const [loadedFor, setLoadedFor] = useState<PromptKey | null>(null);
   const [showOverlay, setShowOverlay] = useState(false);
   const [index, setIndex] = useState(0);
 
-  const hasPrompts = promptList.length > 0;
+  // Only consider prompts valid when they match the currently selected intention.
+  const hasPrompts = selected !== null && loadedFor === selected && promptList.length > 0;
   const listLength = promptList.length - 1;
 
   const selectPrompt = (prompt: PromptKey) => {
@@ -30,11 +33,10 @@ export const Intention = ({ selected, setSelected }: IntentionProps) => {
 
   const getPrompt = async (prompt: PromptKey) => {
     try {
-      setPromptList([]);
-
       const prompts = await fetchPrompts(prompt);
 
       setPromptList(prompts);
+      setLoadedFor(prompt);
       setIndex(0);
     } catch (error) {
       console.error(error);
@@ -42,12 +44,18 @@ export const Intention = ({ selected, setSelected }: IntentionProps) => {
   };
 
   useEffect(() => {
-    if (!selected) {
-      setPromptList([]);
-      setIndex(0);
-      return;
-    }
-    getPrompt(selected);
+    if (!selected) return;
+
+    // Load prompts asynchronously so the effect does not set state synchronously.
+    void fetchPrompts(selected)
+      .then((prompts) => {
+        setPromptList(prompts);
+        setLoadedFor(selected);
+        setIndex(0);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }, [selected]);
 
   return (

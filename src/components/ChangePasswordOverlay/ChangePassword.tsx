@@ -34,8 +34,11 @@ export const ChangePassword = ({ onClose, onSave }: Props) => {
       await changeUserPassword(user?.email ?? '', currentPassword, newPassword);
       onSave('Password updated!', 'success');
       onClose();
-    } catch (error: any) {
-      onSave(error.message ?? 'Error updating password.', 'error');
+    } catch (error: unknown) {
+      onSave(
+        error instanceof Error ? error.message : 'Error updating password.',
+        'error'
+      );
     } finally {
       setLoading(false);
     }

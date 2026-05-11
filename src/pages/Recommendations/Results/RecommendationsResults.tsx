@@ -9,89 +9,20 @@ import {
 import { HomeNavbar } from '../../../components/NavBar/CommonNavBar/HomeNavbar';
 import { MobileNavBar } from '../../../components/NavBar/MobileNavBar/MobileNavBar';
 import logoFace from '../../../assets/logo-face.svg';
-import yogaImg from '../../../assets/yoga.png';
-import breatheImg from '../../../assets/breathe.png';
 import type {
   RecommendationCard,
   ResultsState,
 } from '../../../types/RecommendationViewTypes';
 import { getPersonalizedRecommendations } from '../../../services/recommendationService';
+import { PRESET_OPTIONS } from '../../../data/recommendationData';
 import '../RecommendationsShared.css';
 import './RecommendationsResults.css';
 import { useAuth } from '../../../contexts/AuthContext';
 import { saveRecommendationToDiary } from '../../../services/diaryService';
 
-const CARDS_BY_VARIANT: Record<'A' | 'B', RecommendationCard[]> = {
-  A: [
-    {
-      id: '',
-      title: 'It is time to rest!',
-      titleMuted: 'Tired',
-      subtitle: '',
-      body: [
-        'Your energy and sleep levels suggest your body needs a pause.',
-        'Take a moment to rest and listen to yourself. You will feel the difference later.',
-      ],
-      sideTone: 'peach',
-      bodySpacing: 'spacious',
-    },
-    {
-      id: '',
-      title: 'Reconnect with your body',
-      subtitle:
-        'Rebuilding your energy starts with reconnecting to your body in a conscious way.',
-      body: [
-        'Practices like yoga can gently restore strength, flexibility, and mental clarity over time.',
-        'You can explore local classes near you, or begin privately with guided sessions online.',
-        'What matters most is consistency and presence, not intensity.',
-      ],
-      sideTone: 'blue',
-      sideImage: yogaImg,
-    },
-    {
-      id: '',
-      title: 'Intentional rest break',
-      subtitle: 'Sometimes the simplest solutions are the most effective.',
-      body: [
-        'A short nap can refresh your energy and restore focus for the rest of your day.',
-        'Your body is not wasting time, it is recovering what it needs.',
-      ],
-      sideTone: 'blue',
-      sideImage: yogaImg,
-    },
-  ],
-  B: [
-    {
-      id: '',
-      title: 'You don’t always have to be productive',
-      subtitle: '',
-      body: [
-        'Today may be a good moment to intentionally create space for yourself and release the tension a situation might be causing.',
-        'Stress does not only show up in your schedule. It can appear as muscle tension, headaches, irritability, or changes in appetite.',
-        'If you notice these signals, it may be time to gently support your body and mind.',
-      ],
-      sideTone: 'blue',
-    },
-    {
-      id: '',
-      title: 'Breathing exercises',
-      subtitle:
-        'Rebuilding your energy starts with reconnecting to your body in a conscious way.',
-      body: [
-        'Take a few minutes to anchor yourself in the present moment.',
-        'Breathe in slowly and exhale fully. Notice the sounds around you or the sensation of air on your skin.',
-        'Return to your body. Return to now.',
-      ],
-      sideTone: 'blue',
-      sideImage: breatheImg,
-      ctaLabel: 'Try guided exercise',
-      ctaRoute: '/recommendations/breathing',
-    },
-  ],
-};
 
 export const RecommendationsResults = () => {
-  const {user} = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const state = (location.state ?? {}) as ResultsState;
@@ -106,8 +37,18 @@ export const RecommendationsResults = () => {
   useEffect(() => {
     const fetchRecommendations = async () => {
       setLoading(true);
-      if (state.source === 'form' && state.results) {
-        const fetched = await getPersonalizedRecommendations(state.results.macrostate);
+      
+      let macrostate = state.results?.macrostate;
+
+      if (!macrostate && state.feeling) {
+        const option = PRESET_OPTIONS.find((o) => o.feeling === state.feeling);
+        if (option) {
+          macrostate = option.macrostate;
+        }
+      }
+
+      if (macrostate) {
+        const fetched = await getPersonalizedRecommendations(macrostate);
 
         const mapped: RecommendationCard[] = fetched.map((rec, index) => ({
           id: rec.id,
@@ -115,20 +56,15 @@ export const RecommendationsResults = () => {
           subtitle: '',
           body: [rec.description],
           sideTone: index % 2 === 0 ? 'peach' : 'blue',
-          titleMuted: index === 0 ? state.results?.macrostate : '',
+          titleMuted: index === 0 ? macrostate : '',
           bodySpacing: 'normal',
         }));
 
         setCards(mapped);
       } else {
-        const selectedFeeling = state.feeling ?? null;
-        const variant: 'A' | 'B' = !selectedFeeling
-          ? 'B'
-          : selectedFeeling === 'tired' || selectedFeeling === 'body-hurts'
-            ? 'A'
-            : 'B';
-        setCards(CARDS_BY_VARIANT[variant]);
+        setCards([]);
       }
+      
       setLoading(false);
     };
 

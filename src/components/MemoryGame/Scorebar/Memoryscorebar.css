@@ -1,0 +1,121 @@
+.memory-scorebar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--light-stroke);
+}
+
+.memory-scorebar-player {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--light-stroke);
+  background: var(--bg-light-gray);
+  transition: background 0.2s ease, border-color 0.2s ease;
+  min-height: 56px;
+}
+
+.memory-scorebar-player--active {
+  background: var(--violet-100);
+  border-color: var(--violet-200);
+}
+
+.memory-scorebar-player--right {
+  flex-direction: row-reverse;
+}
+
+.memory-scorebar-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.memory-scorebar-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.memory-scorebar-info--right {
+  align-items: flex-end;
+}
+
+.memory-scorebar-name {
+  font-size: var(--text-sm);
+  color: var(--black-300);
+  line-height: 1;
+}
+
+.memory-scorebar-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--base-violet);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  animation: scorebar-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes scorebar-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.45; }
+}
+
+.memory-scorebar-score {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--base-black);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* ── Centro ── */
+.memory-scorebar-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  min-width: 52px;
+}
+
+.memory-scorebar-vs {
+  font-size: var(--text-sm);
+  color: var(--black-150);
+  font-weight: 500;
+}
+
+.memory-scorebar-thinking {
+  font-size: 0.65rem;
+  color: var(--base-violet);
+  animation: scorebar-blink 0.85s steps(1) infinite;
+}
+
+@keyframes scorebar-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.memory-scorebar-close {
+  background: transparent;
+  border: 1px solid var(--light-stroke);
+  color: var(--black-300);
+  font-size: 0.75rem;
+  height: 1.75rem;
+  width: 1.75rem;
+  padding: 0;
+  border-radius: var(--radius-full);
+  display: grid;
+  place-items: center;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.memory-scorebar-close:hover {
+  background: var(--orange-100);
+  border-color: var(--orange-300);
+  color: var(--base-orange);
+}

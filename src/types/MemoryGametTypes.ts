@@ -1,5 +1,5 @@
 export type GameMode = '1vsCPU' | '1vs1';
-export type GridSize = '3x3' | '4x4' | '5x5';
+export type GridSize = '3x3' | '4x4';
 export type Player = 1 | 2;
 
 export interface MemoryCard {

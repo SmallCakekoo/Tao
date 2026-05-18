@@ -1,0 +1,10 @@
+.memory-board {
+  display: grid;
+  grid-template-columns: repeat(var(--memory-cols), 1fr);
+  gap: 8px;
+  width: 100%;
+}
+
+@media (max-width: 400px) {
+  .memory-board { gap: 5px; }
+}

@@ -40,6 +40,8 @@ import { BreathingExercise } from './pages/BreathingExercise/BreathingExercise';
 import { EditFeelings } from './pages/EditFeelings/EditFeelings';
 import { NotFound } from './pages/NotFound/NotFound';
 
+import { Games } from './pages/Games/Games';
+
 function App() {
   return (
     <ErrorProvider>
@@ -179,6 +181,7 @@ function App() {
                       </ProtectedRoute>
                     }
                   />
+                  <Route path="/games" element={<ProtectedRoute><Games /></ProtectedRoute>} />
                   <Route
                     path="/recommendations/breathing"
                     element={

@@ -1,0 +1,75 @@
+.difficulty-selector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md, 1.5rem);
+  padding: var(--space-lg, 2rem) var(--space-md, 1.5rem);
+}
+
+.difficulty-selector__subtitle {
+  font-size: var(--text-sm, 0.875rem);
+  color: var(--black-300, #747474);
+  margin: 0;
+  text-align: center;
+}
+
+/* ── Option cards — horizontal row inside overlay ── */
+.difficulty-selector__cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs, 0.5rem);
+  width: 100%;
+}
+
+.difficulty-selector__option {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-sm, 1rem);
+
+  /* Reset global button */
+  height: auto;
+  padding: var(--space-sm, 1rem) var(--space-md, 1.5rem);
+  border-radius: var(--radius-lg, 1rem);
+  width: 100%;
+  text-align: left;
+
+  background: var(--bg-light-gray, #f5f5fb);
+  border: 1.5px solid var(--light-stroke, #ddddea);
+  color: var(--base-black, #393939);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.difficulty-selector__option:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  background: var(--bg-light-gray, #f5f5fb);
+}
+
+.difficulty-selector__option--easy:hover   { border-color: var(--base-violet, #895fff); }
+.difficulty-selector__option--medium:hover { border-color: var(--base-orange, #ff7e5b); }
+.difficulty-selector__option--hard:hover   { border-color: var(--accent-yellow, #ffd93d); }
+
+.difficulty-selector__icon {
+  font-size: 1.75rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.difficulty-selector__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.difficulty-selector__label {
+  font-size: var(--text-body, 1rem);
+  font-weight: 600;
+  color: var(--base-black, #393939);
+}
+
+.difficulty-selector__desc {
+  font-size: var(--text-sm, 0.875rem);
+  color: var(--black-150, #a1a1a1);
+  font-weight: 400;
+}

@@ -20,12 +20,9 @@ export const DifficultySelector = () => {
 
   return (
     <div className="difficulty-selector">
-      <div className="difficulty-selector__header">
-        <h1 className="difficulty-selector__title">Memory Game</h1>
-        <p className="difficulty-selector__subtitle">
-          Encuentra todas las parejas. Elige tu nivel para comenzar.
-        </p>
-      </div>
+      <p className="difficulty-selector__subtitle">
+        Encuentra todas las parejas. Elige tu nivel para comenzar.
+      </p>
 
       <div className="difficulty-selector__cards">
         {(Object.keys(DIFFICULTY_CONFIG) as DifficultyLevel[]).map((level) => (
@@ -37,12 +34,14 @@ export const DifficultySelector = () => {
             <span className="difficulty-selector__icon">
               {DIFFICULTY_ICONS[level]}
             </span>
-            <span className="difficulty-selector__label">
-              {DIFFICULTY_CONFIG[level].label}
-            </span>
-            <span className="difficulty-selector__desc">
-              {DIFFICULTY_DESCRIPTIONS[level]}
-            </span>
+            <div className="difficulty-selector__text">
+              <span className="difficulty-selector__label">
+                {DIFFICULTY_CONFIG[level].label}
+              </span>
+              <span className="difficulty-selector__desc">
+                {DIFFICULTY_DESCRIPTIONS[level]}
+              </span>
+            </div>
           </button>
         ))}
       </div>

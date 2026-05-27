@@ -27,6 +27,12 @@ import bored      from '../assets/bored.png';
 import distracted from '../assets/distracted.png';
 import stressed   from '../assets/stressed.png';
 import tired      from '../assets/tired.png';
+import reflexion from '../assets/recs-images/1_reflexion.png';
+import release_tension from '../assets/recs-images/2_selfcare_release_tension.png';
+import nutrition from '../assets/recs-images/3_nutrition.png';
+import shower from '../assets/recs-images//11_mindful_shower.png';
+import social_connections from '../assets/recs-images/7_social_connections.png';
+
 
 // ─── Card pool (10 unique images → supports up to hard level with 10 pairs) ──
 const ALL_CARDS = [
@@ -40,6 +46,11 @@ const ALL_CARDS = [
   { name: 'distracted',  img: distracted },
   { name: 'stressed',    img: stressed },
   { name: 'tired',       img: tired },
+  { name: 'reflexion',   img: reflexion },
+  { name: 'release_tension', img: release_tension },
+  { name: 'nutrition',   img: nutrition },
+  { name: 'shower',      img: shower },
+  { name: 'social_connections', img: social_connections },
 ];
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────

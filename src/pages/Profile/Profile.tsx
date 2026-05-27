@@ -9,11 +9,13 @@ import { Weekly } from '../../components/Weekly/Weekly';
 import { ToDoWidget } from '../../components/ToDoWidget/ToDoWidget';
 import { WeeklyWidgetChart } from '../../components/WeeklyCharts/WeeklyWidgetCharts';
 import { useProfile } from '../../contexts/ProfileContext';
+import { MemoryGameOverlay } from '../../components/MemoryGame/MemoryGameOverlay';
 
 export const Profile = () => {
   const navigate = useNavigate();
   const { profile } = useProfile();
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
+  const [showMemoryGame, setShowMemoryGame] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -52,13 +54,37 @@ export const Profile = () => {
           <Weekly />
           <WeeklyWidgetChart />
         </div>
+
         <div className="profile-right">
           <div className="widgets">
             <DiaryWidget />
             <ToDoWidget />
           </div>
+
+          {/* ── Botones alineados con los widgets ── */}
+          <div className="widget-buttons">
+            <button
+              className="memory-game-trigger"
+              onClick={() => setShowMemoryGame(true)}
+            >
+              <div className="memory-game-trigger__text">
+                <span className="memory-game-trigger__title">Memory Game</span>
+                <span className="memory-game-trigger__sub">Train your memory</span>
+              </div>
+            </button>
+
+            <div className="tic-tac-toe-trigger">
+              <span className="tic-tac-toe-trigger__title">tic-tac-toe</span>
+              <span className="tic-tac-toe-trigger__sub">Play against Taobot</span>
+            </div>
+          </div>
         </div>
       </div>
+
+      {showMemoryGame && (
+        <MemoryGameOverlay onClose={() => setShowMemoryGame(false)} />
+      )}
+
       <MobileNavBar />
     </div>
   );

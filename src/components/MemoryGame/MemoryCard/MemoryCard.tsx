@@ -1,4 +1,5 @@
 import type { MemoryCard as MemoryCardType } from '../../../types/MemoryGametTypes';
+import logo from "../../../assets/logo-face.svg"
 import './MemoryCard.css';
 
 interface Props {
@@ -20,7 +21,7 @@ export const MemoryCard = ({ card, isFlipped, isMatched, onClick }: Props) => {
     >
       <div className="memory-card__inner">
         <div className="memory-card__back">
-          <span className="memory-card__back-icon">🌿</span>
+          <span className="memory-card__back-icon"><img src={logo} alt="Logo" /></span>
         </div>
         <div className="memory-card__front">
           <img src={card.img} alt={card.name} draggable={false} />

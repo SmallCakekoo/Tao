@@ -44,11 +44,10 @@ export const MemoryBoard = () => {
       {/* ── Win banner (inline, not a fixed overlay — the panel already is one) ── */}
       {status === 'won' && (
         <div className="memory-board__win-banner">
-          <span className="memory-board__win-emoji">🎉</span>
           <div className="memory-board__win-text">
-            <p className="memory-board__win-title">¡Lo lograste!</p>
+            <p className="memory-board__win-title">¡You made it!</p>
             <p className="memory-board__win-desc">
-              {moves} {moves === 1 ? 'intento' : 'intentos'}
+              {moves} {moves === 1 ? 'attempt' : 'attempts'}
             </p>
           </div>
           <div className="memory-board__win-actions">
@@ -56,13 +55,13 @@ export const MemoryBoard = () => {
               className="memory-board__btn memory-board__btn--primary"
               onClick={() => startGame(difficulty)}
             >
-              De nuevo
+              Again
             </button>
             <button
               className="memory-board__btn memory-board__btn--ghost"
               onClick={resetGame}
             >
-              Cambiar nivel
+              Change level
             </button>
           </div>
         </div>
@@ -75,7 +74,7 @@ export const MemoryBoard = () => {
             className="memory-board__btn memory-board__btn--ghost"
             onClick={() => startGame(difficulty)}
           >
-            Reiniciar
+            Restart
           </button>
           <button
             className="memory-board__btn memory-board__btn--ghost"

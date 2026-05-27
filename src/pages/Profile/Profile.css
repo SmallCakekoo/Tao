@@ -77,6 +77,85 @@
   margin-bottom: var(--space-md);
 }
 
+/* ── Contenedor de botones alineado con .widgets ── */
+.widget-buttons {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: var(--space-xl);
+  margin-bottom: var(--space-md);
+}
+
+/* ── Memory Game trigger button ── */
+.memory-game-trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 1rem);
+  flex: 1;
+
+  height: auto;
+  padding: var(--space-sm, 1rem) var(--space-md, 1.5rem);
+  border-radius: var(--radius-lg, 1rem);
+  text-align: left;
+
+  background: var(--bg-light-gray, #f5f5fb);
+  border: 1.5px solid var(--light-stroke, #ddddea);
+  color: var(--base-black, #393939);
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+              border-color 0.2s ease, background 0.2s ease;
+}
+
+.memory-game-trigger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(137, 95, 255, 0.15);
+  border-color: var(--base-violet, #895fff);
+  background: var(--violet-100, #e2d7ff);
+}
+
+.memory-game-trigger__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  flex: 1;
+}
+
+.memory-game-trigger__title {
+  font-size: var(--text-body, 1rem);
+  font-weight: 600;
+  color: var(--base-black, #393939);
+}
+
+.memory-game-trigger__sub {
+  font-size: var(--text-sm, 0.875rem);
+  color: var(--black-150, #a1a1a1);
+}
+
+/* ── Tic Tac Toe trigger (solo título, alineado con ToDoWidget) ── */
+.tic-tac-toe-trigger {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: var(--space-sm, 1rem) var(--space-md, 1.5rem);
+  border-radius: var(--radius-lg, 1rem);
+
+  background: var(--bg-light-gray, #f5f5fb);
+  border: 1.5px solid var(--light-stroke, #ddddea);
+
+  cursor: default;
+}
+.tic-tac-toe-trigger__title {
+  font-size: var(--text-body, 1rem);
+  font-weight: 600;
+  color: var(--base-black, #393939);
+}
+
+.tic-tac-toe-trigger__sub {
+  font-size: var(--text-sm, 0.875rem);
+  color: var(--black-150, #a1a1a1);
+}
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .profile-header {
@@ -91,7 +170,7 @@
     justify-content: space-between;
     flex-direction: row;
     align-items: center;
-    flex-wrap: wrap; /* 👈 asegúrate que esté */
+    flex-wrap: wrap;
     gap: 12px;
   }
 
@@ -103,12 +182,10 @@
     margin-left: 0;
   }
 
-  /* oculta el botón de desktop */
   .editProfile-container {
     display: none;
   }
 
-  /* muestra el botón de mobile */
   .editProfile-button--mobile {
     display: inline-flex;
     font-size: 12px;
@@ -136,5 +213,10 @@
     flex-direction: row;
     height: auto;
     margin-top: var(--space-xl);
+  }
+
+  .widget-buttons {
+    flex-direction: row;
+    margin-bottom: var(--space-xl, 3rem);
   }
 }

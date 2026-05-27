@@ -1,5 +1,5 @@
 .memory-card {
-  perspective: 900px;
+  perspective: 600px;
   cursor: pointer;
   aspect-ratio: 1 / 1;
   user-select: none;
@@ -9,26 +9,26 @@
   cursor: default;
 }
 
-/* ── 3-D flip container ── */
+/* ── 3-D flip ── */
 .memory-card__inner {
   position: relative;
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  transition: transform 0.45s cubic-bezier(0.4, 0.2, 0.2, 1);
-  border-radius: var(--radius-lg);
+  transition: transform 0.4s cubic-bezier(0.4, 0.2, 0.2, 1);
+  border-radius: var(--radius-md, 0.75rem);
 }
 
 .memory-card--flipped .memory-card__inner {
   transform: rotateY(180deg);
 }
 
-/* ── shared face styles ── */
+/* ── Shared face ── */
 .memory-card__back,
 .memory-card__front {
   position: absolute;
   inset: 0;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md, 0.75rem);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   display: flex;
@@ -37,29 +37,29 @@
   overflow: hidden;
 }
 
-/* ── Back (hidden side) ── */
+/* ── Back ── */
 .memory-card__back {
   background: linear-gradient(
     135deg,
     var(--violet-100, #e2d7ff) 0%,
     var(--base-violet, #895fff) 100%
   );
-  border: 2px solid var(--violet-200, #c4afff);
-  box-shadow: 0 4px 12px rgba(137, 95, 255, 0.2);
+  border: 1.5px solid var(--violet-200, #c4afff);
+  box-shadow: 0 2px 8px rgba(137, 95, 255, 0.18);
 }
 
 .memory-card__back-icon {
-  font-size: 2rem;
+  font-size: 1.1rem;  /* Smaller icon for compact cards */
   opacity: 0.7;
 }
 
-/* ── Front (image side) ── */
+/* ── Front ── */
 .memory-card__front {
   transform: rotateY(180deg);
   background: var(--bg-light-gray, #f5f5fb);
-  border: 2px solid var(--light-stroke, #ddddea);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  padding: 0.75rem;
+  border: 1.5px solid var(--light-stroke, #ddddea);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  padding: 0.4rem;   /* Tighter padding for small cards */
 }
 
 .memory-card__front img {
@@ -68,7 +68,7 @@
   object-fit: contain;
 }
 
-/* ── Matched state ── */
+/* ── Matched ── */
 .memory-card--matched .memory-card__inner {
   transform: rotateY(180deg);
 }
@@ -76,10 +76,10 @@
 .memory-card--matched .memory-card__front {
   background: var(--orange-50, #fff0eb);
   border-color: var(--base-orange, #ff7e5b);
-  box-shadow: 0 4px 16px rgba(255, 126, 91, 0.25);
+  box-shadow: 0 2px 10px rgba(255, 126, 91, 0.2);
 }
 
 /* ── Hover ── */
 .memory-card:not(.memory-card--matched):not(.memory-card--flipped):hover .memory-card__inner {
-  transform: rotateY(8deg) scale(1.03);
+  transform: rotateY(6deg) scale(1.05);
 }

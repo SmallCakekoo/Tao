@@ -19,12 +19,9 @@ export const MemoryCard = ({ card, isFlipped, isMatched, onClick }: Props) => {
       role="button"
     >
       <div className="memory-card__inner">
-        {/* Back face (hidden side) */}
         <div className="memory-card__back">
           <span className="memory-card__back-icon">🌿</span>
         </div>
-
-        {/* Front face (image) */}
         <div className="memory-card__front">
           <img src={card.img} alt={card.name} draggable={false} />
         </div>

@@ -2,10 +2,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-lg, 2rem);
-  padding: var(--space-lg, 2rem) var(--space-sm, 1rem);
+  gap: var(--space-sm, 1rem);
+  padding: var(--space-sm, 1rem) var(--space-md, 1.5rem) var(--space-md, 1.5rem);
   width: 100%;
-  position: relative;
 }
 
 /* ── HUD ── */
@@ -14,38 +13,39 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  max-width: 36rem;
   background: var(--bg-light-gray, #f5f5fb);
   border: 1px solid var(--light-stroke, #ddddea);
-  border-radius: var(--radius-xl, 1.5rem);
-  padding: var(--space-sm, 1rem) var(--space-md, 1.5rem);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-radius: var(--radius-lg, 1rem);
+  padding: 0.5rem var(--space-md, 1.5rem);
 }
 
 .memory-board__stat {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.125rem;
+  gap: 0;
 }
 
 .memory-board__stat-label {
-  font-size: var(--text-sm, 0.875rem);
+  font-size: 0.7rem;
   color: var(--black-150, #a1a1a1);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .memory-board__stat-value {
-  font-size: var(--text-h5, 1.4375rem);
+  font-size: var(--text-body, 1rem);
   font-weight: 700;
   color: var(--base-black, #393939);
+  line-height: 1.2;
 }
 
 .memory-board__difficulty {
-  font-size: var(--text-sm, 0.875rem);
+  font-size: 0.75rem;
   font-weight: 600;
   color: var(--base-violet, #895fff);
   background: var(--violet-100, #e2d7ff);
-  padding: 0.25rem 0.875rem;
+  padding: 0.2rem 0.75rem;
   border-radius: var(--radius-full, 6.25rem);
 }
 
@@ -53,32 +53,21 @@
 .memory-board__grid {
   display: grid;
   grid-template-columns: repeat(var(--cols, 4), 1fr);
-  gap: var(--space-sm, 1rem);
+  gap: 0.4rem;   /* Tighter gap for compact overlay */
   width: 100%;
-  max-width: 42rem;
-}
-
-/* On small screens collapse to fewer columns */
-@media (max-width: 480px) {
-  .memory-board__grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.5rem;
-  }
 }
 
 /* ── Footer ── */
 .memory-board__footer {
   display: flex;
-  gap: var(--space-sm, 1rem);
-  margin-top: var(--space-xs, 0.5rem);
+  gap: var(--space-xs, 0.5rem);
 }
 
 /* ── Buttons ── */
 .memory-board__btn {
-  /* Reset global button defaults */
   height: auto;
-  padding: 0.625rem 1.5rem;
-  font-size: var(--text-sm, 0.875rem);
+  padding: 0.4rem 1rem;
+  font-size: 0.8rem;
   border-radius: var(--radius-full, 6.25rem);
   font-weight: 500;
   border: none;
@@ -88,20 +77,8 @@
   background: var(--base-orange, #ff7e5b);
   color: var(--bg-color, #fffdfd);
 }
-
 .memory-board__btn--primary:hover {
   background: var(--orange-500, #ff5e32);
-}
-
-.memory-board__btn--secondary {
-  background: var(--bg-light-gray, #f5f5fb);
-  color: var(--base-black, #393939);
-  border: 1.5px solid var(--light-stroke, #ddddea);
-}
-
-.memory-board__btn--secondary:hover {
-  background: var(--violet-100, #e2d7ff);
-  border-color: var(--violet-200, #c4afff);
 }
 
 .memory-board__btn--ghost {
@@ -109,72 +86,63 @@
   color: var(--black-300, #747474);
   border: 1.5px solid var(--light-stroke, #ddddea);
 }
-
 .memory-board__btn--ghost:hover {
   background: var(--bg-light-gray, #f5f5fb);
   color: var(--base-black, #393939);
 }
 
-/* ── Win overlay ── */
-.memory-board__win-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(57, 57, 57, 0.55);
-  backdrop-filter: blur(4px);
+/* ── Win banner (inline inside the panel) ── */
+.memory-board__win-banner {
+  width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
-  animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-.memory-board__win-card {
-  background: var(--bg-color, #fffdfd);
-  border-radius: var(--radius-xl, 1.5rem);
-  padding: var(--space-2xl, 4rem) var(--space-xl, 3rem);
-  max-width: 24rem;
-  width: 90%;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
   align-items: center;
   gap: var(--space-sm, 1rem);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-  animation: slideUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  background: var(--orange-50, #fff0eb);
+  border: 1.5px solid var(--orange-300, #ff9e84);
+  border-radius: var(--radius-lg, 1rem);
+  padding: var(--space-sm, 1rem) var(--space-md, 1.5rem);
+  animation: mg-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-@keyframes slideUp {
-  from { transform: translateY(30px); opacity: 0; }
-  to   { transform: translateY(0);    opacity: 1; }
+@keyframes mg-pop {
+  from { transform: scale(0.95); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
 }
 
 .memory-board__win-emoji {
-  font-size: 3.5rem;
-  line-height: 1;
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.memory-board__win-text {
+  flex: 1;
 }
 
 .memory-board__win-title {
-  font-size: var(--text-h4, 2rem);
+  font-size: var(--text-body, 1rem);
   font-weight: 700;
-  margin: 0;
   color: var(--base-black, #393939);
+  margin: 0;
 }
 
 .memory-board__win-desc {
-  font-size: var(--text-body, 1rem);
+  font-size: var(--text-sm, 0.875rem);
   color: var(--black-300, #747474);
   margin: 0;
 }
 
 .memory-board__win-actions {
   display: flex;
-  gap: var(--space-sm, 1rem);
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: var(--space-xs, 0.5rem);
+  gap: var(--space-xs, 0.5rem);
+  flex-shrink: 0;
+}
+
+@media (max-width: 400px) {
+  .memory-board__win-banner {
+    flex-wrap: wrap;
+  }
+  .memory-board__win-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
 }

@@ -16,15 +16,9 @@ export const MemoryBoard = () => {
       <div className="memory-board__hud">
         <div className="memory-board__stat">
           <span className="memory-board__stat-label">Pares</span>
-          <span className="memory-board__stat-value">
-            {matched.length} / {totalPairs}
-          </span>
+          <span className="memory-board__stat-value">{matched.length}/{totalPairs}</span>
         </div>
-
-        <span className="memory-board__difficulty">
-          {config.label}
-        </span>
-
+        <span className="memory-board__difficulty">{config.label}</span>
         <div className="memory-board__stat">
           <span className="memory-board__stat-label">Intentos</span>
           <span className="memory-board__stat-value">{moves}</span>
@@ -47,35 +41,34 @@ export const MemoryBoard = () => {
         ))}
       </div>
 
-      {/* ── Win overlay ── */}
+      {/* ── Win banner (inline, not a fixed overlay — the panel already is one) ── */}
       {status === 'won' && (
-        <div className="memory-board__win-overlay">
-          <div className="memory-board__win-card">
-            <span className="memory-board__win-emoji">🎉</span>
-            <h2 className="memory-board__win-title">¡Lo lograste!</h2>
+        <div className="memory-board__win-banner">
+          <span className="memory-board__win-emoji">🎉</span>
+          <div className="memory-board__win-text">
+            <p className="memory-board__win-title">¡Lo lograste!</p>
             <p className="memory-board__win-desc">
-              Completaste el nivel <strong>{config.label}</strong> en{' '}
-              <strong>{moves}</strong> {moves === 1 ? 'intento' : 'intentos'}.
+              {moves} {moves === 1 ? 'intento' : 'intentos'}
             </p>
-            <div className="memory-board__win-actions">
-              <button
-                className="memory-board__btn memory-board__btn--primary"
-                onClick={() => startGame(difficulty)}
-              >
-                Jugar de nuevo
-              </button>
-              <button
-                className="memory-board__btn memory-board__btn--secondary"
-                onClick={resetGame}
-              >
-                Cambiar nivel
-              </button>
-            </div>
+          </div>
+          <div className="memory-board__win-actions">
+            <button
+              className="memory-board__btn memory-board__btn--primary"
+              onClick={() => startGame(difficulty)}
+            >
+              De nuevo
+            </button>
+            <button
+              className="memory-board__btn memory-board__btn--ghost"
+              onClick={resetGame}
+            >
+              Cambiar nivel
+            </button>
           </div>
         </div>
       )}
 
-      {/* ── Footer actions ── */}
+      {/* ── Footer ── */}
       {status === 'playing' && (
         <div className="memory-board__footer">
           <button

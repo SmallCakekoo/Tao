@@ -91,7 +91,14 @@ This project was developed using React, TypeScript, and Vite. The following libr
 - **GSAP** – Animations
 - **Recharts** – Data visualization
 
+### Backend
+- **Supabase** – Database, storage, and authentication
 
+### Development Tools
+- **TypeScript** – Static typing
+- **Vite** – Build tool
+- **ESLint** – Code linting
+- **Prettier** – Code formatting
 
 ---
 

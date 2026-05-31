@@ -13,6 +13,14 @@ improve performance without sacrificing well-being.
 
 ---
 
+# Contributors
+
+- Isabella [pucapin]
+- Sary [SmallCakeko]
+- Miguel [Migueg04]
+
+---
+
 ## The Problem
 
 Students often experience:

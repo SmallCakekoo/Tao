@@ -57,13 +57,23 @@ students maintain balance and optimize performance.
 
 ## Tech Stack
 
+### Frontend
 - React
+- TypeScript
 - Vite
-- Firebase (Authentication & Database)
-- React Router
-- External API Integration
+- React Router DOM
 
----
+### Backend & Services
+- Supabase
+
+### Visualization & Interaction
+- Recharts
+- GSAP
+- React Webcam
+
+### Development Tools
+- ESLint
+- Prettier
 
 ## Installation
 
@@ -101,7 +111,6 @@ This project was developed using React, TypeScript, and Vite. The following libr
 - **Prettier** – Code formatting
 
 ---
-
 
 ## Accessibility & Performance
 

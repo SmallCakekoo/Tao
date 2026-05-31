@@ -139,11 +139,19 @@
   justify-content: flex-start;
   padding: var(--space-sm, 1rem) var(--space-md, 1.5rem);
   border-radius: var(--radius-lg, 1rem);
-
   background: var(--bg-light-gray, #f5f5fb);
   border: 1.5px solid var(--light-stroke, #ddddea);
+  text-align: left;
+  cursor: pointer; /* ← era default */
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+              border-color 0.2s ease, background 0.2s ease;
+}
 
-  cursor: default;
+.tic-tac-toe-trigger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(137, 95, 255, 0.15);
+  border-color: var(--base-violet, #895fff);
+  background: var(--violet-100, #e2d7ff);
 }
 .tic-tac-toe-trigger__title {
   font-size: var(--text-body, 1rem);

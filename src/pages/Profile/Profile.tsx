@@ -10,12 +10,16 @@ import { ToDoWidget } from '../../components/ToDoWidget/ToDoWidget';
 import { WeeklyWidgetChart } from '../../components/WeeklyCharts/WeeklyWidgetCharts';
 import { useProfile } from '../../contexts/ProfileContext';
 import { MemoryGameOverlay } from '../../components/MemoryGame/MemoryGameOverlay';
+import { TicTacToeOverlay } from '../../components/TicTacToeGame/Overlay/TicTacToeOverlay';
+
 
 export const Profile = () => {
   const navigate = useNavigate();
   const { profile } = useProfile();
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
   const [showMemoryGame, setShowMemoryGame] = useState(false);
+  const [showTicTacToe, setShowTicTacToe] = useState(false);
+
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -73,16 +77,22 @@ export const Profile = () => {
               </div>
             </button>
 
-            <div className="tic-tac-toe-trigger">
+            <button
+              className="tic-tac-toe-trigger"
+              onClick={() => setShowTicTacToe(true)}
+            >
               <span className="tic-tac-toe-trigger__title">tic-tac-toe</span>
               <span className="tic-tac-toe-trigger__sub">Play against Taobot</span>
-            </div>
+            </button>
           </div>
         </div>
       </div>
 
       {showMemoryGame && (
         <MemoryGameOverlay onClose={() => setShowMemoryGame(false)} />
+      )}
+      {showTicTacToe && (
+        <TicTacToeOverlay onClose={() => setShowTicTacToe(false)} />
       )}
 
       <MobileNavBar />

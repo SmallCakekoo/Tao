@@ -85,7 +85,13 @@ Run locally:
 
 This project was developed using React, TypeScript, and Vite. The following libraries and tools were used throughout development.
 
-### Production dependencies
+### Frontend
+- **React** – UI framework
+- **React Router DOM** – Client-side routing
+- **GSAP** – Animations
+- **Recharts** – Data visualization
+
+
 
 ---
 

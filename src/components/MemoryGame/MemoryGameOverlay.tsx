@@ -27,6 +27,11 @@ const MemoryGameContent = ({ onClose }: Props) => {
     return () => { document.body.style.overflow = ''; };
   }, []);
 
+  useEffect(() => {
+    document.body.classList.add('overlay-open');
+    return () => document.body.classList.remove('overlay-open');
+  }, []);
+
   const handleClose = () => {
     resetGame();
     onClose();

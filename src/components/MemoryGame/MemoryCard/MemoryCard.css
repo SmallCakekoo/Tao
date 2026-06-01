@@ -85,3 +85,10 @@
 .memory-card:not(.memory-card--matched):not(.memory-card--flipped):hover .memory-card__inner {
   transform: rotateY(6deg) scale(1.05);
 }
+
+@media (max-width: 768px) {
+  .memory-card__back-icon img {
+    width: 8vh;
+    height: 8vh;
+  }
+}

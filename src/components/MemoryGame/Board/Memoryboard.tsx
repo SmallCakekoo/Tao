@@ -1,7 +1,7 @@
 import { useMemoryGame } from '../../../contexts/MemoryGameContext';
 import { MemoryCard } from '../MemoryCard/MemoryCard';
 import { DIFFICULTY_CONFIG } from '../../../types/MemoryGametTypes';
-import './MemoryBoard.css';
+import './Memoryboard.css';
 
 export const MemoryBoard = () => {
   const { state, flipCard, startGame, resetGame } = useMemoryGame();

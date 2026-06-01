@@ -1,7 +1,7 @@
 .todo-widget {
   border-radius: 20px;
-  width: 45%;
-  height: 100%;
+  width: 100%;
+  height: 70%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,8 +21,8 @@
 
 .todo-widget2 {
   border-radius: 20px;
-  width: 45%;
-  height: 100%;
+  width: 100%;
+  height: 70%;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -31,6 +31,11 @@ export const Diary = () => {
   const [showRecommendations, setShowRecommendations] = useState(false);
   const [savedRecs, setSavedRecs] = useState<RecommendationCard[]>([]);
 
+  const recommendationImages = import.meta.glob('/src/assets/recs-images/*', {
+    eager: true,
+    import: 'default',
+  });
+
   const { entry, setEntry } = useDiary();
   const { user } = useAuth();
   const { showError } = useError();
@@ -130,15 +135,25 @@ export const Diary = () => {
           const fetched = await getRecommendationsByIds(data.saved_recommendations);
 
           setSavedRecs(
-            fetched.map((rec, index) => ({
-              id: rec.id,
-              title: rec.title,
-              subtitle: '',
-              body: [rec.description],
-              sideTone: index % 2 === 0 ? 'peach' : 'blue',
-              titleMuted: '',
-              bodySpacing: 'normal',
-            }))
+            fetched.map((rec, index) => {
+
+              const imageUrl = rec.image_name
+                ? (recommendationImages[`/src/assets/recs-images/${rec.image_name}`] as
+                    | string
+                    | undefined)
+                : undefined;
+
+              return {
+                id: rec.id,
+                title: rec.title,
+                subtitle: '',
+                body: [rec.description],
+                sideTone: index % 2 === 0 ? 'peach' : 'blue',
+                titleMuted: '',
+                bodySpacing: 'normal',
+                sideImage: imageUrl,
+              };
+            })
           );
         } else {
           setSavedRecs([]);

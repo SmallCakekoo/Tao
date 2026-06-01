@@ -120,6 +120,22 @@ This project was developed using React, TypeScript, and Vite. The following libr
 
 ---
 
+## Available Scripts
+
+The following scripts are available in this project:
+
+| Command                | Description                                                                   |
+| ---------------------- | ----------------------------------------------------------------------------- |
+| `npm run dev`          | Starts the development server using Vite.                                     |
+| `npm run build`        | Compiles TypeScript and builds the project for production.                    |
+| `npm run preview`      | Serves the production build locally for preview.                              |
+| `npm run lint`         | Runs ESLint to analyze the codebase for potential issues.                     |
+| `npm run lint:fix`     | Automatically fixes linting issues when possible.                             |
+| `npm run format`       | Formats the entire codebase using Prettier.                                   |
+| `npm run format:check` | Checks whether the codebase follows the configured Prettier formatting rules. |
+
+---
+
 ## Accessibility & Performance
 
 Tao follows:

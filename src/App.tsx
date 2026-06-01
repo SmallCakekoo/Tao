@@ -40,6 +40,9 @@ import { BreathingExercise } from './pages/BreathingExercise/BreathingExercise';
 import { EditFeelings } from './pages/EditFeelings/EditFeelings';
 import { NotFound } from './pages/NotFound/NotFound';
 
+import { MemoryGame } from './pages/Games/Games';
+import { MemoryGameProvider } from './contexts/MemoryGameContext';
+
 function App() {
   return (
     <ErrorProvider>
@@ -180,6 +183,15 @@ function App() {
                     }
                   />
                   <Route
+                    path="/games/memory"
+                    element={
+                      <ProtectedRoute>
+                        <MemoryGameProvider>
+                          <MemoryGame />
+                        </MemoryGameProvider>
+                      </ProtectedRoute>
+                    }
+                  />                  <Route
                     path="/recommendations/breathing"
                     element={
                       <ProtectedRoute>

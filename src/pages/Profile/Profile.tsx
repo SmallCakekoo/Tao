@@ -9,11 +9,17 @@ import { Weekly } from '../../components/Weekly/Weekly';
 import { ToDoWidget } from '../../components/ToDoWidget/ToDoWidget';
 import { WeeklyWidgetChart } from '../../components/WeeklyCharts/WeeklyWidgetCharts';
 import { useProfile } from '../../contexts/ProfileContext';
+import { MemoryGameOverlay } from '../../components/MemoryGame/MemoryGameOverlay';
+import { TicTacToeOverlay } from '../../components/TicTacToeGame/Overlay/TicTacToeOverlay';
+
 
 export const Profile = () => {
   const navigate = useNavigate();
   const { profile } = useProfile();
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
+  const [showMemoryGame, setShowMemoryGame] = useState(false);
+  const [showTicTacToe, setShowTicTacToe] = useState(false);
+
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -52,13 +58,41 @@ export const Profile = () => {
           <Weekly />
           <WeeklyWidgetChart />
         </div>
+
         <div className="profile-right">
           <div className="widgets">
-            <DiaryWidget />
-            <ToDoWidget />
-          </div>
+
+    <div className="widget-col">
+      <DiaryWidget />
+      <button className="memory-game-trigger" onClick={() => setShowMemoryGame(true)}>
+        <div className="memory-game-trigger__text">
+          <span className="memory-game-trigger__title">Memory Game</span>
+          <span className="memory-game-trigger__sub">Train your memory</span>
+        </div>
+      </button>
+    </div>
+
+    <div className="widget-col">
+      <ToDoWidget />
+      <button className="tic-tac-toe-trigger" onClick={() => setShowTicTacToe(true)}>
+        <div className="tic-tac-toe-trigger__text">
+          <span className="tic-tac-toe-trigger__title">tic-tac-toe</span>
+          <span className="tic-tac-toe-trigger__sub">Play against a friend or Taobot</span>
+        </div>
+      </button>
+    </div>
+
+  </div>
         </div>
       </div>
+
+      {showMemoryGame && (
+        <MemoryGameOverlay onClose={() => setShowMemoryGame(false)} />
+      )}
+      {showTicTacToe && (
+        <TicTacToeOverlay onClose={() => setShowTicTacToe(false)} />
+      )}
+
       <MobileNavBar />
     </div>
   );

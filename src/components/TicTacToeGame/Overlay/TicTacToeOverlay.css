@@ -1,0 +1,89 @@
+/* ── Backdrop ── */
+.ttt-overlay__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(57, 57, 57, 0.5);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: ttt-fade-in 0.2s ease;
+}
+
+@keyframes ttt-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Panel ── */
+.ttt-overlay__panel {
+  background: var(--bg-color, #fffdfd);
+  border-radius: var(--radius-xl, 1.5rem);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.18);
+  width: min(94vw, 400px);
+  max-height: 92dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: ttt-slide-up 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes ttt-slide-up {
+  from { transform: translateY(24px) scale(0.97); opacity: 0; }
+  to   { transform: translateY(0)     scale(1);    opacity: 1; }
+}
+
+/* ── Header ── */
+.ttt-overlay__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm, 1rem) var(--space-md, 1.5rem);
+  border-bottom: 1px solid var(--light-stroke, #ddddea);
+  flex-shrink: 0;
+}
+
+.ttt-overlay__title {
+  font-size: var(--text-h5, 1.4375rem);
+  font-weight: 700;
+  color: var(--base-black, #393939);
+}
+
+.ttt-overlay__close {
+  background: var(--bg-light-gray, #f5f5fb);
+  color: var(--black-300, #747474);
+  border: 1px solid var(--light-stroke, #ddddea);
+  border-radius: var(--radius-full, 6.25rem);
+  width: 2rem;
+  height: 2rem;
+  min-width: unset;
+  padding: 0;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.ttt-overlay__close:hover {
+  background: var(--orange-100, #ffdfd6);
+  color: var(--base-orange, #ff7e5b);
+  border-color: var(--orange-300, #ff9e84);
+}
+
+/* ── Content ── */
+.ttt-overlay__content {
+  overflow-y: auto;
+  flex: 1;
+  scrollbar-width: thin;
+  scrollbar-color: var(--violet-200, #c4afff) transparent;
+}
+
+.ttt-overlay__content::-webkit-scrollbar { width: 4px; }
+.ttt-overlay__content::-webkit-scrollbar-thumb {
+  background: var(--violet-200, #c4afff);
+  border-radius: 2px;
+}

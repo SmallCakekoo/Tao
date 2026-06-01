@@ -73,3 +73,9 @@
   color: var(--black-150, #a1a1a1);
   font-weight: 400;
 }
+
+.difficulty-selector__icon {
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+}

@@ -67,24 +67,26 @@
 
 .widgets {
   display: flex;
+  height: 300px;
   width: 100%;
-  height: 260px;
   flex-direction: row;
-  align-items: flex-start;
   justify-content: space-between;
+  align-items: flex-start;
   margin-top: var(--space-3xl);
   gap: var(--space-xl);
   margin-bottom: var(--space-md);
+  /* quita height: 260px */
 }
 
-/* ── Contenedor de botones alineado con .widgets ── */
-.widget-buttons {
+.widget-col {
   display: flex;
-  flex-direction: row;
-  width: 100%;
-  gap: var(--space-xl);
-  margin-bottom: var(--space-md);
+  height: 100%;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-md);
 }
+
+
 
 /* ── Memory Game trigger button ── */
 .memory-game-trigger {
@@ -98,7 +100,7 @@
   border-radius: var(--radius-lg, 1rem);
   text-align: left;
 
-  background: var(--bg-light-gray, #f5f5fb);
+  background: var(--bg-color);
   border: 1.5px solid var(--light-stroke, #ddddea);
   color: var(--base-black, #393939);
 
@@ -133,18 +135,29 @@
 
 /* ── Tic Tac Toe trigger (solo título, alineado con ToDoWidget) ── */
 .tic-tac-toe-trigger {
-  flex: 1;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  align-items: center;
+  gap: var(--space-sm, 1rem);
+  flex: 1;
+
+  height: auto;
   padding: var(--space-sm, 1rem) var(--space-md, 1.5rem);
   border-radius: var(--radius-lg, 1rem);
-  background: var(--bg-light-gray, #f5f5fb);
-  border: 1.5px solid var(--light-stroke, #ddddea);
   text-align: left;
-  cursor: pointer; /* ← era default */
+
+  background: var(--bg-color);
+  border: 1.5px solid var(--light-stroke, #ddddea);
+  color: var(--base-black, #393939);
+
   transition: transform 0.2s ease, box-shadow 0.2s ease,
               border-color 0.2s ease, background 0.2s ease;
+}
+
+.tic-tac-toe-trigger__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  flex: 1;
 }
 
 .tic-tac-toe-trigger:hover {

@@ -2,11 +2,14 @@ import type { DifficultyLevel } from '../../../types/MemoryGametTypes';
 import { DIFFICULTY_CONFIG } from '../../../types/MemoryGametTypes';
 import { useMemoryGame } from '../../../contexts/MemoryGameContext';
 import './DifficultySelector.css';
+import easyIcon from '../../../assets/stickers/great.svg';
+import mediumIcon from '../../../assets/stickers/neutral.svg';
+import hardIcon from '../../../assets/stickers/bad.svg';
 
 const DIFFICULTY_ICONS: Record<DifficultyLevel, string> = {
-  easy:   '🌱',
-  medium: '🌿',
-  hard:   '🌳',
+  easy:   easyIcon,
+  medium: mediumIcon,
+  hard:   hardIcon,
 };
 
 const DIFFICULTY_DESCRIPTIONS: Record<DifficultyLevel, string> = {
@@ -31,9 +34,11 @@ export const DifficultySelector = () => {
             className={`difficulty-selector__option difficulty-selector__option--${level}`}
             onClick={() => startGame(level)}
           >
-            <span className="difficulty-selector__icon">
-              {DIFFICULTY_ICONS[level]}
-            </span>
+            <img
+              src={DIFFICULTY_ICONS[level]}
+              alt={level}
+              className="difficulty-selector__icon"
+            />
             <div className="difficulty-selector__text">
               <span className="difficulty-selector__label">
                 {DIFFICULTY_CONFIG[level].label}

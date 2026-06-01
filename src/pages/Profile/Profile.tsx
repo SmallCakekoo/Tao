@@ -61,30 +61,28 @@ export const Profile = () => {
 
         <div className="profile-right">
           <div className="widgets">
-            <DiaryWidget />
-            <ToDoWidget />
-          </div>
 
-          {/* ── Botones alineados con los widgets ── */}
-          <div className="widget-buttons">
-            <button
-              className="memory-game-trigger"
-              onClick={() => setShowMemoryGame(true)}
-            >
-              <div className="memory-game-trigger__text">
-                <span className="memory-game-trigger__title">Memory Game</span>
-                <span className="memory-game-trigger__sub">Train your memory</span>
-              </div>
-            </button>
+    <div className="widget-col">
+      <DiaryWidget />
+      <button className="memory-game-trigger" onClick={() => setShowMemoryGame(true)}>
+        <div className="memory-game-trigger__text">
+          <span className="memory-game-trigger__title">Memory Game</span>
+          <span className="memory-game-trigger__sub">Train your memory</span>
+        </div>
+      </button>
+    </div>
 
-            <button
-              className="tic-tac-toe-trigger"
-              onClick={() => setShowTicTacToe(true)}
-            >
-              <span className="tic-tac-toe-trigger__title">tic-tac-toe</span>
-              <span className="tic-tac-toe-trigger__sub">Play against Taobot</span>
-            </button>
-          </div>
+    <div className="widget-col">
+      <ToDoWidget />
+      <button className="tic-tac-toe-trigger" onClick={() => setShowTicTacToe(true)}>
+        <div className="tic-tac-toe-trigger__text">
+          <span className="tic-tac-toe-trigger__title">tic-tac-toe</span>
+          <span className="tic-tac-toe-trigger__sub">Play against a friend or Taobot</span>
+        </div>
+      </button>
+    </div>
+
+  </div>
         </div>
       </div>
 

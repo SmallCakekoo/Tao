@@ -8,8 +8,8 @@ const ModeSelector = () => {
   const { startGame } = useTicTacToe();
 
   const modes: { id: GameMode; icon: string; label: string; desc: string }[] = [
-    { id: '1vsCPU', icon: '🤖', label: 'vs CPU',   desc: 'Juega contra el bot' },
-    { id: '1vs1',   icon: '🧑‍🤝‍🧑', label: 'vs Amigo', desc: 'Dos jugadores, un dispositivo' },
+    { id: '1vsCPU', icon: '', label: 'vs CPU',   desc: 'Juega contra el bot' },
+    { id: '1vs1',   icon: '', label: 'vs Amigo', desc: 'Dos jugadores, un dispositivo' },
   ];
 
   return (
@@ -44,8 +44,8 @@ export const TicTacToeBoard = () => {
   const isDisabled = status !== 'playing' || isBotThinking;
 
   const statusText = () => {
-    if (status === 'won') return winner === 'X' ? '¡Ganaste! 🎉' : mode === '1vsCPU' ? 'Ganó el bot 🤖' : '¡Ganó O! 🎉';
-    if (status === 'draw') return '¡Empate! 🤝';
+    if (status === 'won') return winner === 'X' ? '¡Ganaste!' : mode === '1vsCPU' ? 'Ganó el bot' : '¡Ganó O!';
+    if (status === 'draw') return '¡Empate!';
     if (isBotThinking) return 'El bot está pensando...';
     return `Turno de ${currentPlayer === 'X' ? 'X' : mode === '1vsCPU' ? 'bot (O)' : 'O'}`;
   };

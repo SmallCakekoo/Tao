@@ -15,14 +15,13 @@ export const PersonalizedRedirectOverlay = ({
     return null;
   }
 
-  const hasCheckin = !!todaysCheckin;
 
   return (
     <div className="personalized-overlay-backdrop" role="dialog" aria-modal="true">
       <div className="personalized-overlay-card">
         {loading ? (
           <div className="overlay-loading">Checking status...</div>
-        ) : hasCheckin ? (
+        ) : todaysCheckin ? (
           <>
             <h3>Recommendations Ready!</h3>
             <p className="overlay-description">

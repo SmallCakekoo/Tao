@@ -14,9 +14,7 @@ import type {
 } from '../types/MemoryGametTypes';
 import { DIFFICULTY_CONFIG } from '../types/MemoryGametTypes';
 
-// ─── Asset imports ────────────────────────────────────────────────────────────
-// All game images come from the existing Tao asset folder.
-// Add or swap images here to change the card pool.
+
 import breathe    from '../assets/breathe.png';
 import meditation from '../assets/meditation.png';
 import yoga       from '../assets/yoga.png';
@@ -53,7 +51,6 @@ const ALL_CARDS = [
   { name: 'social_connections', img: social_connections },
 ];
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
 
 function shuffle<T>(arr: T[]): T[] {
   return [...arr].sort(() => Math.random() - 0.5);
@@ -76,7 +73,7 @@ function buildBoard(difficulty: DifficultyLevel): MemoryCard[] {
   return shuffle(doubled).map((card, id) => ({ ...card, id }));
 }
 
-// ─── Initial state ────────────────────────────────────────────────────────────
+// Initial state
 
 const INITIAL_STATE: MemoryGameState = {
   cards: [],
@@ -87,7 +84,7 @@ const INITIAL_STATE: MemoryGameState = {
   difficulty: 'easy',
 };
 
-// ─── Reducer ─────────────────────────────────────────────────────────────────
+// Reducer 
 
 type Action =
   | { type: 'START_GAME'; difficulty: DifficultyLevel }
@@ -152,7 +149,7 @@ function reducer(state: MemoryGameState, action: Action): MemoryGameState {
   }
 }
 
-// ─── Context ─────────────────────────────────────────────────────────────────
+// Context
 
 export const MemoryGameContext = createContext<MemoryGameContextType | undefined>(
   undefined

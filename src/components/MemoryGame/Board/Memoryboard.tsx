@@ -12,7 +12,7 @@ export const MemoryBoard = () => {
 
   return (
     <div className="memory-board">
-      {/* ── HUD ── */}
+      
       <div className="memory-board__hud">
         <div className="memory-board__stat">
           <span className="memory-board__stat-label">Pares</span>
@@ -25,7 +25,7 @@ export const MemoryBoard = () => {
         </div>
       </div>
 
-      {/* ── Grid ── */}
+      
       <div
         className="memory-board__grid"
         style={{ '--cols': config.cols } as React.CSSProperties}
@@ -41,7 +41,6 @@ export const MemoryBoard = () => {
         ))}
       </div>
 
-      {/* ── Win banner (inline, not a fixed overlay — the panel already is one) ── */}
       {status === 'won' && (
         <div className="memory-board__win-banner">
           <div className="memory-board__win-text">
@@ -67,7 +66,6 @@ export const MemoryBoard = () => {
         </div>
       )}
 
-      {/* ── Footer ── */}
       {status === 'playing' && (
         <div className="memory-board__footer">
           <button

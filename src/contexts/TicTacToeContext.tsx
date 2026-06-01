@@ -15,7 +15,7 @@ import type {
   GameMode,
 } from '../types/TicTacToeTypes';
 
-// ─── Win patterns ─────────────────────────────────────────────────────────────
+// Win patterns
 
 const WIN_PATTERNS = [
   [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
@@ -23,7 +23,7 @@ const WIN_PATTERNS = [
   [0, 4, 8], [2, 4, 6],             // diagonals
 ];
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+// Helpers
 
 function checkWinner(board: Cell[]): { winner: Player; cells: number[] } | null {
   for (const [a, b, c] of WIN_PATTERNS) {
@@ -38,7 +38,7 @@ function isDraw(board: Cell[]): boolean {
   return board.every((cell) => cell !== null) && !checkWinner(board);
 }
 
-// ─── Bot logic (same strategy as original code) ───────────────────────────────
+// Bot logic (same strategy as original code)
 
 function findWinningMove(board: Cell[], player: Player): number {
   for (const [a, b, c] of WIN_PATTERNS) {
@@ -72,7 +72,7 @@ function getBotMove(board: Cell[]): number {
   return available[Math.floor(Math.random() * available.length)];
 }
 
-// ─── Initial state ────────────────────────────────────────────────────────────
+// Initial state
 
 const EMPTY_BOARD: Cell[] = Array(9).fill(null);
 
@@ -86,7 +86,7 @@ const INITIAL_STATE: TicTacToeState = {
   scores: { X: 0, O: 0 },
 };
 
-// ─── Reducer ──────────────────────────────────────────────────────────────────
+// Reducer
 
 type Action =
   | { type: 'START_GAME'; mode: GameMode }
@@ -185,7 +185,7 @@ function reducer(state: TicTacToeState, action: Action): TicTacToeState {
   }
 }
 
-// ─── Context ──────────────────────────────────────────────────────────────────
+// Context
 
 export const TicTacToeContext = createContext<TicTacToeContextType | undefined>(undefined);
 

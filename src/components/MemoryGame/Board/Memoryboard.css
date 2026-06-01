@@ -7,7 +7,6 @@
   width: 100%;
 }
 
-/* ── HUD ── */
 .memory-board__hud {
   display: flex;
   align-items: center;
@@ -53,7 +52,7 @@
 .memory-board__grid {
   display: grid;
   grid-template-columns: repeat(var(--cols, 4), 1fr);
-  gap: 0.4rem;   /* Tighter gap for compact overlay */
+  gap: 0.4rem;   
   width: 100%;
 }
 

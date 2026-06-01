@@ -45,7 +45,7 @@
 }
 
 .memory-card__back-icon {
-  font-size: 1.1rem;  /* Smaller icon for compact cards */
+  font-size: 1.1rem; 
   opacity: 0.7;
 }
 
@@ -61,7 +61,7 @@
   background: var(--bg-light-gray, #f5f5fb);
   border: 1.5px solid var(--light-stroke, #ddddea);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
-  padding: 0.4rem;   /* Tighter padding for small cards */
+  padding: 0.4rem;   
 }
 
 .memory-card__front img {

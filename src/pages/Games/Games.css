@@ -1,8 +1,0 @@
-.memory-game-page {
-  min-height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: var(--bg-color, #fffdfd);
-  /* Matches the subtle bg used in other Tao pages */
-}

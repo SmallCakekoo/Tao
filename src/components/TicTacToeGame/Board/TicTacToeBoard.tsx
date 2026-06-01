@@ -2,8 +2,6 @@ import { useTicTacToe } from '../../../contexts/TicTacToeContext';
 import type { GameMode } from '../../../types/TicTacToeTypes';
 import './TicTacToeBoard.css';
 
-// ─── Mode selector ────────────────────────────────────────────────────────────
-
 const ModeSelector = () => {
   const { startGame } = useTicTacToe();
 
@@ -34,7 +32,6 @@ const ModeSelector = () => {
   );
 };
 
-// ─── Board ────────────────────────────────────────────────────────────────────
 
 export const TicTacToeBoard = () => {
   const { state, selectCell, resetRound, resetAll } = useTicTacToe();
